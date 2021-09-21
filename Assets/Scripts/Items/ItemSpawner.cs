@@ -7,12 +7,20 @@ namespace BK
 {
 	public class ItemSpawner: MonoBehaviour
 	{
+		[SerializeField]
+		protected float initSpawnDistance = 35f;
+
+		protected int initSpawnCount = 1;
+
 		private float _timeSinceLast;
 		private float _timerTarget;
 
 		private void Start()
 		{
-			SpawnObstacle(transform.position + Vector3.back * 40f);
+			for (int i = 0; i < initSpawnCount; i++)
+			{
+				Spawn(RandomPosition() + Vector3.back * initSpawnDistance);
+			}
 		}
 
 		private void Update()
@@ -21,50 +29,57 @@ namespace BK
 
 			if (!(_timeSinceLast > _timerTarget)) return;
 
-			Spawn();
+			Spawn(RandomPosition());
 			_timeSinceLast = 0;
 			_timerTarget = GetTimerTarget();
 		}
 
-		private float GetTimerTarget()
+		protected virtual float GetTimerTarget()
 		{
-			return Random.Range(Game.Instance.minTime, Game.Instance.maxTime);
+			return Random.Range(Game.Instance.minSpawnTime, Game.Instance.maxSpawnTime);
 		}
 
-		private void Spawn()
+		protected virtual void Spawn(Vector3 pos)
 		{
-			if (Random.Range(0, 1f) < Game.Instance.bias)
+			if (Random.Range(0, 1f) < Game.Instance.collectibleBias)
 			{
-				SpawnCollectible(RandomPosition());
+				SpawnCollectible(pos);
 			}
 			else
 			{
-				SpawnObstacle(RandomPosition());
+				SpawnObstacle(pos);
 			}
 		}
 
 		private void SpawnObstacle(Vector3 pos)
 		{
-			var item = Game.Instance.obstacles[Random.Range(0, Game.Instance.obstacles.Length)];
-			Instantiate(item, pos, Quaternion.identity, transform);
+			var item = Game.Instance.Obstacles[Random.Range(0, Game.Instance.Obstacles.Length)];
+			CreateItem(pos, item);
 		}
 
 		private void SpawnCollectible(Vector3 pos)
 		{
 			var items = GetAvailableCollectibles();
 			var item = items[Random.Range(0, items.Length)];
-			Instantiate(item, pos, Quaternion.identity, transform);
+			CreateItem(pos, item);
 		}
 
-		private Item[] GetAvailableCollectibles()
+		protected void CreateItem(Vector3 pos, Item item)
+		{
+			var go = Instantiate(item, pos, Quaternion.identity, transform);
+			go.gameObject.SetActive(true);
+		}
+
+		private Collectible[] GetAvailableCollectibles()
 		{
 			// TODO: Remove already collected items and return a new array or list
-			return Game.Instance.collectibles;
+			return Game.Instance.Collectibles;
 		}
 
-		private Vector3 RandomPosition()
+		protected virtual Vector3 RandomPosition()
 		{
-			return transform.position;
+			var v2 = Random.insideUnitCircle * (Game.Instance.roadWidth - 0.5f);
+			return transform.position + new Vector3(v2.x, 0, v2.y);
 		}
 	}
 }

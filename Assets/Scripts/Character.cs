@@ -28,7 +28,6 @@ namespace BK
 
         private void OnTriggerEnter(Collider other)
         {
-			Debug.Log("Collision");
 	        var item = other.gameObject.GetComponent<Item>();
 
 	        if (item is Collectible)
