@@ -20,13 +20,24 @@ MonoBehaviour:
     texture: {fileID: 2800000, guid: d0d50c0ab4e8ba342892374251bc3067, type: 3}
     repeatY: 15
   collectibleSprites:
-  - sprite: {fileID: 21300000, guid: 5d401bdbaa0b1c54bb721748dd6bed61, type: 3}
+  - sprite: {fileID: 3286163911610860551, guid: b8582351bf469bf4f9e5646beab025e3,
+      type: 3}
+  - sprite: {fileID: 3286163911610860551, guid: e80b29adbd9e37e4aa042b94aca55676,
+      type: 3}
+  - sprite: {fileID: 3286163911610860551, guid: 99761769b9406ba40aae09dd3b82261f,
+      type: 3}
+  - sprite: {fileID: 3286163911610860551, guid: 9990301d233b2e84e8c022e8ba5f5b2f,
+      type: 3}
+  - sprite: {fileID: 3286163911610860551, guid: 6ca1ef1d20701d543b141efdb09b26e9,
+      type: 3}
   obstacleSprites:
-  - sprite: {fileID: 21300000, guid: fb0f81a8f7a00244f8f8c6319b98f39f, type: 3}
-    stopsPlayer: 0
+  - sprite: {fileID: 3286163911610860551, guid: b0b832b7e8a34c442935273984635efc,
+      type: 3}
   decorationSprites:
-  - sprite: {fileID: 21300000, guid: 6d616b64c59e17d46844e497432ac715, type: 3}
-    probability: 1
-  - sprite: {fileID: 21300000, guid: edec2aba01cfdb64ba663e609f186dd7, type: 3}
-    probability: 1
+  - sprite: {fileID: 3286163911610860551, guid: b33cacb70ab264c4496aa780bf1f6eb9,
+      type: 3}
+  - sprite: {fileID: 3286163911610860551, guid: b10dcc5a15a3c8948a657b2d2262ca0b,
+      type: 3}
+  - sprite: {fileID: 3286163911610860551, guid: a9144fc8597ac9340ab8b6f3d5f9a1ad,
+      type: 3}
   itemSprites: []
