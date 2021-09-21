@@ -11,8 +11,10 @@ namespace BK
 
 		private void Awake()
 		{
-			_material = GetComponent<MeshRenderer>().sharedMaterial;
-			_material.mainTextureOffset = Vector2.zero;
+			var r = GetComponent<MeshRenderer>();
+			var m = r.sharedMaterial;
+			_material = new Material(m) {mainTextureOffset = Vector2.zero};
+			r.material = _material;
 		}
 
 		private void Start()
