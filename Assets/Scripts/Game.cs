@@ -56,7 +56,7 @@ namespace BK
 			_decorations = InitItemArray<Item>(GetSprites(graphicsPackage.decorationSprites));
 		}
 
-		private Sprite[] GetSprites(List<ItemSprite> items)
+		private Sprite[] GetSprites<T>(List<T> items) where T : ItemSprite
 		{
 			var sprites = new List<Sprite>();
 

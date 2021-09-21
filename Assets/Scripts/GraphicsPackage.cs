@@ -20,6 +20,20 @@ namespace BK
 		public Sprite sprite;
 	}
 
+	[Serializable]
+	public class ObstacleSprite : ItemSprite
+	{
+		[Tooltip("If chosen, will stop player on contact. Else just slow down.")]
+		public bool stopsPlayer;
+	}
+
+	[Serializable]
+	public class DecorationSprite : ItemSprite
+	{
+		[Tooltip("Bigger number is more probable.")]
+		public int probability;
+	}
+
 
 	[System.Serializable]
 	public class GroundMaterial
@@ -43,10 +57,10 @@ namespace BK
 		public List<ItemSprite> collectibleSprites;
 
 		[Header("Obstacles that slow down the Character")]
-		public List<ItemSprite> obstacleSprites;
+		public List<ObstacleSprite> obstacleSprites;
 
 		[Header("Textures that appear outside the road")]
-		public List<ItemSprite> decorationSprites;
+		public List<DecorationSprite> decorationSprites;
 
 		[Header("Items that appear from the collectibles")]
 		public List<ItemSprite> itemSprites;
