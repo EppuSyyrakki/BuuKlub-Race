@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using BK.Items;
 using UnityEngine;
@@ -9,9 +10,16 @@ namespace BK
 	public class RoadTexture
 	{
 		public Texture texture;
-		[Range(1, 20)]
-		public int repeatY;
+		[Range(1, 40)]
+		public int repeatY = 1;
 	}
+
+	[Serializable]
+	public class ItemSprite
+	{
+		public Sprite sprite;
+	}
+
 
 	[System.Serializable]
 	public class GroundMaterial
@@ -32,15 +40,15 @@ namespace BK
 		public RoadTexture roadTexture;
 		
 		[Header("The things to be collected by Character")]
-		public Sprite[] collectibleSprites;
+		public List<ItemSprite> collectibleSprites;
 
 		[Header("Obstacles that slow down the Character")]
-		public Sprite[] obstacleSprites;
+		public List<ItemSprite> obstacleSprites;
 
 		[Header("Textures that appear outside the road")]
-		public Sprite[] decorationSprites;
+		public List<ItemSprite> decorationSprites;
 
 		[Header("Items that appear from the collectibles")]
-		public Sprite[] itemSprites;
+		public List<ItemSprite> itemSprites;
 	}
 }

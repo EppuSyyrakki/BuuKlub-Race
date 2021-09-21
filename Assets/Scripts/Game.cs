@@ -51,9 +51,21 @@ namespace BK
 
 		private void InitGraphics()
 		{
-			_collectibles = InitItemArray<Collectible>(graphicsPackage.collectibleSprites);
-			_obstacles = InitItemArray<Obstacle>(graphicsPackage.obstacleSprites);
-			_decorations = InitItemArray<Item>(graphicsPackage.decorationSprites);
+			_collectibles = InitItemArray<Collectible>(GetSprites(graphicsPackage.collectibleSprites));
+			_obstacles = InitItemArray<Obstacle>(GetSprites(graphicsPackage.obstacleSprites));
+			_decorations = InitItemArray<Item>(GetSprites(graphicsPackage.decorationSprites));
+		}
+
+		private Sprite[] GetSprites(List<ItemSprite> items)
+		{
+			var sprites = new List<Sprite>();
+
+			foreach (var item in items)
+			{
+				sprites.Add(item.sprite);
+			}
+
+			return sprites.ToArray();
 		}
 
 		private T[] InitItemArray<T>(Sprite[] sprites) where T : Item
