@@ -13,9 +13,21 @@ namespace BK
 		public int repeatY;
 	}
 
+	[System.Serializable]
+	public class GroundMaterial
+	{
+		public Color color = Color.white;
+
+		[Range(0, 1)]
+		public float smoothness, metallic;
+	}
+
 	[CreateAssetMenu(fileName = "Graphics Package", menuName = "New Graphics Package")]
 	public class GraphicsPackage : ScriptableObject
 	{
+		[Header("Data of ground outside the road")]
+		public GroundMaterial groundMaterial;
+
 		[Header("The scrolling texture for the road")]
 		public RoadTexture roadTexture;
 		

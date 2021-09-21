@@ -15,6 +15,7 @@ namespace BK
 
 		public static Game Instance => _instance;
 		public RoadTexture RoadTexture => graphicsPackage.roadTexture;
+		public GroundMaterial GroundMaterial => graphicsPackage.groundMaterial;
 
 		private void Awake()
 		{
