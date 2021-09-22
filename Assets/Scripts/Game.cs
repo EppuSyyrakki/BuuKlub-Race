@@ -45,6 +45,10 @@ namespace BK
 		[Range(0, 10)]
 		public int decorationDensity = 5;
 
+		[Header("Visual variables:")]
+		[Range(1f,200f), Tooltip("How close to the camera all sprites turn towards")]
+		public float billboardBend = 100f;
+
 		public Collectible[] Collectibles => _collectibles;
 		public Obstacle[] Obstacles => _obstacles;
 		public Item[] Decorations => _decorations;

@@ -1,23 +1,41 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using BK;
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer))]
 public class Billboard : MonoBehaviour
 {
+	[SerializeField]
+	private bool flipX;
+
 	private Camera _cam;
 
 	private void Awake()
 	{
-		GetComponent<SpriteRenderer>().flipX = true;
+		if (flipX)
+		{
+			FlipX();
+		}
 		_cam = Camera.main;
 	}
 
-	// Update is called once per frame
-    void LateUpdate()
+	private void FlipX()
+	{
+		var sr = GetComponent<SpriteRenderer>();
+
+		if (sr == null)
+		{
+			Debug.LogError(gameObject.name + " is trying to flip it's SpriteRenderer but didn't find one!");
+		}
+		else
+		{
+			sr.flipX = true;
+		}
+	}
+
+    private void LateUpdate()
     {
-	    var look = -_cam.transform.forward * 100f;
-	    transform.LookAt(look);
+	    var look = -_cam.transform.forward * Game.Instance.billboardBend;
+	    transform.forward = transform.position - look;
     }
+
+
 }
