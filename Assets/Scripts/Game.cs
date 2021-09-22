@@ -17,18 +17,10 @@ namespace BK
 		public RoadTexture RoadTexture => graphicsPackage.roadTexture;
 		public GroundMaterial GroundMaterial => graphicsPackage.groundMaterial;
 
-		private void Awake()
-		{
-			_instance = this;
-
-			if (graphicsPackage == null) { Debug.LogError("No Graphics Package found in Game component!"); }
-
-			InitGraphics();
-		}
-
 		private Collectible[] _collectibles;
 		private Obstacle[] _obstacles;
 		private Item[] _decorations;
+		private Character _player;
 
 		[Header("Movement variables:")]
 		public float roadWidth = 6f;
@@ -52,6 +44,17 @@ namespace BK
 		public Collectible[] Collectibles => _collectibles;
 		public Obstacle[] Obstacles => _obstacles;
 		public Item[] Decorations => _decorations;
+		public Character Player => _player;
+
+		private void Awake()
+		{
+			_instance = this;
+
+			if (graphicsPackage == null) { Debug.LogError("No Graphics Package found in Game component!"); }
+
+			InitGraphics();
+			_player = FindObjectOfType<Character>();
+		}
 
 		private void InitGraphics()
 		{

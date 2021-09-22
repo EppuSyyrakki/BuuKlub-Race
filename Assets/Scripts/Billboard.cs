@@ -33,9 +33,7 @@ public class Billboard : MonoBehaviour
 
     private void LateUpdate()
     {
-	    var look = -_cam.transform.forward * Game.Instance.billboardBend;
-	    transform.forward = transform.position - look;
-    }
-
-
+		var look = -_cam.transform.forward * Game.Instance.billboardBend;
+		transform.forward = transform.position - look;
+	}
 }
