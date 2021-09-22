@@ -31,9 +31,9 @@ namespace BK
 		[Header("Spawner variables:")]
 		[Range(0, 1), Tooltip("0 = only obstacles, 1 = only collectibles")]
 		public float collectibleBias = 0.5f;
-		[Range(2, 4)]
+		[Range(1, 3.95f)]
 		public float minSpawnTime = 2f;
-		[Range(4, 6)]
+		[Range(4, 8)]
 		public float maxSpawnTime = 4f;
 		[Range(0, 10)]
 		public int decorationDensity = 5;

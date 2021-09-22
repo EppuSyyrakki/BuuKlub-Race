@@ -26,20 +26,16 @@ namespace BK
 		    }
 
 		    Touch touch = Input.GetTouch(0);
+		    float tX = touch.position.x;
+		    float cX = _cam.WorldToScreenPoint(transform.position).x;
 
-		    if (touch.phase == TouchPhase.Moved)
+		    if (Mathf.Abs(tX - cX) < Game.Instance.moveTreshold)
 		    {
-			    float tX = touch.position.x;
-			    float cX = _cam.WorldToScreenPoint(transform.position).x;
+			    return;
+		    }
 
-			    if (Mathf.Abs(tX - cX) < Game.Instance.moveTreshold)
-			    {
-				    return;
-			    }
-
-			    if (tX < cX) { MoveLeft(); }
-			    else if (tX > cX) { MoveRight(); }
-			}
+		    if (tX < cX) { MoveLeft(); }
+		    else if (tX > cX) { MoveRight(); }
 	    }
 
 	    public void MoveLeft()
