@@ -8,36 +8,58 @@ namespace BK
 {
     public class Character : MonoBehaviour
     {
+	    private Camera _cam;
+	    private Animator _animator;
+
+	    private void Awake()
+	    {
+			_cam = Camera.main;
+			_animator = GetComponent<Animator>();
+	    }
+
+	    private void Update()
+	    {
+		    if (Input.touchCount == 0)
+		    {
+				_animator.SetInteger("movement", 0);
+			    return;
+		    }
+
+		    Touch touch = Input.GetTouch(0);
+
+		    if (touch.phase == TouchPhase.Moved)
+		    {
+			    float tX = touch.position.x;
+			    float cX = _cam.WorldToScreenPoint(transform.position).x;
+
+			    if (Mathf.Abs(tX - cX) < Game.Instance.moveTreshold)
+			    {
+				    return;
+			    }
+
+			    if (tX < cX) { MoveLeft(); }
+			    else if (tX > cX) { MoveRight(); }
+			}
+	    }
+
 	    public void MoveLeft()
         {
+            _animator.SetInteger("movement", -1);
 	        Move(-Game.Instance.horizontalSpeed);
         }
 
         public void MoveRight()
         {
-	        Move(-Game.Instance.horizontalSpeed);
+			_animator.SetInteger("movement", 1);
+			Move(Game.Instance.horizontalSpeed);
         }
 
         private void Move(float step)
         {
 	        Vector3 pos = transform.position;
-	        float limit = -Game.Instance.roadWidth / 2;
-	        var newX = Mathf.Clamp(pos.x + step, -limit, limit);
+	        float limit = Game.Instance.roadWidth - 1;
+	        var newX = Mathf.Clamp(pos.x + step * Time.deltaTime, -limit, limit);
 	        transform.position = new Vector3(newX, pos.y, pos.z);
-        }
-
-        private void OnTriggerEnter(Collider other)
-        {
-	        var item = other.gameObject.GetComponent<Item>();
-
-	        if (item is Collectible)
-	        {
-				Debug.Log("Touched Collectible!");
-	        }
-			else if (item is Obstacle)
-	        {
-				Debug.Log("Touched Obstacle!");
-	        }
         }
     }
 }

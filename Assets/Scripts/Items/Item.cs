@@ -41,5 +41,10 @@ namespace BK.Items
 			var sr = GetComponent<SpriteRenderer>();
 			sr.sprite = sprite;
 		}
+
+		public virtual void Collide()
+		{
+			Debug.Log("Collided with " + gameObject.name);
+		}
 	}
 }

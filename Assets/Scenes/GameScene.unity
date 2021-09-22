@@ -1033,6 +1033,7 @@ MonoBehaviour:
   maxSpawnTime: 4
   decorationDensity: 5
   billboardBend: 100
+  fixedTimeStep: 15
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0

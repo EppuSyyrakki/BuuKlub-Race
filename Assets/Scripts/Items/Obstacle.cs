@@ -13,5 +13,14 @@ namespace BK.Items
 			col.center = Vector3.up;
 			col.radius = 1;
 		}
+
+		private void OnTriggerEnter(Collider other)
+		{
+			if (other.gameObject.TryGetComponent<Character>(out var c))
+			{
+				var animator = c.GetComponent<Animator>();
+				animator.SetTrigger("hit");
+			}
+		}
 	}
 }

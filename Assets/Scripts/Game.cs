@@ -26,6 +26,7 @@ namespace BK
 		public float roadWidth = 6f;
 		public float forwardSpeed = 5f;
 		public float horizontalSpeed = 2f;
+		public float moveTreshold = 10f;
 
 		[Header("Spawner variables:")]
 		[Range(0, 1), Tooltip("0 = only obstacles, 1 = only collectibles")]
@@ -41,6 +42,10 @@ namespace BK
 		[Range(1f,200f), Tooltip("How close to the camera all sprites turn towards")]
 		public float billboardBend = 100f;
 
+		[Header("Optimization variables:")]
+		[Range(10, 50)]
+		public int fixedTimeStep = 30;
+
 		public Collectible[] Collectibles => _collectibles;
 		public Obstacle[] Obstacles => _obstacles;
 		public Item[] Decorations => _decorations;
@@ -54,6 +59,7 @@ namespace BK
 
 			InitGraphics();
 			_player = FindObjectOfType<Character>();
+			Time.fixedDeltaTime = 1 / (float) fixedTimeStep;
 		}
 
 		private void InitGraphics()
