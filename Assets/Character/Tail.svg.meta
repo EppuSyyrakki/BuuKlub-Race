@@ -12,8 +12,8 @@ ScriptedImporter:
   texturedSpriteMeshType: 0
   svgPixelsPerUnit: 600
   gradientResolution: 64
-  alignment: 7
-  customPivot: {x: 0, y: 0}
+  alignment: 1
+  customPivot: {x: 0, y: 1}
   generatePhysicsShape: 0
   viewportOptions: 0
   preserveViewport: 0
@@ -39,17 +39,17 @@ ScriptedImporter:
   spriteData:
     TessellationDetail: 0
     SpriteRect:
-      name: 
+      name: TailSprite
       originalName: 
-      pivot: {x: 0, y: 0}
-      alignment: 0
+      pivot: {x: 0, y: 1}
+      alignment: 1
       border: {x: 0, y: 0, z: 0, w: 0}
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 0
-        height: 0
+        width: 1934
+        height: 464
       spriteID: 3352ee4c8c061474aa1aaf622f882514
       internalID: 0
     PhysicsOutlines: []
