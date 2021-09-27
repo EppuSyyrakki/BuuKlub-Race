@@ -20,7 +20,13 @@ namespace BKRacing.Items
 			{
 				var animator = c.GetComponent<Animator>();
 				animator.SetTrigger("hit");
+				Collide();
 			}
+		}
+
+		private void Collide()
+		{
+			// TODO: Play effect, slow down speed or stop game or whatever
 		}
 	}
 }

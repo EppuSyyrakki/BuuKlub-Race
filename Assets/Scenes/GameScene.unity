@@ -1114,7 +1114,7 @@ MonoBehaviour:
   roadWidth: 6
   forwardSpeed: 150
   horizontalSpeed: 6
-  moveTreshold: 10
+  moveTreshold: 20
   collectibleBias: 0.25
   minSpawnTime: 1
   maxSpawnTime: 4
@@ -1659,6 +1659,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2d82e575d9882845a8f17d097a29f51, type: 3}
+--- !u!1 &1917685485007133133 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1917685485699515776, guid: e2d82e575d9882845a8f17d097a29f51,
+    type: 3}
+  m_PrefabInstance: {fileID: 1917685485007133132}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1917685485007133134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917685485007133133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aae1a97411b4fef41ac11e90dbcbbd6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &9196504423047453883
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -27,8 +27,9 @@ namespace BKRacing.Items
 
 		private void Collect()
 		{
-			Game.Collect(transform.position);
+			Game.Instance.Collect(transform.position);
 			// TODO: Play effect
+			Destroy(gameObject);
 		}
 	}
 }

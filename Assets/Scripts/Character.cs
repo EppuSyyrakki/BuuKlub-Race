@@ -28,26 +28,28 @@ namespace BKRacing
 		    Touch touch = Input.GetTouch(0);
 		    float tX = touch.position.x;
 		    float cX = _cam.WorldToScreenPoint(transform.position).x;
+		    float touchDelta = Mathf.Abs(tX - cX);
 
-		    if (Mathf.Abs(tX - cX) < Game.Instance.moveTreshold)
+		    if (touchDelta < Game.Instance.moveTreshold)
 		    {
 			    return;
 		    }
 
-		    if (tX < cX) { MoveLeft(); }
-		    else if (tX > cX) { MoveRight(); }
+		    touchDelta = Mathf.Clamp(touchDelta, 300f, 1000f);
+		    if (tX < cX) { MoveLeft(touchDelta); }
+		    else if (tX > cX) { MoveRight(touchDelta); }
 	    }
 
-	    public void MoveLeft()
+	    public void MoveLeft(float touchDelta)
         {
             _animator.SetInteger("movement", -1);
-	        Move(-Game.Instance.horizontalSpeed);
+            Move(-Game.Instance.horizontalSpeed * touchDelta / Screen.width * 5f);
         }
 
-        public void MoveRight()
+        public void MoveRight(float touchDelta)
         {
 			_animator.SetInteger("movement", 1);
-			Move(Game.Instance.horizontalSpeed);
+			Move(Game.Instance.horizontalSpeed * touchDelta / Screen.width * 5f);
         }
 
         private void Move(float step)

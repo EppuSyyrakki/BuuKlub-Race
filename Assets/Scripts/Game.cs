@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using BKRacing.GUI;
 using BKRacing.Items;
+using TMPro.EditorUtilities;
 using UnityEngine;
 
 namespace BKRacing
@@ -10,6 +12,7 @@ namespace BKRacing
 	{
 		private static Game _instance;
 		private Camera _cam;
+		private CollectibleDisplay _collectibleDisplay;
 
 		[SerializeField]
 		private GraphicsPackage graphicsPackage;
@@ -26,6 +29,8 @@ namespace BKRacing
 		[Header("Movement variables:")]
 		public float roadWidth = 6f;
 		public float forwardSpeed = 5f;
+		[Range(0, 1f)]
+		public float forwardSpeedIncrease = 0.25f;
 		public float horizontalSpeed = 2f;
 		public float moveTreshold = 10f;
 
@@ -56,6 +61,7 @@ namespace BKRacing
 		{
 			_instance = this;
 			_cam = Camera.main;
+			_collectibleDisplay = FindObjectOfType<CollectibleDisplay>();
 
 			if (graphicsPackage == null) { Debug.LogError("No Graphics Package found in Game component!"); }
 
@@ -99,8 +105,9 @@ namespace BKRacing
 			return items.ToArray();
 		}
 
-		public static void Collect(Vector3 worldPosition)
+		public void Collect(Vector3 worldPosition)
 		{
+			Vector2 screenPosition = _cam.WorldToScreenPoint(worldPosition);
 
 		}
 	}
