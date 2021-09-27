@@ -30,12 +30,12 @@ namespace BKRacing
 		    float cX = _cam.WorldToScreenPoint(transform.position).x;
 		    float touchDelta = Mathf.Abs(tX - cX);
 
-		    if (touchDelta < Game.Instance.moveTreshold)
-		    {
-			    return;
-		    }
+			if (touchDelta < Game.Instance.moveTreshold)
+			{
+				return;
+			}
 
-		    touchDelta = Mathf.Clamp(touchDelta, 300f, 1000f);
+			touchDelta = Mathf.Clamp(touchDelta, 100f, 1000f);
 		    if (tX < cX) { MoveLeft(touchDelta); }
 		    else if (tX > cX) { MoveRight(touchDelta); }
 	    }

@@ -176,7 +176,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 202b34d8466746d4b8495a399ca9ad52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initSpawnDistance: 200
 --- !u!68 &359399796
 EdgeCollider2D:
   m_ObjectHideFlags: 0
@@ -1113,11 +1112,12 @@ MonoBehaviour:
   graphicsPackage: {fileID: 11400000, guid: d2539874080bb114984ab51e4b78ea98, type: 2}
   roadWidth: 6
   forwardSpeed: 150
+  forwardSpeedIncrease: 15
   horizontalSpeed: 6
   moveTreshold: 20
   collectibleBias: 0.25
-  minSpawnTime: 1
-  maxSpawnTime: 4
+  minSpawnTime: 0.5
+  maxSpawnTime: 2.38
   decorationDensity: 5
   billboardBend: 100
   fixedTimeStep: 15
@@ -1204,6 +1204,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 25, y: 0, z: 0}
+--- !u!1 &1200654964 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 915419aaf2f3f754ba8d50645d5fc60e,
+    type: 3}
+  m_PrefabInstance: {fileID: 650465751}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1200654965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1200654964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aba31078cccabcd4082f6afe2cac09a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1496668024
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1348,7 +1366,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 202b34d8466746d4b8495a399ca9ad52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initSpawnDistance: 200
 --- !u!68 &1733110721
 EdgeCollider2D:
   m_ObjectHideFlags: 0
@@ -1440,7 +1457,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb61a0745d14a4144b171a1459375738, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initSpawnDistance: 25
 --- !u!4 &2058093477
 Transform:
   m_ObjectHideFlags: 0
@@ -1449,7 +1465,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2058093475}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 100}
+  m_LocalPosition: {x: 0, y: 0, z: 150}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

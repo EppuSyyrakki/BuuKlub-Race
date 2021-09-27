@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections;
-using UnityEditor;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace BKRacing.Items
 {
 	[RequireComponent(typeof(EdgeCollider2D))]
-	public class DecorationSpawner : ItemSpawner
+	public class DecorationSpawner : MonoBehaviour
 	{
 		private EdgeCollider2D _edge;
-
+		
 		private void Awake()
 		{
 			_edge = GetComponent<EdgeCollider2D>();
@@ -19,27 +17,24 @@ namespace BKRacing.Items
 
 		private void Start()
 		{
-			initSpawnCount = Game.Instance.decorationDensity * 10;
+			var initSpawnCount = Game.Instance.decorationDensity * 10;
 
 			for (int i = 0; i < initSpawnCount; i++)
 			{
-				Spawn(RandomPosition() + Vector3.back * Random.Range(0, initSpawnDistance));
+				Spawn(RandomPosition() + Vector3.back * Random.Range(0, transform.position.z));
 			}
 		}
-
-		protected override float GetTimerTarget()
-		{
-			return Random.Range(Game.Instance.decorationDensity * 0.75f, Game.Instance.decorationDensity * 1.25f) * 0.1f;
-		}
-
-		protected override void Spawn(Vector3 pos)
+		
+		private void Spawn(Vector3 pos)
 		{
 			int i = Random.Range(0, Game.Instance.Decorations.Length);
 			var decoration = Game.Instance.Decorations[i];
-			CreateItem(pos, decoration);
+			var go = Instantiate(decoration, pos, Quaternion.identity, transform);
+			go.gameObject.SetActive(true);
+			go.GetComponent<Decoration>().SetSpawner(this);
 		}
 
-		protected override Vector3 RandomPosition()
+		public Vector3 RandomPosition()
 		{
 			var bounds = _edge.bounds;
 			return new Vector3(

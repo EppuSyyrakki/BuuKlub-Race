@@ -9,20 +9,19 @@ namespace BKRacing.Items
 		typeof(SpriteRenderer))]
 	public class Item : MonoBehaviour
 	{
-		private Transform _player;
-		private SpriteRenderer _sr;
-		
+		protected Transform player;
+		protected SpriteRenderer spriteRenderer;
 
 		private void Start()
 		{
-			_player = Game.Instance.Player.transform;
-			_sr = GetComponent<SpriteRenderer>();
+			player = Game.Instance.Player.transform;
+			spriteRenderer = GetComponent<SpriteRenderer>();
 		}
 
-		private void Update()
+		public virtual void Update()
 		{
 			var self = transform.position;
-			var newPos = new Vector3(self.x, self.y , self.z - Game.Instance.forwardSpeed * Time.deltaTime * 0.12f);
+			var newPos = new Vector3(self.x, self.y, self.z - Game.Instance.forwardSpeed * Time.deltaTime * 0.12f);
 
 			if (newPos.z < -10f)
 			{
@@ -30,11 +29,11 @@ namespace BKRacing.Items
 				return;
 			}
 
-			if (newPos.z < _player.position.z)
+			if (newPos.z < player.position.z)
 			{
-				_sr.sortingOrder += 100;
+				spriteRenderer.sortingOrder += 100;
 			}
-			
+
 			transform.position = newPos;
 		}
 

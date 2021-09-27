@@ -1,37 +1,14 @@
-﻿using BKRacing;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace BKRacing.Environment
 {
 	public class Billboard : MonoBehaviour
 	{
-		[SerializeField]
-		private bool flipX;
-
 		private Camera _cam;
 
 		private void Awake()
 		{
-			if (flipX)
-			{
-				FlipX();
-			}
-
 			_cam = Camera.main;
-		}
-
-		private void FlipX()
-		{
-			var sr = GetComponent<SpriteRenderer>();
-
-			if (sr == null)
-			{
-				Debug.LogError(gameObject.name + " is trying to flip it's SpriteRenderer but didn't find one!");
-			}
-			else
-			{
-				sr.flipX = true;
-			}
 		}
 
 		private void LateUpdate()

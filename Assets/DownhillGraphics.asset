@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: ItemsGraphicsPackage
   m_EditorClassIdentifier: 
   groundMaterial:
-    color: {r: 1, g: 1, b: 1, a: 1}
-    smoothness: 1
+    color: {r: 0.13710138, g: 0.6886792, b: 0.029236369, a: 1}
+    smoothness: 0.88
     metallic: 0.552
   roadTexture:
     texture: {fileID: 2800000, guid: d0d50c0ab4e8ba342892374251bc3067, type: 3}

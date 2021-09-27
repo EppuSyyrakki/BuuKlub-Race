@@ -7,19 +7,18 @@ namespace BKRacing
 {
 	public class ItemSpawner: MonoBehaviour
 	{
-		[SerializeField]
-		protected float initSpawnDistance = 35f;
-
-		protected int initSpawnCount = 1;
-
+		private float _initSpawnDistance;
+		private int _initSpawnCount = 1;
 		private float _timeSinceLast;
 		private float _timerTarget;
 
 		private void Start()
 		{
-			for (int i = 0; i < initSpawnCount; i++)
+			_initSpawnDistance = transform.position.z / 2f;
+
+			for (int i = 0; i < _initSpawnCount; i++)
 			{
-				Spawn(RandomPosition() + Vector3.back * initSpawnDistance);
+				Spawn(RandomPosition() + Vector3.back * _initSpawnDistance);
 			}
 		}
 
@@ -34,12 +33,12 @@ namespace BKRacing
 			_timerTarget = GetTimerTarget();
 		}
 
-		protected virtual float GetTimerTarget()
+		private float GetTimerTarget()
 		{
 			return Random.Range(Game.Instance.minSpawnTime, Game.Instance.maxSpawnTime);
 		}
 
-		protected virtual void Spawn(Vector3 pos)
+		private void Spawn(Vector3 pos)
 		{
 			if (Random.Range(0, 1f) < Game.Instance.collectibleBias)
 			{
@@ -64,7 +63,7 @@ namespace BKRacing
 			CreateItem(pos, item);
 		}
 
-		protected void CreateItem(Vector3 pos, Item item)
+		private void CreateItem(Vector3 pos, Item item)
 		{
 			var go = Instantiate(item, pos, Quaternion.identity, transform);
 			go.gameObject.SetActive(true);
@@ -76,7 +75,7 @@ namespace BKRacing
 			return Game.Instance.Collectibles;
 		}
 
-		protected virtual Vector3 RandomPosition()
+		private Vector3 RandomPosition()
 		{
 			var v2 = Random.insideUnitCircle * (Game.Instance.roadWidth - 0.5f);
 			return transform.position + new Vector3(v2.x, 0, v2.y);

@@ -23,24 +23,24 @@ namespace BKRacing
 
 		private Collectible[] _collectibles;
 		private Obstacle[] _obstacles;
-		private Item[] _decorations;
+		private Decoration[] _decorations;
 		private Character _player;
 
 		[Header("Movement variables:")]
 		public float roadWidth = 6f;
-		public float forwardSpeed = 5f;
-		[Range(0, 1f)]
-		public float forwardSpeedIncrease = 0.25f;
+		public float forwardSpeed = 150f;
+		[Range(0, 20f)]
+		public float forwardSpeedIncrease = 10f;
 		public float horizontalSpeed = 2f;
 		public float moveTreshold = 10f;
 
 		[Header("Spawner variables:")]
 		[Range(0, 1), Tooltip("0 = only obstacles, 1 = only collectibles")]
 		public float collectibleBias = 0.5f;
-		[Range(1, 3.95f)]
-		public float minSpawnTime = 2f;
-		[Range(4, 8)]
-		public float maxSpawnTime = 4f;
+		[Range(0.25f, 1.95f)]
+		public float minSpawnTime = 1f;
+		[Range(2, 4)]
+		public float maxSpawnTime = 2.5f;
 		[Range(0, 10)]
 		public int decorationDensity = 5;
 
@@ -54,7 +54,7 @@ namespace BKRacing
 
 		public Collectible[] Collectibles => _collectibles;
 		public Obstacle[] Obstacles => _obstacles;
-		public Item[] Decorations => _decorations;
+		public Decoration[] Decorations => _decorations;
 		public Character Player => _player;
 
 		private void Awake()
@@ -74,7 +74,7 @@ namespace BKRacing
 		{
 			_collectibles = InitItemArray<Collectible>(GetSprites(graphicsPackage.collectibleSprites));
 			_obstacles = InitItemArray<Obstacle>(GetSprites(graphicsPackage.obstacleSprites));
-			_decorations = InitItemArray<Item>(GetSprites(graphicsPackage.decorationSprites));
+			_decorations = InitItemArray<Decoration>(GetSprites(graphicsPackage.decorationSprites));
 		}
 
 		private Sprite[] GetSprites<T>(List<T> items) where T : ItemSprite
@@ -108,7 +108,7 @@ namespace BKRacing
 		public void Collect(Vector3 worldPosition)
 		{
 			Vector2 screenPosition = _cam.WorldToScreenPoint(worldPosition);
-
+			forwardSpeed += forwardSpeedIncrease;
 		}
 	}
 }
