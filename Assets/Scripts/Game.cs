@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using BK.Items;
+using BKRacing.Items;
 using UnityEngine;
 
-namespace BK
+namespace BKRacing
 {
 	public class Game : MonoBehaviour
 	{
 		private static Game _instance;
+		private Camera _cam;
 
 		[SerializeField]
 		private GraphicsPackage graphicsPackage;
@@ -54,6 +55,7 @@ namespace BK
 		private void Awake()
 		{
 			_instance = this;
+			_cam = Camera.main;
 
 			if (graphicsPackage == null) { Debug.LogError("No Graphics Package found in Game component!"); }
 
@@ -95,6 +97,11 @@ namespace BK
 			}
 
 			return items.ToArray();
+		}
+
+		public static void Collect(Vector3 worldPosition)
+		{
+
 		}
 	}
 }

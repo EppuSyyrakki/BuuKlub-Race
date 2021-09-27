@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BK.Items
+namespace BKRacing.Items
 {
 	[RequireComponent(typeof(SphereCollider))]
 	public class Obstacle : Item

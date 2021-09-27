@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using BK.Items;
+using BKRacing.Items;
 using UnityEngine;
 
-namespace BK
+namespace BKRacing
 {
 	public class ItemSpawner: MonoBehaviour
 	{

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BK.Items
+namespace BKRacing.Items
 {
 	[RequireComponent(typeof(SphereCollider))]
 	public class Collectible : Item
@@ -21,7 +21,14 @@ namespace BK.Items
 			{
 				var animator = c.GetComponent<Animator>();
 				animator.SetTrigger("collect");
+				Collect();
 			}
+		}
+
+		private void Collect()
+		{
+			Game.Collect(transform.position);
+			// TODO: Play effect
 		}
 	}
 }

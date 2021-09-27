@@ -5,7 +5,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace BK.Items
+namespace BKRacing.Items
 {
 	[RequireComponent(typeof(EdgeCollider2D))]
 	public class DecorationSpawner : ItemSpawner

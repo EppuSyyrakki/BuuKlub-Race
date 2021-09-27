@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BK
+namespace BKRacing.Environment
 {
 	public class Road : MonoBehaviour
 	{

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using BK.Items;
+using BKRacing.Items;
 using UnityEngine;
 
-namespace BK
+namespace BKRacing
 {
 	[System.Serializable]
 	public class RoadTexture

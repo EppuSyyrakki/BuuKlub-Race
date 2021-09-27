@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using BKRacing.Environment;
 
-namespace BK.Items
+namespace BKRacing.Items
 {
 	[RequireComponent(typeof(Billboard),
 		typeof(SpriteRenderer))]
@@ -10,6 +11,7 @@ namespace BK.Items
 	{
 		private Transform _player;
 		private SpriteRenderer _sr;
+		
 
 		private void Start()
 		{
@@ -40,11 +42,6 @@ namespace BK.Items
 		{
 			var sr = GetComponent<SpriteRenderer>();
 			sr.sprite = sprite;
-		}
-
-		public virtual void Collide()
-		{
-			Debug.Log("Collided with " + gameObject.name);
 		}
 	}
 }
