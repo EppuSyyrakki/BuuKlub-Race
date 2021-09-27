@@ -30,8 +30,8 @@ namespace BKRacing.Items
 			int i = Random.Range(0, Game.Instance.Decorations.Length);
 			var decoration = Game.Instance.Decorations[i];
 			var go = Instantiate(decoration, pos, Quaternion.identity, transform);
+			go.SetSpawner(this);
 			go.gameObject.SetActive(true);
-			go.GetComponent<Decoration>().SetSpawner(this);
 		}
 
 		public Vector3 RandomPosition()

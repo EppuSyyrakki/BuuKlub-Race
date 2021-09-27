@@ -7,18 +7,17 @@ namespace BKRacing
 {
 	public class ItemSpawner: MonoBehaviour
 	{
-		private float _initSpawnDistance;
-		private int _initSpawnCount = 1;
 		private float _timeSinceLast;
 		private float _timerTarget;
-
+		
 		private void Start()
 		{
-			_initSpawnDistance = transform.position.z / 2f;
+			var count = Game.Instance.initialSpawnCount;
 
-			for (int i = 0; i < _initSpawnCount; i++)
+			for (int i = 0; i < count; i++)
 			{
-				Spawn(RandomPosition() + Vector3.back * _initSpawnDistance);
+				var z = Random.Range(0, transform.position.z * 0.75f);
+				SpawnObstacle(RandomPosition() + Vector3.back * z);
 			}
 		}
 
@@ -65,7 +64,7 @@ namespace BKRacing
 
 		private void CreateItem(Vector3 pos, Item item)
 		{
-			var go = Instantiate(item, pos, Quaternion.identity, transform);
+			var go = Instantiate(item, pos + Vector3.down * 10f, Quaternion.identity, transform);
 			go.gameObject.SetActive(true);
 		}
 

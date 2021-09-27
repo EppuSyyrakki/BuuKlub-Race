@@ -11,30 +11,38 @@ namespace BKRacing.Items
 	{
 		protected Transform player;
 		protected SpriteRenderer spriteRenderer;
+		protected Vector3 newPos;
+		private float _objectHeight;
+		private AnimationCurve _curve;
 
 		private void Start()
 		{
 			player = Game.Instance.Player.transform;
 			spriteRenderer = GetComponent<SpriteRenderer>();
+			var sprite = spriteRenderer.sprite;
+			_objectHeight = sprite.rect.height / sprite.pixelsPerUnit;
+			_curve = Game.Instance.riseCurve;
+		}
+
+		private float GetYPosition(float z)
+		{
+			var distance = Mathf.Abs(transform.localPosition.z);
+			var curveDistance = Game.Instance.curveDistance;
+
+			if (distance > curveDistance)
+			{
+				return 0;
+			}
+
+			return -_objectHeight + _objectHeight * _curve.Evaluate(distance / curveDistance);
 		}
 
 		public virtual void Update()
 		{
 			var self = transform.position;
-			var newPos = new Vector3(self.x, self.y, self.z - Game.Instance.forwardSpeed * Time.deltaTime * 0.12f);
-
-			if (newPos.z < -10f)
-			{
-				Destroy(gameObject);
-				return;
-			}
-
-			if (newPos.z < player.position.z)
-			{
-				spriteRenderer.sortingOrder += 100;
-			}
-
-			transform.position = newPos;
+			var z = self.z - Game.Instance.forwardSpeed * Time.deltaTime * 0.12f;
+			var y = GetYPosition(z);
+			newPos = new Vector3(self.x, y, z);
 		}
 
 		public void Init(Sprite sprite)

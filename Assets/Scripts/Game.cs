@@ -37,16 +37,24 @@ namespace BKRacing
 		[Header("Spawner variables:")]
 		[Range(0, 1), Tooltip("0 = only obstacles, 1 = only collectibles")]
 		public float collectibleBias = 0.5f;
-		[Range(0.25f, 1.95f)]
+		[Range(0.25f, 1.95f), Tooltip("Minimum time between spawns")]
 		public float minSpawnTime = 1f;
-		[Range(2, 4)]
+		[Range(2, 4), Tooltip("Maximum time between spawns")]
 		public float maxSpawnTime = 2.5f;
-		[Range(0, 10)]
+		[Range(0, 10), Tooltip("Density of decorations outside the road area")]
 		public int decorationDensity = 5;
+		[Range(1, 5), Tooltip("How long items will rise from the horizons (in seconds)")]
+		public float riseTime = 2f;
+		[Range(1, 5), Tooltip("How many obstacles get spawned on road at start")]
+		public int initialSpawnCount = 2;
 
 		[Header("Visual variables:")]
 		[Range(1f,200f), Tooltip("How close to the camera all sprites turn towards")]
 		public float billboardBend = 100f;
+		[Tooltip("Curve for the height of all items after spawning")]
+		public AnimationCurve riseCurve;
+		[Range(5f,200f), Tooltip("How far from the spawn point the curve affects object height")]
+		public float curveDistance = 20f;
 
 		[Header("Optimization variables:")]
 		[Range(10, 50)]

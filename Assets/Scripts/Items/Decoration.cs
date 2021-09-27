@@ -10,14 +10,12 @@ namespace BKRacing.Items
 
 		public override void Update()
 		{
-			var self = transform.position;
-			var newPos = new Vector3(self.x, self.y, self.z - Game.Instance.forwardSpeed * Time.deltaTime * 0.12f);
-
 			if (newPos.z < -10f)
 			{
-				newPos = _spawner.RandomPosition();
+				transform.position = _spawner.RandomPosition();
 			}
-			
+
+			base.Update();
 			transform.position = newPos;
 		}
 
