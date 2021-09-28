@@ -42,10 +42,13 @@ namespace BKRacing
 		[Range(0, 1)]
 		public float smoothness, metallic;
 	}
-
+	
 	[CreateAssetMenu(fileName = "Graphics Package", menuName = "New Graphics Package")]
 	public class GraphicsPackage : ScriptableObject
 	{
+		[Header("Background sprite")]
+		public Sprite backgroundCard;
+
 		[Header("Data of ground outside the road")]
 		public GroundMaterial groundMaterial;
 
