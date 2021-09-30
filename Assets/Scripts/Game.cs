@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using BKRacing.Environment;
 using BKRacing.GUI;
 using BKRacing.Items;
 using TMPro.EditorUtilities;
@@ -26,19 +27,18 @@ namespace BKRacing
 		private Decoration[] _decorations;
 		private Character _player;
 		private float _originalSpeed;
+		private float _roadWidth;
 
 		[Header("Movement variables:")]
-		public float roadWidth = 6f;
 		public float forwardSpeed = 150f;
 		[Range(0, 20f)]
 		public float forwardSpeedIncrease = 10f;
 		public float horizontalSpeed = 2f;
-		public float moveTreshold = 10f;
-		[SerializeField, Range(0.1f,3f), Tooltip("Seconds to wait after colliding")]
-		private float waitAfterCollision = 1f;
 		[SerializeField, Range(0.1f, 1f), Tooltip("How fast a collision with obstacle stops the player")]
 		private float stoppingSpeed = 0.5f;
-		[SerializeField, Range(0, 1f), Tooltip("Time it takes to get back up to speed after colliding")]
+		[SerializeField, Range(0.1f, 3f), Tooltip("Seconds to wait after colliding")]
+		private float waitAfterCollision = 1f;
+		[SerializeField, Range(0, 1f), Tooltip("Time it takes to get back up to starting speed after colliding")]
 		private float speedUpAfterCollision = 1f;
 
 		[Header("Spawner variables:")]
@@ -50,8 +50,6 @@ namespace BKRacing
 		public float maxSpawnTime = 2.5f;
 		[Range(0, 10), Tooltip("Density of decorations outside the road area")]
 		public int decorationDensity = 5;
-		[Range(1, 5), Tooltip("How long items will rise from the horizons (in seconds)")]
-		public float riseTime = 2f;
 		[Range(1, 5), Tooltip("How many obstacles get spawned on road at start")]
 		public int initialSpawnCount = 2;
 
@@ -71,6 +69,7 @@ namespace BKRacing
 		public Obstacle[] Obstacles => _obstacles;
 		public Decoration[] Decorations => _decorations;
 		public Character Player => _player;
+		public float RoadWidth => _roadWidth;
 
 		private void Awake()
 		{
@@ -78,6 +77,7 @@ namespace BKRacing
 			_cam = Camera.main;
 			_collectibleDisplay = FindObjectOfType<CollectibleDisplay>();
 			_originalSpeed = forwardSpeed;
+			_roadWidth = FindObjectOfType<Road>().transform.localScale.x * 0.5f;
 
 			if (graphicsPackage == null) { Debug.LogError("No Graphics Package found in Game component!"); }
 

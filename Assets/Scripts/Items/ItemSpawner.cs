@@ -76,7 +76,7 @@ namespace BKRacing
 
 		private Vector3 RandomPosition()
 		{
-			var v2 = Random.insideUnitCircle * (Game.Instance.roadWidth - 0.5f);
+			var v2 = Random.insideUnitCircle * (Game.Instance.RoadWidth - 0.5f);
 			return transform.position + new Vector3(v2.x, 0, v2.y);
 		}
 	}

@@ -8,6 +8,9 @@ namespace BKRacing
 {
     public class Character : MonoBehaviour
     {
+	    [SerializeField]
+	    private float moveTreshold = 20f;
+
 	    private Camera _cam;
 	    private Animator _animator;
 
@@ -30,7 +33,7 @@ namespace BKRacing
 		    float cX = _cam.WorldToScreenPoint(transform.position).x;
 		    float touchDelta = Mathf.Abs(tX - cX);
 
-			if (touchDelta < Game.Instance.moveTreshold)
+			if (touchDelta < moveTreshold)
 			{
 				return;
 			}
@@ -55,7 +58,7 @@ namespace BKRacing
         private void Move(float step)
         {
 	        Vector3 pos = transform.position;
-	        float limit = Game.Instance.roadWidth - 1;
+	        float limit = Game.Instance.RoadWidth - 1;
 	        var newX = Mathf.Clamp(pos.x + step * Time.deltaTime, -limit, limit);
 	        transform.position = new Vector3(newX, pos.y, pos.z);
         }
