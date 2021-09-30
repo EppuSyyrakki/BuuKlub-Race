@@ -129,6 +129,11 @@ namespace BKRacing
 
 		public void Collide(Vector3 worldPosition)
 		{
+			var effect = Instantiate(graphicsPackage.collisionEffects.hitObstaclePrefab,
+				worldPosition,
+				Quaternion.identity,
+				null);
+			Destroy(effect, 5f);
 			StartCoroutine(nameof(SlowDown));
 		}
 
