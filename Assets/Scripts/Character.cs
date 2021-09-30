@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using BKRacing.Items;
 using UnityEngine;
 
 namespace BKRacing
@@ -22,7 +21,7 @@ namespace BKRacing
 
 	    private void Update()
 	    {
-		    if (Input.touchCount == 0)
+		    if (Input.touchCount == 0 || !Game.Instance.ControlEnabled)
 		    {
 				_animator.SetInteger("movement", 0);
 			    return;

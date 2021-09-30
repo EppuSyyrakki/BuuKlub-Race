@@ -23,6 +23,8 @@ namespace BKRacing
 
 		private void Update()
 		{
+			if (!Game.Instance.ControlEnabled) { return; }
+
 			_timeSinceLast += Time.deltaTime;
 
 			if (!(_timeSinceLast > _timerTarget)) return;

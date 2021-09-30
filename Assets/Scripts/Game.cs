@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using BKRacing.Environment;
 using BKRacing.GUI;
 using BKRacing.Items;
-using TMPro.EditorUtilities;
 using UnityEngine;
 
 namespace BKRacing
@@ -14,6 +13,13 @@ namespace BKRacing
 		private static Game _instance;
 		private Camera _cam;
 		private CollectibleDisplay _collectibleDisplay;
+		private Collectible[] _collectibles;
+		private Obstacle[] _obstacles;
+		private Decoration[] _decorations;
+		private Character _player;
+		private float _originalSpeed;
+		private float _roadWidth;
+		private bool _gameStarted;
 
 		[SerializeField]
 		private GraphicsPackage graphicsPackage;
@@ -21,13 +27,7 @@ namespace BKRacing
 		public static Game Instance => _instance;
 		public RoadTexture RoadTexture => graphicsPackage.roadTexture;
 		public GroundMaterial GroundMaterial => graphicsPackage.groundMaterial;
-
-		private Collectible[] _collectibles;
-		private Obstacle[] _obstacles;
-		private Decoration[] _decorations;
-		private Character _player;
-		private float _originalSpeed;
-		private float _roadWidth;
+		public bool ControlEnabled { get; private set; }
 
 		[Header("Movement variables:")]
 		public float forwardSpeed = 150f;
@@ -77,6 +77,7 @@ namespace BKRacing
 			_cam = Camera.main;
 			_collectibleDisplay = FindObjectOfType<CollectibleDisplay>();
 			_originalSpeed = forwardSpeed;
+			forwardSpeed = 0;
 			_roadWidth = FindObjectOfType<Road>().transform.localScale.x * 0.5f;
 
 			if (graphicsPackage == null) { Debug.LogError("No Graphics Package found in Game component!"); }
@@ -84,6 +85,23 @@ namespace BKRacing
 			InitGraphics();
 			_player = FindObjectOfType<Character>();
 			Time.fixedDeltaTime = 1 / (float) fixedTimeStep;
+		}
+
+		private void Update()
+		{
+			// Initial start of game.
+
+			if (Input.touchCount > 0 && !_gameStarted)
+			{
+				_gameStarted = true;
+				StartCoroutine(ChangeSpeed(
+					true, 
+					0, 
+					0, 
+					_originalSpeed, 
+					speedUpAfterCollision, 
+					0));
+			}
 		}
 
 		private void InitGraphics()
@@ -134,31 +152,37 @@ namespace BKRacing
 				Quaternion.identity,
 				null);
 			Destroy(effect, 5f);
-			StartCoroutine(nameof(SlowDown));
+			StartCoroutine(ChangeSpeed(
+				false, 
+				0, 
+				forwardSpeed, 
+				0, 
+				stoppingSpeed, 
+				waitAfterCollision));
+			StartCoroutine(ChangeSpeed(
+				true,
+				stoppingSpeed + waitAfterCollision,
+				0,
+				_originalSpeed,
+				speedUpAfterCollision,
+				0));
 		}
 
-		private IEnumerator SlowDown()
+		private IEnumerator ChangeSpeed(bool control, float preWait, float from, float to, float time, float postWait)
 		{
-			float time = 0;
+			if (!control) { ControlEnabled = false; }
+			float t = 0;
+			yield return new WaitForSeconds(preWait);
+			if (control) { ControlEnabled = true; }
 
-			while (time < stoppingSpeed)
+			while (t < time)
 			{
-				forwardSpeed = Mathf.Lerp(_originalSpeed, 0, time / stoppingSpeed);
-				time += Time.deltaTime;
+				forwardSpeed = Mathf.Lerp(from, to, t / time);
+				t += Time.deltaTime;
 				yield return new WaitForEndOfFrame();
 			}
 
-			forwardSpeed = 0;
-			time = 0;
-			yield return new WaitForSeconds(waitAfterCollision);
-			
-
-			while (time < speedUpAfterCollision)
-			{
-				forwardSpeed = Mathf.Lerp(0, _originalSpeed, time / speedUpAfterCollision);
-				time += Time.deltaTime;
-				yield return new WaitForEndOfFrame();
-			}
+			yield return new WaitForSeconds(postWait);
 		}
 	}
 }

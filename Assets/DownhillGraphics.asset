@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd7f555d396220b4b9d0004906349664, type: 3}
   m_Name: DownhillGraphics
   m_EditorClassIdentifier: 
+  backgroundCard: {fileID: 0}
   groundMaterial:
     color: {r: 1, g: 1, b: 1, a: 1}
     smoothness: 0.88
@@ -67,3 +68,7 @@ MonoBehaviour:
       type: 3}
   - sprite: {fileID: 3286163911610860551, guid: 0226ac636d3e9dd4b984011f58db36ed,
       type: 3}
+  collisionEffects:
+    hitObstaclePrefab: {fileID: 2473328970595687785, guid: 55a2463da15dbb14fbf8a7320daaffa0,
+      type: 3}
+    hitCollectablePrefab: {fileID: 0}
