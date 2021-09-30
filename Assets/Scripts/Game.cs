@@ -85,6 +85,7 @@ namespace BKRacing
 			InitGraphics();
 			_player = FindObjectOfType<Character>();
 			Time.fixedDeltaTime = 1 / (float) fixedTimeStep;
+			SetControl(false);
 		}
 
 		private void Update()
@@ -94,13 +95,8 @@ namespace BKRacing
 			if (Input.touchCount > 0 && !_gameStarted)
 			{
 				_gameStarted = true;
-				StartCoroutine(ChangeSpeed(
-					true, 
-					0, 
-					0, 
-					_originalSpeed, 
-					speedUpAfterCollision, 
-					0));
+				StartCoroutine(ChangeSpeed(true, 0, 0, _originalSpeed, 
+					speedUpAfterCollision, 0));
 			}
 		}
 
@@ -152,28 +148,20 @@ namespace BKRacing
 				Quaternion.identity,
 				null);
 			Destroy(effect, 5f);
-			StartCoroutine(ChangeSpeed(
-				false, 
-				0, 
-				forwardSpeed, 
-				0, 
-				stoppingSpeed, 
+			StartCoroutine(ChangeSpeed(false, 0, forwardSpeed, 0, stoppingSpeed, 
 				waitAfterCollision));
-			StartCoroutine(ChangeSpeed(
-				true,
-				stoppingSpeed + waitAfterCollision,
-				0,
-				_originalSpeed,
-				speedUpAfterCollision,
-				0));
+			StartCoroutine(ChangeSpeed(true, stoppingSpeed + waitAfterCollision, 0,
+				_originalSpeed, speedUpAfterCollision, 0));
 		}
 
 		private IEnumerator ChangeSpeed(bool control, float preWait, float from, float to, float time, float postWait)
 		{
-			if (!control) { ControlEnabled = false; }
+			if (!control) { SetControl(false); }
+
 			float t = 0;
 			yield return new WaitForSeconds(preWait);
-			if (control) { ControlEnabled = true; }
+			
+			if (control) { SetControl(true); }
 
 			while (t < time)
 			{
@@ -183,6 +171,13 @@ namespace BKRacing
 			}
 
 			yield return new WaitForSeconds(postWait);
+		}
+
+		private void SetControl(bool enable)
+		{
+			ControlEnabled = enable;
+			var particles = Player.GetComponentInChildren<ParticleSystem>();
+			if (particles != null) { particles.gameObject.SetActive(enable); }
 		}
 	}
 }
