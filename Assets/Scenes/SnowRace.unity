@@ -1274,12 +1274,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   graphicsPackage: {fileID: 11400000, guid: d2539874080bb114984ab51e4b78ea98, type: 2}
-  roadWidth: 6
   forwardSpeed: 150
   forwardSpeedIncrease: 15
   horizontalSpeed: 6
-  waitAfterCollision: 1
   stoppingSpeed: 0.5
+  waitAfterCollision: 1
   speedUpAfterCollision: 1
   collectibleBias: 0.25
   minSpawnTime: 0.75
