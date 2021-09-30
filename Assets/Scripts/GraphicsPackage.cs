@@ -42,13 +42,6 @@ namespace BKRacing
 		[Range(0, 1)]
 		public float smoothness, metallic;
 	}
-
-	[System.Serializable]
-	public class CollisionEffects
-	{
-		public GameObject hitObstaclePrefab;
-		public GameObject hitCollectablePrefab;
-	}
 	
 	[CreateAssetMenu(fileName = "Graphics Package", menuName = "New Graphics Package")]
 	public class GraphicsPackage : ScriptableObject
@@ -73,8 +66,5 @@ namespace BKRacing
 
 		[Header("Items that appear from the collectibles")]
 		public List<ItemSprite> itemSprites;
-
-		[Header("Particle effects")]
-		public CollisionEffects collisionEffects;
 	}
 }
