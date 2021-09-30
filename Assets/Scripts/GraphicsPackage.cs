@@ -32,8 +32,7 @@ namespace BKRacing
 		[Tooltip("Bigger number is more probable.")]
 		public int probability;
 	}
-
-
+	
 	[System.Serializable]
 	public class GroundMaterial
 	{
@@ -41,6 +40,13 @@ namespace BKRacing
 
 		[Range(0, 1)]
 		public float smoothness, metallic;
+	}
+
+	[System.Serializable]
+	public class CollisionEffects
+	{
+		public GameObject hitObstaclePrefab;
+		public GameObject hitCollectiblePrefab;
 	}
 	
 	[CreateAssetMenu(fileName = "Graphics Package", menuName = "New Graphics Package")]
@@ -66,5 +72,8 @@ namespace BKRacing
 
 		[Header("Items that appear from the collectibles")]
 		public List<ItemSprite> itemSprites;
+
+		[Header("Prefabs for effects when colliding with items")]
+		public CollisionEffects collisionEffects;
 	}
 }
