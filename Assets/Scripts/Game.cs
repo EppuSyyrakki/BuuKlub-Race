@@ -25,6 +25,7 @@ namespace BKRacing
 		private Obstacle[] _obstacles;
 		private Decoration[] _decorations;
 		private Character _player;
+		private float _originalSpeed;
 
 		[Header("Movement variables:")]
 		public float roadWidth = 6f;
@@ -33,6 +34,12 @@ namespace BKRacing
 		public float forwardSpeedIncrease = 10f;
 		public float horizontalSpeed = 2f;
 		public float moveTreshold = 10f;
+		[SerializeField, Range(0.1f,3f), Tooltip("Seconds to wait after colliding")]
+		private float waitAfterCollision = 1f;
+		[SerializeField, Range(0.1f, 1f), Tooltip("How fast a collision with obstacle stops the player")]
+		private float stoppingSpeed = 0.5f;
+		[SerializeField, Range(0, 1f), Tooltip("Time it takes to get back up to speed after colliding")]
+		private float speedUpAfterCollision = 1f;
 
 		[Header("Spawner variables:")]
 		[Range(0, 1), Tooltip("0 = only obstacles, 1 = only collectibles")]
@@ -70,6 +77,7 @@ namespace BKRacing
 			_instance = this;
 			_cam = Camera.main;
 			_collectibleDisplay = FindObjectOfType<CollectibleDisplay>();
+			_originalSpeed = forwardSpeed;
 
 			if (graphicsPackage == null) { Debug.LogError("No Graphics Package found in Game component!"); }
 
@@ -117,6 +125,35 @@ namespace BKRacing
 		{
 			Vector2 screenPosition = _cam.WorldToScreenPoint(worldPosition);
 			forwardSpeed += forwardSpeedIncrease;
+		}
+
+		public void Collide(Vector3 worldPosition)
+		{
+			StartCoroutine(nameof(SlowDown));
+		}
+
+		private IEnumerator SlowDown()
+		{
+			float time = 0;
+
+			while (time < stoppingSpeed)
+			{
+				forwardSpeed = Mathf.Lerp(_originalSpeed, 0, time / stoppingSpeed);
+				time += Time.deltaTime;
+				yield return new WaitForEndOfFrame();
+			}
+
+			forwardSpeed = 0;
+			time = 0;
+			yield return new WaitForSeconds(waitAfterCollision);
+			
+
+			while (time < speedUpAfterCollision)
+			{
+				forwardSpeed = Mathf.Lerp(0, _originalSpeed, time / speedUpAfterCollision);
+				time += Time.deltaTime;
+				yield return new WaitForEndOfFrame();
+			}
 		}
 	}
 }

@@ -1196,12 +1196,15 @@ MonoBehaviour:
   forwardSpeedIncrease: 15
   horizontalSpeed: 6
   moveTreshold: 20
+  waitAfterCollision: 1
+  stoppingSpeed: 0.5
+  speedUpAfterCollision: 1
   collectibleBias: 0.25
   minSpawnTime: 0.75
   maxSpawnTime: 3
   decorationDensity: 5
   riseTime: 2
-  initialSpawnCount: 3
+  initialSpawnCount: 4
   billboardBend: 100
   riseCurve:
     serializedVersion: 2

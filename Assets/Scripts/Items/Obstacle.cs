@@ -7,6 +7,8 @@ namespace BKRacing.Items
 	[RequireComponent(typeof(SphereCollider))]
 	public class Obstacle : Item
 	{
+		private bool _sorted;
+
 		private void Awake()
 		{
 			var col = GetComponent<SphereCollider>();
@@ -24,9 +26,10 @@ namespace BKRacing.Items
 				return;
 			}
 
-			if (newPos.z < player.position.z)
+			if (newPos.z < player.position.z && !_sorted)
 			{
 				spriteRenderer.sortingOrder += 100;
+				_sorted = true;
 			}
 
 			transform.position = newPos;
@@ -34,17 +37,11 @@ namespace BKRacing.Items
 
 		private void OnTriggerEnter(Collider other)
 		{
-			if (other.gameObject.TryGetComponent<Character>(out var c))
-			{
-				var animator = c.GetComponent<Animator>();
-				animator.SetTrigger("hit");
-				Collide();
-			}
-		}
+			if (!other.gameObject.TryGetComponent<Character>(out var c)) { return; }
 
-		private void Collide()
-		{
-			// TODO: Play effect, slow down speed or stop game or whatever
+			var animator = c.GetComponent<Animator>();
+			animator.SetTrigger("hit");
+			Game.Instance.Collide(transform.position);
 		}
 	}
 }
