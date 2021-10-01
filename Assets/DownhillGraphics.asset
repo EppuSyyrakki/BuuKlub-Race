@@ -74,4 +74,6 @@ MonoBehaviour:
       type: 3}
     hitCollectiblePrefab: {fileID: 3044676713775359695, guid: dd0aa5067978abc449fe616c5e296e1c,
       type: 3}
-  weatherEffects: []
+  weatherEffects:
+  - {fileID: 8931038786710276726, guid: 3bde7e40a8e504d4d99805703869dd46, type: 3}
+  - {fileID: 6338130425423638093, guid: a2aedda27a98acf4fa81572f3fda3f64, type: 3}
