@@ -61,13 +61,18 @@ namespace BKRacing
 		{
 			var items = GetAvailableCollectibles();
 			var item = items[Random.Range(0, items.Length)];
-			CreateItem(pos, item);
+			CreateItem(pos, item, true);
 		}
 
-		private void CreateItem(Vector3 pos, Item item)
+		private void CreateItem(Vector3 pos, Item item, bool includeEffect = false)
 		{
 			var go = Instantiate(item, pos + Vector3.down * 10f, Quaternion.identity, transform);
 			go.gameObject.SetActive(true);
+
+			if (includeEffect)
+			{
+				Instantiate(Game.Instance.CollectibleAccent, go.transform);
+			}
 		}
 
 		private Collectible[] GetAvailableCollectibles()

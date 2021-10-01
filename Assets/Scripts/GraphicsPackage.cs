@@ -60,8 +60,9 @@ namespace BKRacing
 
 		[Header("The scrolling texture for the road")]
 		public RoadTexture roadTexture;
-		
+
 		[Header("The things to be collected by Character")]
+		public GameObject collectibleAccentEffect;
 		public List<ItemSprite> collectibleSprites;
 
 		[Header("Obstacles that slow down the Character")]
@@ -71,9 +72,11 @@ namespace BKRacing
 		public List<DecorationSprite> decorationSprites;
 
 		[Header("Items that appear from the collectibles")]
+		public Color uncollectedColor;
 		public List<ItemSprite> itemSprites;
 
-		[Header("Prefabs for effects when colliding with items")]
+		[Header("Prefabs for effects")]
 		public CollisionEffects collisionEffects;
+		public List<GameObject> weatherEffects;
 	}
 }

@@ -16,7 +16,6 @@ namespace BKRacing
 		private Collectible[] _collectibles;
 		private Obstacle[] _obstacles;
 		private Decoration[] _decorations;
-		private UiItem[] _items;
 		private Character _player;
 		private float _originalSpeed;
 		private float _roadWidth;
@@ -70,8 +69,9 @@ namespace BKRacing
 		public Collectible[] Collectibles => _collectibles;
 		public Obstacle[] Obstacles => _obstacles;
 		public Decoration[] Decorations => _decorations;
-		public UiItem[] Items => _items;
 		public Character Player => _player;
+		public Color UncollectedColor => graphicsPackage.uncollectedColor;
+		public GameObject CollectibleAccent => graphicsPackage.collectibleAccentEffect;
 		public float RoadWidth => _roadWidth;
 
 		private void Awake()
@@ -120,6 +120,11 @@ namespace BKRacing
 			}
 
 			return sprites.ToArray();
+		}
+
+		public Sprite[] GetUiSprites()
+		{
+			return GetSprites(graphicsPackage.itemSprites);
 		}
 
 		private static T[] InitItemArray<T>(Sprite[] sprites) where T : Item
