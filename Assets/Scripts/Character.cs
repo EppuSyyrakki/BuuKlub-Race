@@ -12,11 +12,15 @@ namespace BKRacing
 
 	    private Camera _cam;
 	    private Animator _animator;
+	    private ParticleSystem _particles;
+
+	    public ParticleSystem Particles => _particles;
 
 	    private void Awake()
 	    {
 			_cam = Camera.main;
 			_animator = GetComponent<Animator>();
+			_particles = GetComponentInChildren<ParticleSystem>();
 	    }
 
 	    private void Update()

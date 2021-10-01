@@ -16,6 +16,7 @@ namespace BKRacing
 		private Collectible[] _collectibles;
 		private Obstacle[] _obstacles;
 		private Decoration[] _decorations;
+		private UiItem[] _items;
 		private Character _player;
 		private float _originalSpeed;
 		private float _roadWidth;
@@ -68,6 +69,7 @@ namespace BKRacing
 		public Collectible[] Collectibles => _collectibles;
 		public Obstacle[] Obstacles => _obstacles;
 		public Decoration[] Decorations => _decorations;
+		public UiItem[] Items => _items;
 		public Character Player => _player;
 		public float RoadWidth => _roadWidth;
 
@@ -82,10 +84,10 @@ namespace BKRacing
 
 			if (graphicsPackage == null) { Debug.LogError("No Graphics Package found in Game component!"); }
 
-			InitGraphics();
 			_player = FindObjectOfType<Character>();
 			Time.fixedDeltaTime = 1 / (float) fixedTimeStep;
 			SetControl(false);
+			InitGraphics();
 		}
 
 		private void Update()
@@ -105,6 +107,7 @@ namespace BKRacing
 			_collectibles = InitItemArray<Collectible>(GetSprites(graphicsPackage.collectibleSprites));
 			_obstacles = InitItemArray<Obstacle>(GetSprites(graphicsPackage.obstacleSprites));
 			_decorations = InitItemArray<Decoration>(GetSprites(graphicsPackage.decorationSprites));
+			_items = InitItemArray<UiItem>(GetSprites(graphicsPackage.itemSprites), _collectibleDisplay.transform);
 		}
 
 		private Sprite[] GetSprites<T>(List<T> items) where T : ItemSprite
@@ -119,7 +122,7 @@ namespace BKRacing
 			return sprites.ToArray();
 		}
 
-		private T[] InitItemArray<T>(Sprite[] sprites) where T : Item
+		private static T[] InitItemArray<T>(Sprite[] sprites, Transform parent = null) where T : Item
 		{
 			var items = new List<T>();
 
@@ -129,7 +132,8 @@ namespace BKRacing
 				var item = go.AddComponent<T>();
 				item.Init(sprite);
 				items.Add(item);
-				go.SetActive(false);
+
+				if (parent != null) { go.transform.SetParent(parent, false); }
 			}
 
 			return items.ToArray();
@@ -176,8 +180,7 @@ namespace BKRacing
 		private void SetControl(bool enable)
 		{
 			ControlEnabled = enable;
-			var particles = Player.GetComponentInChildren<ParticleSystem>();
-			if (particles != null) { particles.gameObject.SetActive(enable); }
+			if (Player.Particles != null) { Player.Particles.gameObject.SetActive(enable); }
 		}
 	}
 }

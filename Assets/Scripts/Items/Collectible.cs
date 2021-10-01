@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using BKRacing.Environment;
 using UnityEngine;
 
 namespace BKRacing.Items
 {
-	[RequireComponent(typeof(SphereCollider))]
+	[RequireComponent(typeof(SphereCollider), 
+		typeof(Billboard),
+		typeof(SpriteRenderer))]
 	public class Collectible : Item
 	{
 		private void Awake()

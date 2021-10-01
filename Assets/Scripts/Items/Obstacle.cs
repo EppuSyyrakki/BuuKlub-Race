@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using BKRacing.Environment;
 using UnityEngine;
 
 namespace BKRacing.Items
 {
-	[RequireComponent(typeof(SphereCollider))]
+	[RequireComponent(typeof(SphereCollider),
+		typeof(Billboard),
+		typeof(SpriteRenderer))]
 	public class Obstacle : Item
 	{
 		private bool _sorted;

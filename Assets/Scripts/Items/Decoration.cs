@@ -4,6 +4,8 @@ using UnityEngine;
 
 namespace BKRacing.Items
 {
+	[RequireComponent(typeof(SpriteRenderer), 
+		typeof(Billboard))]
 	public class Decoration : Item
 	{
 		private DecorationSpawner _spawner = null;

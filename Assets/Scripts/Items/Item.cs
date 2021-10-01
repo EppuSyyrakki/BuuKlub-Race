@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
-using BKRacing.Environment;
 
 namespace BKRacing.Items
 {
-	[RequireComponent(typeof(Billboard),
-		typeof(SpriteRenderer))]
-	public class Item : MonoBehaviour
+	public abstract class Item : MonoBehaviour
 	{
 		protected Transform player;
 		protected SpriteRenderer spriteRenderer;
 		protected Vector3 newPos;
 		private float _objectHeight;
 		private AnimationCurve _curve;
+
+		public virtual Sprite Sprite => spriteRenderer.sprite;
 
 		private void Start()
 		{
@@ -45,8 +44,9 @@ namespace BKRacing.Items
 			newPos = new Vector3(self.x, y, z);
 		}
 
-		public void Init(Sprite sprite)
+		public virtual void Init(Sprite sprite)
 		{
+			gameObject.SetActive(false);
 			var sr = GetComponent<SpriteRenderer>();
 			sr.sprite = sprite;
 		}
