@@ -110,6 +110,10 @@ namespace BKRacing
 			_collectibles = InitItemArray<Collectible>(GetSprites(graphicsPackage.collectibleSprites));
 			_obstacles = InitItemArray<Obstacle>(GetSprites(graphicsPackage.obstacleSprites));
 			_decorations = InitItemArray<Decoration>(GetSprites(graphicsPackage.decorationSprites));
+			foreach (var effect in graphicsPackage.weatherEffects)
+			{
+				Instantiate(effect);
+			}
 		}
 
 		private Sprite[] GetSprites<T>(List<T> items) where T : ItemSprite
