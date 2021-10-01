@@ -34,6 +34,7 @@ namespace BKRacing
 		public float forwardSpeed = 150f;
 		[Range(0, 20f)]
 		public float forwardSpeedIncrease = 10f;
+		public float speedIncreaseTime = 2f;
 		public float horizontalSpeed = 2f;
 		[SerializeField, Range(0.1f, 1f), Tooltip("How fast a collision with obstacle stops the player")]
 		private float stoppingSpeed = 0.5f;
@@ -107,7 +108,6 @@ namespace BKRacing
 			_collectibles = InitItemArray<Collectible>(GetSprites(graphicsPackage.collectibleSprites));
 			_obstacles = InitItemArray<Obstacle>(GetSprites(graphicsPackage.obstacleSprites));
 			_decorations = InitItemArray<Decoration>(GetSprites(graphicsPackage.decorationSprites));
-			_items = InitItemArray<UiItem>(GetSprites(graphicsPackage.itemSprites), _collectibleDisplay.transform);
 		}
 
 		private Sprite[] GetSprites<T>(List<T> items) where T : ItemSprite
@@ -122,7 +122,7 @@ namespace BKRacing
 			return sprites.ToArray();
 		}
 
-		private static T[] InitItemArray<T>(Sprite[] sprites, Transform parent = null) where T : Item
+		private static T[] InitItemArray<T>(Sprite[] sprites) where T : Item
 		{
 			var items = new List<T>();
 
@@ -132,8 +132,6 @@ namespace BKRacing
 				var item = go.AddComponent<T>();
 				item.Init(sprite);
 				items.Add(item);
-
-				if (parent != null) { go.transform.SetParent(parent, false); }
 			}
 
 			return items.ToArray();
@@ -143,6 +141,14 @@ namespace BKRacing
 		{
 			Vector2 screenPosition = _cam.WorldToScreenPoint(worldPosition);
 			forwardSpeed += forwardSpeedIncrease;
+
+			var effect = Instantiate(graphicsPackage.collisionEffects.hitCollectiblePrefab,
+				worldPosition,
+				Quaternion.identity,
+				null);
+			Destroy(effect, 5f);
+			StartCoroutine(ChangeSpeed(true, 0, forwardSpeed, 
+				forwardSpeed + forwardSpeedIncrease, speedIncreaseTime, 0));
 		}
 
 		public void Collide(Vector3 worldPosition)
