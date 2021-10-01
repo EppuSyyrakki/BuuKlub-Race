@@ -72,6 +72,8 @@ namespace BKRacing
 		public Character Player => _player;
 		public Color UncollectedColor => graphicsPackage.uncollectedColor;
 		public GameObject CollectibleAccent => graphicsPackage.collectibleAccentEffect;
+		public GameObject CollectedEffect => graphicsPackage.collisionEffects.hitCollectiblePrefab;
+		public float CollectedSize => graphicsPackage.itemSize;
 		public float RoadWidth => _roadWidth;
 
 		private void Awake()

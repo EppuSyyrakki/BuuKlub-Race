@@ -73,6 +73,8 @@ namespace BKRacing
 
 		[Header("Items that appear from the collectibles")]
 		public Color uncollectedColor;
+		[Range(0.05f, 0.3f), Tooltip("Size of the image as fraction of screen width")]
+		public float itemSize = 0.125f;
 		public List<ItemSprite> itemSprites;
 
 		[Header("Prefabs for effects")]
