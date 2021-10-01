@@ -71,4 +71,5 @@ MonoBehaviour:
   collisionEffects:
     hitObstaclePrefab: {fileID: 2473328970595687785, guid: 55a2463da15dbb14fbf8a7320daaffa0,
       type: 3}
-    hitCollectablePrefab: {fileID: 0}
+    hitCollectiblePrefab: {fileID: 3044676713775359695, guid: dd0aa5067978abc449fe616c5e296e1c,
+      type: 3}
