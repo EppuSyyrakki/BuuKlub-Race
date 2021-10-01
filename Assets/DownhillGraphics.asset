@@ -65,8 +65,6 @@ MonoBehaviour:
       type: 3}
   - sprite: {fileID: 3286163911610860551, guid: 3acaf6191d570ec45a1da4797155c335,
       type: 3}
-  - sprite: {fileID: 3286163911610860551, guid: 3162741bb68022745ac19ab27dae06b3,
-      type: 3}
   - sprite: {fileID: 3286163911610860551, guid: be5c7d0f8fcbaef4ebf7348533454331,
       type: 3}
   - sprite: {fileID: 3286163911610860551, guid: 0226ac636d3e9dd4b984011f58db36ed,
