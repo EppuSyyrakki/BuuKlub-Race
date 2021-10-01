@@ -144,14 +144,12 @@ namespace BKRacing
 
 		public void Collect(Vector3 worldPosition)
 		{
-			Vector2 screenPosition = _cam.WorldToScreenPoint(worldPosition);
-			forwardSpeed += forwardSpeedIncrease;
-
+			_collectibleDisplay.CollectNew(_cam.WorldToScreenPoint(worldPosition));
 			var effect = Instantiate(graphicsPackage.collisionEffects.hitCollectiblePrefab,
 				worldPosition,
 				Quaternion.identity,
 				null);
-			Destroy(effect, 5f);
+			Destroy(effect, 2.5f);
 			StartCoroutine(ChangeSpeed(true, 0, forwardSpeed, 
 				forwardSpeed + forwardSpeedIncrease, speedIncreaseTime, 0));
 		}
