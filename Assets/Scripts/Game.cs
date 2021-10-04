@@ -35,6 +35,8 @@ namespace BKRacing
 		public float forwardSpeedIncrease = 10f;
 		public float speedIncreaseTime = 2f;
 		public float horizontalSpeed = 2f;
+		[Range(1f, 3f), Tooltip("Time the character is protected from another crash after crashing.")]
+		public float crashProtectionTime = 1.5f;
 		[SerializeField, Range(0.1f, 1f), Tooltip("How fast a collision with obstacle stops the player")]
 		private float stoppingSpeed = 0.5f;
 		[SerializeField, Range(0.1f, 3f), Tooltip("Seconds to wait after colliding")]

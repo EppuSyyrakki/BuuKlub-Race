@@ -54,6 +54,7 @@ MonoBehaviour:
       type: 3}
     probability: 0
   uncollectedColor: {r: 0, g: 0, b: 0, a: 1}
+  itemSize: 0.125
   itemSprites:
   - sprite: {fileID: 3286163911610860551, guid: ef6ae95bb70946142a94656040096099,
       type: 3}

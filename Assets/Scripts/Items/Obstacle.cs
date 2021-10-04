@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using BKRacing.Environment;
 using UnityEngine;
@@ -42,9 +43,12 @@ namespace BKRacing.Items
 		{
 			if (!other.gameObject.TryGetComponent<Character>(out var c)) { return; }
 
+			if (c.Protected) { return; }
+
 			var animator = c.GetComponent<Animator>();
 			animator.SetTrigger("hit");
 			Game.Instance.Collide(transform.position);
+			c.ProtectFromCrash();
 		}
 	}
 }

@@ -39,7 +39,7 @@ namespace BKRacing.Items
 		private void OnTriggerEnter(Collider other)
 		{
 			if (!other.gameObject.TryGetComponent<Character>(out var c)) { return; }
-
+			
 			var animator = c.GetComponent<Animator>();
 			animator.SetTrigger("collect");
 			Game.Instance.Collect(transform.position);

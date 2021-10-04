@@ -12,7 +12,7 @@ namespace BKRacing.GUI
 		private AnimationCurve toCenterCurve, toInventoryCurve;
 
 		[SerializeField, Range(0, 1f)]
-		private float itemCenterPosition = 0.75f;
+		private float itemYPosition = 0.75f, itemXPosition = 0.65f;
 
 		[SerializeField]
 		private float moveTime = 0.5f, waitTime = 1f;
@@ -48,11 +48,17 @@ namespace BKRacing.GUI
 			collected.color = Color.white;
 			collected.rectTransform.position = screenPosition;
 			var size = Screen.width * Game.Instance.CollectedSize;
-			var centerTarget = new Vector3(Screen.width * 0.5f, Screen.height * itemCenterPosition, 0);
+			var centerTarget = new Vector3(Screen.width * itemXPosition, Screen.height * itemYPosition, 0);
+			
+			// Immediately move the item to a "display position" on screen.
 			StartCoroutine(MoveTo(collected.rectTransform, 0, screenPosition, 
 				centerTarget, 0, size, toCenterCurve));
+
+			// Wait and move the item to the inventory.
 			StartCoroutine(MoveTo(collected.rectTransform, moveTime + waitTime, centerTarget,
-				item.rectTransform.position, size, 0, toInventoryCurve));
+				item.rectTransform.position, size, 1, toInventoryCurve));
+
+			// Wait, finalize and destroy the collected item.
 			StartCoroutine(FinalizeCollected(item, collected.gameObject));
 		}
 

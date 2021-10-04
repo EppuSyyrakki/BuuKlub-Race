@@ -13,9 +13,11 @@ namespace BKRacing
 	    private Camera _cam;
 	    private Animator _animator;
 	    private ParticleSystem _particles;
-
+	    private bool _crashProtection = false;
+	    
 	    public ParticleSystem Particles => _particles;
-
+	    public bool Protected => _crashProtection;
+		
 	    private void Awake()
 	    {
 			_cam = Camera.main;
@@ -64,6 +66,17 @@ namespace BKRacing
 	        float limit = Game.Instance.RoadWidth - 1;
 	        var newX = Mathf.Clamp(pos.x + step * Time.deltaTime, -limit, limit);
 	        transform.position = new Vector3(newX, pos.y, pos.z);
+        }
+
+        public void ProtectFromCrash()
+        {
+	        _crashProtection = true;
+	        Invoke(nameof(EnableCrashing), Game.Instance.crashProtectionTime);
+        }
+
+        private void EnableCrashing()
+        {
+	        _crashProtection = false;
         }
     }
 }
