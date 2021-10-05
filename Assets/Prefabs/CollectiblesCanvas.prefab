@@ -36,8 +36,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 11.599976, y: -333}
-  m_SizeDelta: {x: -52.952698, y: -483.2063}
+  m_AnchoredPosition: {x: 531.6063, y: -224.61885}
+  m_SizeDelta: {x: 1063.2126, y: 449.2377}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6034649043335505815
 CanvasRenderer:
@@ -93,8 +93,8 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 0
-  m_StartCorner: 0
+  m_ChildAlignment: 6
+  m_StartCorner: 2
   m_StartAxis: 0
   m_CellSize: {x: 419, y: 55}
   m_Spacing: {x: 0, y: 0}
@@ -172,12 +172,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -236,8 +236,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 20, y: 39.4}
-  m_SizeDelta: {x: -89.51654, y: -148.8628}
+  m_AnchoredPosition: {x: -12.37912, y: 39.400024}
+  m_SizeDelta: {x: -24.75827, y: -148.8628}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6960810217048447934
 CanvasRenderer:
@@ -296,10 +296,10 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 128, y: 128}
+  m_CellSize: {x: 110, y: 110}
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 1
-  m_ConstraintCount: 3
+  m_ConstraintCount: 1
 --- !u!114 &8989160697736053875
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,6 +312,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aae1a97411b4fef41ac11e90dbcbbd6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  toCenterCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  toInventoryCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  itemYPosition: 0.75
+  itemXPosition: 0.65
+  moveTime: 0.5
+  waitTime: 1
 --- !u!1 &4472128102709603611
 GameObject:
   m_ObjectHideFlags: 0
@@ -372,13 +388,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e5723f0f985a91e4e8a6274e5de1170b, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -422,7 +438,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 30.3, y: -1}
+  m_AnchoredPosition: {x: 50, y: 16.100004}
   m_SizeDelta: {x: 357, y: 23}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6903697573393232523
@@ -488,7 +504,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 20, y: 17}
   m_SizeDelta: {x: 419, y: 55}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2896602526412724551
