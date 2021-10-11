@@ -32,7 +32,7 @@ namespace BKRacing
 		[Tooltip("Bigger number is more probable.")]
 		public int probability;
 	}
-	
+
 	[System.Serializable]
 	public class GroundMaterial
 	{
@@ -48,10 +48,14 @@ namespace BKRacing
 		public GameObject hitObstaclePrefab;
 		public GameObject hitCollectiblePrefab;
 	}
-	
+
+
 	[CreateAssetMenu(fileName = "Graphics Package", menuName = "New Graphics Package")]
 	public class GraphicsPackage : ScriptableObject
 	{
+		[Header("Health icon for health bonus spawns and in GUI.")]
+		public ItemSprite healthIcon;
+
 		[Header("Background sprite")]
 		public Sprite backgroundCard;
 

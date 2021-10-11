@@ -15,13 +15,13 @@ namespace BKRacing
 		private CollectibleDisplay _collectibleDisplay;
 		private Collectible[] _collectibles;
 		private Obstacle[] _obstacles;
+		private HealthBonus _healthBonus;
 		private Decoration[] _decorations;
 		private Character _player;
 		private HealthBar _healthBar;
 		private float _originalSpeed;
 		private float _roadWidth;
 		private bool _gameStarted;
-		private int _currentHealth;
 
 		[SerializeField]
 		private GraphicsPackage graphicsPackage;
@@ -47,6 +47,8 @@ namespace BKRacing
 		private float speedUpAfterCollision = 1f;
 		[Tooltip("How many crashes can the character survive")]
 		public int characterMaxHealth = 3;
+		[Tooltip("Deselecting will disable the health system completely.")]
+		public bool useHealthSystem = true;
 
 		[Header("Spawner variables:")]
 		[Range(0, 1), Tooltip("0 = only obstacles, 1 = only collectibles")]
@@ -63,8 +65,9 @@ namespace BKRacing
 		public int ensureCollectibleEvery = 5;
 		[Range(0, 10), Tooltip("Spawn at least n obstacles after spawning a collectible. 0 = disabled.")]
 		public int obstaclesAfterCollectible = 2;
-
-
+		[Range(0, 100), Tooltip("Chance of health bonus spawn instead of collectible if health is less than max")]
+		public int healthBonusChance = 25;
+		
 		[Header("Visual variables:")]
 		[Range(1f,200f), Tooltip("How close to the camera all sprites turn towards")]
 		public float billboardBend = 100f;
@@ -81,12 +84,15 @@ namespace BKRacing
 		public Collectible[] Collectibles => _collectibles;
 		public Obstacle[] Obstacles => _obstacles;
 		public Decoration[] Decorations => _decorations;
+		public HealthBonus HealthBonus => _healthBonus;
 		public Character Player => _player;
 		public Color UncollectedColor => graphicsPackage.uncollectedColor;
 		public GameObject CollectibleAccent => graphicsPackage.collectibleAccentEffect;
 		public GameObject CollectedEffect => graphicsPackage.collisionEffects.hitCollectiblePrefab;
 		public float CollectedSize => graphicsPackage.itemSize;
 		public float RoadWidth => _roadWidth;
+		public int PlayerHealth => _player.Health;
+		public Sprite HealthSprite => graphicsPackage.healthIcon.sprite;
 
 		private void Awake()
 		{
@@ -99,16 +105,23 @@ namespace BKRacing
 			forwardSpeed = 0;
 			_roadWidth = FindObjectOfType<Road>().transform.localScale.x * 0.5f;
 			_player = FindObjectOfType<Character>();
-			_player.HealthChanged += OnHealthChanged;
 			_healthBar = FindObjectOfType<HealthBar>();
 			Time.fixedDeltaTime = 1 / (float) fixedTimeStep;
 			SetControl(false);
 			InitGraphics();
+
+			if (useHealthSystem)
+			{
+				_player.HealthChanged += OnHealthChanged;
+			}
 		}
 
 		private void OnDisable()
 		{
-			_player.HealthChanged -= OnHealthChanged;
+			if (useHealthSystem)
+			{
+				_player.HealthChanged -= OnHealthChanged;
+			}
 		}
 
 		private void Update()
@@ -133,6 +146,8 @@ namespace BKRacing
 			_collectibles = InitItemArray<Collectible>(GetSprites(graphicsPackage.collectibleSprites));
 			_obstacles = InitItemArray<Obstacle>(GetSprites(graphicsPackage.obstacleSprites));
 			_decorations = InitItemArray<Decoration>(GetSprites(graphicsPackage.decorationSprites));
+			_healthBonus = CreateSingle<HealthBonus>(graphicsPackage.healthIcon.sprite);
+			
 			foreach (var effect in graphicsPackage.weatherEffects)
 			{
 				Instantiate(effect);
@@ -162,13 +177,29 @@ namespace BKRacing
 
 			foreach (var sprite in sprites)
 			{
-				var go = new GameObject(sprite.name);
-				var item = go.AddComponent<T>();
-				item.Init(sprite);
+				var item = CreateSingle<T>(sprite);
 				items.Add(item);
 			}
 
 			return items.ToArray();
+		}
+
+		private static T CreateSingle<T>(Sprite sprite) where T : Item
+		{
+			var go = new GameObject(sprite.name);
+			var item = go.AddComponent<T>();
+			item.Init(sprite);
+			return item;
+		}
+
+		public void CollectHealth(Vector3 worldPosition)
+		{
+			_collectibleDisplay.CollectNew(_cam.WorldToScreenPoint(worldPosition));
+			var effect = Instantiate(graphicsPackage.collisionEffects.hitCollectiblePrefab,
+				worldPosition,
+				Quaternion.identity,
+				null);
+			_player.ChangeHealth(1);
 		}
 
 		public void Collect(Vector3 worldPosition)

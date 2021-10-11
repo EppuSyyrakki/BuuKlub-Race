@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.VectorGraphics;
 using UnityEngine;
 
 namespace BKRacing.GUI
@@ -12,9 +13,19 @@ namespace BKRacing.GUI
 		private readonly Vector3 _startingScale = new Vector3(0, 1, 1);
 		private readonly Vector3 _endingScale = new Vector3(1, 1, 1);
 
-		private void Awake()
+		private void Start()
 		{
-			damageTransform.localScale = _startingScale;
+			if (Game.Instance.useHealthSystem)
+			{
+				damageTransform.localScale = _startingScale;
+				GameObject icon = transform.GetChild(0).Find("HealthIcon").gameObject;
+				SVGImage image = icon.GetComponent<SVGImage>();
+				image.sprite = Game.Instance.HealthSprite;
+			}
+			else
+			{
+				gameObject.SetActive(false);
+			}
 		}
 
 		public void SetHealth(int currentHealth, int max)

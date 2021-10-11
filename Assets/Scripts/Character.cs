@@ -20,6 +20,7 @@ namespace BKRacing
 	    public ParticleSystem Particles => _particles;
 	    public bool Protected => _crashProtection;
 	    public event Action<int> HealthChanged;
+	    public int Health => _currentHealth;
 		
 	    private void Awake()
 	    {
@@ -89,9 +90,9 @@ namespace BKRacing
 	        _crashProtection = false;
         }
 
-		private void ChangeHealth(int amount)
+		public void ChangeHealth(int amount)
 		{
-			_currentHealth += amount;
+			_currentHealth = Mathf.Clamp(_currentHealth + amount, 0, _maxHealth);
 			HealthChanged?.Invoke(_currentHealth);
 		}
     }
