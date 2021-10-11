@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/SnowRace.unity
+    guid: 44c30f11ecccd16408765f2188efa3be
   m_configObjects: {}
