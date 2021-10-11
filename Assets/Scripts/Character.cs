@@ -14,15 +14,24 @@ namespace BKRacing
 	    private Animator _animator;
 	    private ParticleSystem _particles;
 	    private bool _crashProtection = false;
+	    private int _maxHealth;
+	    private int _currentHealth;
 	    
 	    public ParticleSystem Particles => _particles;
 	    public bool Protected => _crashProtection;
+	    public event Action<int> HealthChanged;
 		
 	    private void Awake()
 	    {
 			_cam = Camera.main;
 			_animator = GetComponent<Animator>();
 			_particles = GetComponentInChildren<ParticleSystem>();
+	    }
+
+	    private void Start()
+	    {
+		    _maxHealth = Game.Instance.characterMaxHealth;
+		    _currentHealth = _maxHealth;
 	    }
 
 	    private void Update()
@@ -60,6 +69,13 @@ namespace BKRacing
 			Move(Game.Instance.horizontalSpeed * touchDelta / Screen.width * 5f);
         }
 
+        public void Crash()
+        {
+	        _crashProtection = true;
+			ChangeHealth(-1);
+	        Invoke(nameof(EnableCrashing), Game.Instance.crashProtectionTime);
+        }
+
         private void Move(float step)
         {
 	        Vector3 pos = transform.position;
@@ -68,15 +84,15 @@ namespace BKRacing
 	        transform.position = new Vector3(newX, pos.y, pos.z);
         }
 
-        public void ProtectFromCrash()
-        {
-	        _crashProtection = true;
-	        Invoke(nameof(EnableCrashing), Game.Instance.crashProtectionTime);
-        }
-
-        private void EnableCrashing()
+		private void EnableCrashing()
         {
 	        _crashProtection = false;
         }
+
+		private void ChangeHealth(int amount)
+		{
+			_currentHealth += amount;
+			HealthChanged?.Invoke(_currentHealth);
+		}
     }
 }

@@ -9,6 +9,7 @@ namespace BKRacing
 	{
 		private float _timeSinceLast;
 		private float _timerTarget;
+		private int _obstaclesSpawned;
 		
 		private void Start()
 		{
@@ -41,6 +42,20 @@ namespace BKRacing
 
 		private void Spawn(Vector3 pos)
 		{
+			if (Game.Instance.obstaclesAfterCollectible > 0
+			    && _obstaclesSpawned < Game.Instance.obstaclesAfterCollectible)
+			{
+				SpawnObstacle(pos);
+				return;
+			}
+			
+			if (Game.Instance.ensureCollectibleEvery > 0
+			         && _obstaclesSpawned + 1 >= Game.Instance.ensureCollectibleEvery)
+			{
+				SpawnCollectible(pos);
+				return;
+			}
+
 			if (Random.Range(0, 1f) < Game.Instance.collectibleBias)
 			{
 				SpawnCollectible(pos);
@@ -53,12 +68,14 @@ namespace BKRacing
 
 		private void SpawnObstacle(Vector3 pos)
 		{
+			_obstaclesSpawned++;
 			var item = Game.Instance.Obstacles[Random.Range(0, Game.Instance.Obstacles.Length)];
 			CreateItem(pos, item);
 		}
 
 		private void SpawnCollectible(Vector3 pos)
 		{
+			_obstaclesSpawned = 0;
 			var items = GetAvailableCollectibles();
 			var item = items[Random.Range(0, items.Length)];
 			CreateItem(pos, item, true);

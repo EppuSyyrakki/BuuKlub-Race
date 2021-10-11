@@ -146,6 +146,25 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &29584091 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1794150804015656337, guid: e2d82e575d9882845a8f17d097a29f51,
+    type: 3}
+  m_PrefabInstance: {fileID: 1917685485007133132}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &29584093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 29584091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14d429b31d3551f41811f169d94f4fd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthTransform: {fileID: 773601976}
 --- !u!1 &118688604
 GameObject:
   m_ObjectHideFlags: 0
@@ -1285,6 +1304,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!224 &773601976 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3985353918473759640, guid: e2d82e575d9882845a8f17d097a29f51,
+    type: 3}
+  m_PrefabInstance: {fileID: 1917685485007133132}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &836103361
 GameObject:
   m_ObjectHideFlags: 0
@@ -1553,11 +1578,14 @@ MonoBehaviour:
   stoppingSpeed: 0.5
   waitAfterCollision: 1
   speedUpAfterCollision: 1
+  characterMaxHealth: 3
   collectibleBias: 0.25
   minSpawnTime: 0.75
   maxSpawnTime: 3
   decorationDensity: 5
   initialSpawnCount: 4
+  ensureCollectibleEvery: 3
+  obstaclesAfterCollectible: 2
   billboardBend: 100
   riseCurve:
     serializedVersion: 2
@@ -2025,7 +2053,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1516204101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2334,6 +2362,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1219991658478442802, guid: e2d82e575d9882845a8f17d097a29f51,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1860522105259270658, guid: e2d82e575d9882845a8f17d097a29f51,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -2619,6 +2652,31 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3985353918473759640, guid: e2d82e575d9882845a8f17d097a29f51,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3985353918473759640, guid: e2d82e575d9882845a8f17d097a29f51,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3985353918473759640, guid: e2d82e575d9882845a8f17d097a29f51,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -62
+      objectReference: {fileID: 0}
+    - target: {fileID: 3985353918473759640, guid: e2d82e575d9882845a8f17d097a29f51,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3985353918473759640, guid: e2d82e575d9882845a8f17d097a29f51,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 50.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4157079279632807453, guid: e2d82e575d9882845a8f17d097a29f51,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -2708,6 +2766,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6613922487827887551, guid: e2d82e575d9882845a8f17d097a29f51,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6613922487827887551, guid: e2d82e575d9882845a8f17d097a29f51,
+        type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8292438651620711192, guid: e2d82e575d9882845a8f17d097a29f51,
         type: 3}

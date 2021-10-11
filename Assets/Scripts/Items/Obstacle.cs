@@ -48,7 +48,7 @@ namespace BKRacing.Items
 			var animator = c.GetComponent<Animator>();
 			animator.SetTrigger("hit");
 			Game.Instance.Collide(transform.position);
-			c.ProtectFromCrash();
+			c.Crash();
 		}
 	}
 }

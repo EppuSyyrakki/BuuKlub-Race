@@ -17,9 +17,11 @@ namespace BKRacing
 		private Obstacle[] _obstacles;
 		private Decoration[] _decorations;
 		private Character _player;
+		private HealthBar _healthBar;
 		private float _originalSpeed;
 		private float _roadWidth;
 		private bool _gameStarted;
+		private int _currentHealth;
 
 		[SerializeField]
 		private GraphicsPackage graphicsPackage;
@@ -29,7 +31,7 @@ namespace BKRacing
 		public GroundMaterial GroundMaterial => graphicsPackage.groundMaterial;
 		public bool ControlEnabled { get; private set; }
 
-		[Header("Movement variables:")]
+		[Header("Movement/Character variables:")]
 		public float forwardSpeed = 150f;
 		[Range(0, 20f)]
 		public float forwardSpeedIncrease = 10f;
@@ -43,6 +45,8 @@ namespace BKRacing
 		private float waitAfterCollision = 1f;
 		[SerializeField, Range(0, 1f), Tooltip("Time it takes to get back up to starting speed after colliding")]
 		private float speedUpAfterCollision = 1f;
+		[Tooltip("How many crashes can the character survive")]
+		public int characterMaxHealth = 3;
 
 		[Header("Spawner variables:")]
 		[Range(0, 1), Tooltip("0 = only obstacles, 1 = only collectibles")]
@@ -55,6 +59,11 @@ namespace BKRacing
 		public int decorationDensity = 5;
 		[Range(1, 5), Tooltip("How many obstacles get spawned on road at start")]
 		public int initialSpawnCount = 2;
+		[Range(0, 10), Tooltip("Ensure at least every n:th item is a collectible. 0 = disabled.")]
+		public int ensureCollectibleEvery = 5;
+		[Range(0, 10), Tooltip("Spawn at least n obstacles after spawning a collectible. 0 = disabled.")]
+		public int obstaclesAfterCollectible = 2;
+
 
 		[Header("Visual variables:")]
 		[Range(1f,200f), Tooltip("How close to the camera all sprites turn towards")]
@@ -64,6 +73,7 @@ namespace BKRacing
 		[Range(5f,200f), Tooltip("How far from the spawn point the curve affects object height")]
 		public float curveDistance = 20f;
 
+		
 		[Header("Optimization variables:")]
 		[Range(10, 50)]
 		public int fixedTimeStep = 30;
@@ -80,19 +90,25 @@ namespace BKRacing
 
 		private void Awake()
 		{
+			if (graphicsPackage == null) { Debug.LogError("No Graphics Package found in Game component!"); }
+
 			_instance = this;
 			_cam = Camera.main;
 			_collectibleDisplay = FindObjectOfType<CollectibleDisplay>();
 			_originalSpeed = forwardSpeed;
 			forwardSpeed = 0;
 			_roadWidth = FindObjectOfType<Road>().transform.localScale.x * 0.5f;
-
-			if (graphicsPackage == null) { Debug.LogError("No Graphics Package found in Game component!"); }
-
 			_player = FindObjectOfType<Character>();
+			_player.HealthChanged += OnHealthChanged;
+			_healthBar = FindObjectOfType<HealthBar>();
 			Time.fixedDeltaTime = 1 / (float) fixedTimeStep;
 			SetControl(false);
 			InitGraphics();
+		}
+
+		private void OnDisable()
+		{
+			_player.HealthChanged -= OnHealthChanged;
 		}
 
 		private void Update()
@@ -105,6 +121,11 @@ namespace BKRacing
 				StartCoroutine(ChangeSpeed(true, 0, 0, _originalSpeed, 
 					speedUpAfterCollision, 0));
 			}
+		}
+
+		private void OnHealthChanged(int currentHealth)
+		{
+			_healthBar.SetHealth(currentHealth, characterMaxHealth);
 		}
 
 		private void InitGraphics()
