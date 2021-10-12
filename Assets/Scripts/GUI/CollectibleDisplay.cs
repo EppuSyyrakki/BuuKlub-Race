@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Unity.VectorGraphics;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace BKRacing.GUI
 {
@@ -35,6 +34,11 @@ namespace BKRacing.GUI
 				_allItems[i] = current;
 				_notCollected.Add(current);
 			}
+		}
+
+		public void CollectHealth(Vector2 screenPosition)
+		{
+
 		}
 
 		public void CollectNew(Vector2 screenPosition)

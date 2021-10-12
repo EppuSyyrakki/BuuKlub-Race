@@ -194,12 +194,13 @@ namespace BKRacing
 
 		public void CollectHealth(Vector3 worldPosition)
 		{
-			_collectibleDisplay.CollectNew(_cam.WorldToScreenPoint(worldPosition));
+			_collectibleDisplay.CollectHealth(_cam.WorldToScreenPoint(worldPosition));
 			var effect = Instantiate(graphicsPackage.collisionEffects.hitCollectiblePrefab,
 				worldPosition,
 				Quaternion.identity,
 				null);
 			_player.ChangeHealth(1);
+			Destroy(effect, 2.5f);
 		}
 
 		public void Collect(Vector3 worldPosition)
