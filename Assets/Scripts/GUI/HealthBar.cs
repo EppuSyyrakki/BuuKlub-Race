@@ -10,16 +10,18 @@ namespace BKRacing.GUI
 		[SerializeField]
 		private RectTransform damageTransform;
 
+		public RectTransform iconTransform;
+
 		private readonly Vector3 _startingScale = new Vector3(0, 1, 1);
 		private readonly Vector3 _endingScale = new Vector3(1, 1, 1);
 
+		
 		private void Start()
 		{
 			if (Game.Instance.useHealthSystem)
 			{
 				damageTransform.localScale = _startingScale;
-				GameObject icon = transform.GetChild(0).Find("HealthIcon").gameObject;
-				SVGImage image = icon.GetComponent<SVGImage>();
+				SVGImage image = iconTransform.GetComponent<SVGImage>();
 				image.sprite = Game.Instance.HealthSprite;
 			}
 			else

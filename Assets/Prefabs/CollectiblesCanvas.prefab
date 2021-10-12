@@ -114,6 +114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageTransform: {fileID: 3985353918473759640}
+  iconTransform: {fileID: 2117881365766324072}
 --- !u!1 &1917685485699515776
 GameObject:
   m_ObjectHideFlags: 0

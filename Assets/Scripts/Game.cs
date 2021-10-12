@@ -18,8 +18,7 @@ namespace BKRacing
 		private HealthBonus _healthBonus;
 		private Decoration[] _decorations;
 		private Character _player;
-		private HealthBar _healthBar;
-		private float _originalSpeed;
+		private float _startingSpeed;
 		private float _roadWidth;
 		private bool _gameStarted;
 
@@ -93,6 +92,7 @@ namespace BKRacing
 		public float RoadWidth => _roadWidth;
 		public int PlayerHealth => _player.Health;
 		public Sprite HealthSprite => graphicsPackage.healthIcon.sprite;
+		public HealthBar HealthBar { get; private set; }
 
 		private void Awake()
 		{
@@ -101,11 +101,11 @@ namespace BKRacing
 			_instance = this;
 			_cam = Camera.main;
 			_collectibleDisplay = FindObjectOfType<CollectibleDisplay>();
-			_originalSpeed = forwardSpeed;
+			_startingSpeed = forwardSpeed;
 			forwardSpeed = 0;
 			_roadWidth = FindObjectOfType<Road>().transform.localScale.x * 0.5f;
 			_player = FindObjectOfType<Character>();
-			_healthBar = FindObjectOfType<HealthBar>();
+			HealthBar = FindObjectOfType<HealthBar>();
 			Time.fixedDeltaTime = 1 / (float) fixedTimeStep;
 			SetControl(false);
 			InitGraphics();
@@ -131,22 +131,26 @@ namespace BKRacing
 			if (Input.touchCount > 0 && !_gameStarted)
 			{
 				_gameStarted = true;
-				StartCoroutine(ChangeSpeed(true, 0, 0, _originalSpeed, 
+				StartCoroutine(ChangeSpeed(true, 0, 0, _startingSpeed, 
 					speedUpAfterCollision, 0));
 			}
 		}
 
 		private void OnHealthChanged(int currentHealth)
 		{
-			_healthBar.SetHealth(currentHealth, characterMaxHealth);
+			HealthBar.SetHealth(currentHealth, characterMaxHealth);
 		}
 
 		private void InitGraphics()
 		{
-			_collectibles = InitItemArray<Collectible>(GetSprites(graphicsPackage.collectibleSprites));
-			_obstacles = InitItemArray<Obstacle>(GetSprites(graphicsPackage.obstacleSprites));
-			_decorations = InitItemArray<Decoration>(GetSprites(graphicsPackage.decorationSprites));
-			_healthBonus = CreateSingle<HealthBonus>(graphicsPackage.healthIcon.sprite);
+			_collectibles = InitItemArray<Collectible>(
+				GetSpritesInfo(graphicsPackage.collectibleSprites, out var mirrors), mirrors);
+			_obstacles = InitItemArray<Obstacle>(
+				GetSpritesInfo(graphicsPackage.obstacleSprites, out mirrors), mirrors);
+			_decorations = InitItemArray<Decoration>(
+				GetSpritesInfo(graphicsPackage.decorationSprites, out mirrors), mirrors);
+			_healthBonus = CreateSingle<HealthBonus>(
+				graphicsPackage.healthIcon.sprite, graphicsPackage.healthIcon.randomMirroring);
 			
 			foreach (var effect in graphicsPackage.weatherEffects)
 			{
@@ -154,42 +158,51 @@ namespace BKRacing
 			}
 		}
 
-		private Sprite[] GetSprites<T>(List<T> items) where T : ItemSprite
+		private Sprite[] GetSpritesInfo<T>(List<T> items, out bool[] mirrors) where T : ItemSprite
+		{
+			var sprites = new Sprite[items.Count];
+			mirrors = new bool[items.Count];
+
+			for (int i = 0; i < items.Count; i++)
+			{
+				sprites[i] = items[i].sprite;
+				mirrors[i] = items[i].randomMirroring;
+			}
+
+			return sprites;
+		}
+
+		private static T[] InitItemArray<T>(Sprite[] sprites, bool[] mirrors) where T : Item
+		{
+			var items = new T[sprites.Length];
+
+			for (int i = 0; i < sprites.Length; i++)
+			{
+				var item = CreateSingle<T>(sprites[i], mirrors[i]);
+				items[i] = item;
+			}
+
+			return items;
+		}
+
+		private static T CreateSingle<T>(Sprite sprite, bool mirror) where T : Item
+		{
+			var go = new GameObject(sprite.name);
+			var item = go.AddComponent<T>();
+			item.Init(sprite, mirror);
+			return item;
+		}
+
+		public Sprite[] GetUiSprites()
 		{
 			var sprites = new List<Sprite>();
 
-			foreach (var item in items)
+			foreach (var item in graphicsPackage.itemSprites)
 			{
 				sprites.Add(item.sprite);
 			}
 
 			return sprites.ToArray();
-		}
-
-		public Sprite[] GetUiSprites()
-		{
-			return GetSprites(graphicsPackage.itemSprites);
-		}
-
-		private static T[] InitItemArray<T>(Sprite[] sprites) where T : Item
-		{
-			var items = new List<T>();
-
-			foreach (var sprite in sprites)
-			{
-				var item = CreateSingle<T>(sprite);
-				items.Add(item);
-			}
-
-			return items.ToArray();
-		}
-
-		private static T CreateSingle<T>(Sprite sprite) where T : Item
-		{
-			var go = new GameObject(sprite.name);
-			var item = go.AddComponent<T>();
-			item.Init(sprite);
-			return item;
 		}
 
 		public void CollectHealth(Vector3 worldPosition)
@@ -227,7 +240,7 @@ namespace BKRacing
 			StartCoroutine(ChangeSpeed(false, 0, forwardSpeed, 0, stoppingSpeed, 
 				waitAfterCollision));
 			StartCoroutine(ChangeSpeed(true, stoppingSpeed + waitAfterCollision, 0,
-				_originalSpeed, speedUpAfterCollision, 0));
+				_startingSpeed, speedUpAfterCollision, 0));
 		}
 
 		private IEnumerator ChangeSpeed(bool control, float preWait, float from, float to, float time, float postWait)

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using BKRacing.Items;
+using Unity.VectorGraphics;
 using UnityEngine;
 
 namespace BKRacing
@@ -77,11 +78,12 @@ namespace BKRacing
 
 		private void SpawnCollectible(Vector3 pos)
 		{
-			//if (Game.Instance.PlayerHealth < _maxHealth && Random.Range(0, 101) < Game.Instance.healthBonusChance)
-			//{
-			//	SpawnHealthBonus(pos);
-			//	return;
-			//}
+			if (Game.Instance.PlayerHealth < _maxHealth 
+			    && Random.Range(0, 101) < Game.Instance.healthBonusChance)
+			{
+				SpawnHealthBonus(pos);
+				return;
+			}
 
 			_obstaclesSpawned = 0;
 			var items = GetAvailableCollectibles();
@@ -100,6 +102,11 @@ namespace BKRacing
 			var go = Instantiate(item, pos + Vector3.down * 10f, Quaternion.identity, transform);
 			go.gameObject.SetActive(true);
 
+			if (item.Mirror)
+			{
+				go.GetComponent<SpriteRenderer>().flipX = Random.Range(0, 1f) <= 0.5f;
+			}
+			
 			if (includeEffect)
 			{
 				Instantiate(Game.Instance.CollectibleAccent, go.transform);

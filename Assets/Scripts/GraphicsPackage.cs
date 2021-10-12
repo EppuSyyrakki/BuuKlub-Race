@@ -17,6 +17,7 @@ namespace BKRacing
 	public class ItemSprite
 	{
 		public Sprite sprite;
+		public bool randomMirroring = false;
 	}
 
 	[Serializable]
