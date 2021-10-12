@@ -146,12 +146,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!1 &118688604 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8714119743073227071, guid: e9de90bab82251040ad57f0b1aae0e36,
-    type: 3}
-  m_PrefabInstance: {fileID: 8714119743189686883}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &359399794
 GameObject:
   m_ObjectHideFlags: 0
