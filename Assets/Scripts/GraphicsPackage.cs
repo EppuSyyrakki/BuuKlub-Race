@@ -64,8 +64,8 @@ namespace BKRacing
 		[Header("The scrolling texture for the road")]
 		public EnvironmentTexture roadTexture = new EnvironmentTexture(new Vector2(1f, 15f));
 
-		[Header("The scrolling texture for the ground")]
-		public EnvironmentTexture groundTexture = new EnvironmentTexture(new Vector2(30f, 15f));
+		[Header("Material used in the ground")]
+		public GroundMaterial groundMaterial;
 
 		[Header("The things to be collected by Character")]
 		public GameObject collectibleAccentEffect;

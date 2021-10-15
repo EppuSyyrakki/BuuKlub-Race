@@ -70,9 +70,9 @@ namespace BKRacing
 		[Header("Optimization variables:")]
 		[Range(10, 50)]
 		public int fixedTimeStep = 30;
-		
+
+		public GroundMaterial GroundMaterial => graphicsPackage.groundMaterial;
 		public EnvironmentTexture RoadTexture => graphicsPackage.roadTexture;
-		public EnvironmentTexture GroundTexture => graphicsPackage.groundTexture;
 		public Collectible[] Collectibles => _collectibles;
 		public Obstacle[] Obstacles => _obstacles;
 		public Decoration[] Decorations => _decorations;

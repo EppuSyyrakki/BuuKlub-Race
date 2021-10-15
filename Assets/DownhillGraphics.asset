@@ -12,16 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd7f555d396220b4b9d0004906349664, type: 3}
   m_Name: DownhillGraphics
   m_EditorClassIdentifier: 
-  healthIcon:
-    sprite: {fileID: 21300000, guid: aad337850a5038f41a3e6c4de11617f1, type: 3}
-    randomMirroring: 0
   backgroundCard: {fileID: 0}
   roadTexture:
     texture: {fileID: 2800000, guid: d0d50c0ab4e8ba342892374251bc3067, type: 3}
     tiling: {x: 1, y: 15}
-  groundTexture:
-    texture: {fileID: 2800000, guid: 0daee991d87d2ff409a23ff57a0f671b, type: 3}
-    tiling: {x: 30, y: 15}
+  groundMaterial:
+    color: {r: 1, g: 1, b: 1, a: 1}
+    smoothness: 0.646
+    metallic: 0.065
   collectibleAccentEffect: {fileID: 283717274259775710, guid: 6d89a3921b9d5ca4f94a03aaa5a538c0,
     type: 3}
   collectibleSprites:

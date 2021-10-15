@@ -7,28 +7,35 @@ namespace BKRacing.Environment
 {
 	public class Ground : MonoBehaviour
 	{
-		private Material _material = null;
+		private Material _material;
+		private GroundMaterial _groundMaterial;
 
 		private void Awake()
 		{
-			var r = GetComponent<MeshRenderer>();
-			var m = r.sharedMaterial;
+			var mr = GetComponent<MeshRenderer>();
+			var m = mr.sharedMaterial;
 			_material = new Material(m) { mainTextureOffset = Vector2.zero };
-			r.material = _material;
+			mr.material = _material;
 		}
 
 		private void Start()
 		{
-			var et = Game.Instance.GroundTexture;
-			_material.mainTexture = et.texture;
-			_material.mainTextureScale = et.tiling;
+			_groundMaterial = Game.Instance.GroundMaterial;
+			SetMaterialProperties();
 		}
 
 		private void Update()
 		{
-			var tiling = Game.Instance.GroundTexture.tiling;
-			Vector2 offset = new Vector2(0, Game.Instance.forwardSpeed * tiling.y * 0.00048f * Time.deltaTime);
-			_material.mainTextureOffset += offset;
+#if UNITY_EDITOR
+			SetMaterialProperties();
+#endif
+		}
+
+		private void SetMaterialProperties()
+		{
+			_material.color = _groundMaterial.color;
+			_material.SetFloat("_Glossiness", _groundMaterial.smoothness);
+			_material.SetFloat("_Metallic", _groundMaterial.metallic);
 		}
 	}
 }

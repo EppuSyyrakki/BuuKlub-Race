@@ -1133,7 +1133,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 915419aaf2f3f754ba8d50645d5fc60e,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 915419aaf2f3f754ba8d50645d5fc60e, type: 3}
@@ -1166,7 +1166,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 0.1
+  m_Intensity: 0.3
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -1377,8 +1377,6 @@ MonoBehaviour:
   stoppingSpeed: 0.5
   waitAfterCollision: 1
   speedUpAfterCollision: 1
-  characterMaxHealth: 4
-  useHealthSystem: 1
   collectibleBias: 0.25
   minSpawnTime: 0.75
   maxSpawnTime: 3
@@ -1386,7 +1384,6 @@ MonoBehaviour:
   initialSpawnCount: 4
   ensureCollectibleEvery: 6
   obstaclesAfterCollectible: 4
-  healthBonusChance: 25
   billboardBend: 100
   riseCurve:
     serializedVersion: 2
@@ -1639,7 +1636,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 29d6cc5dcb1b7a54eb4d778098e9a178,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29d6cc5dcb1b7a54eb4d778098e9a178, type: 3}
