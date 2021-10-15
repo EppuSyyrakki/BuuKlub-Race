@@ -15,7 +15,6 @@ namespace BKRacing
 		private CollectibleDisplay _collectibleDisplay;
 		private Collectible[] _collectibles;
 		private Obstacle[] _obstacles;
-		private HealthBonus _healthBonus;
 		private Decoration[] _decorations;
 		private Character _player;
 		private float _startingSpeed;
@@ -26,13 +25,11 @@ namespace BKRacing
 		private GraphicsPackage graphicsPackage;
 
 		public static Game Instance => _instance;
-		public RoadTexture RoadTexture => graphicsPackage.roadTexture;
-		public GroundMaterial GroundMaterial => graphicsPackage.groundMaterial;
 		public bool ControlEnabled { get; private set; }
 
 		[Header("Movement/Character variables:")]
-		public float forwardSpeed = 150f;
-		[Range(0, 20f)]
+		public float forwardSpeed = 165f;
+		[Range(0, 30f)]
 		public float forwardSpeedIncrease = 10f;
 		public float speedIncreaseTime = 2f;
 		public float horizontalSpeed = 2f;
@@ -44,10 +41,6 @@ namespace BKRacing
 		private float waitAfterCollision = 1f;
 		[SerializeField, Range(0, 1f), Tooltip("Time it takes to get back up to starting speed after colliding")]
 		private float speedUpAfterCollision = 1f;
-		[Tooltip("How many crashes can the character survive")]
-		public int characterMaxHealth = 3;
-		[Tooltip("Deselecting will disable the health system completely.")]
-		public bool useHealthSystem = true;
 
 		[Header("Spawner variables:")]
 		[Range(0, 1), Tooltip("0 = only obstacles, 1 = only collectibles")]
@@ -64,8 +57,6 @@ namespace BKRacing
 		public int ensureCollectibleEvery = 5;
 		[Range(0, 10), Tooltip("Spawn at least n obstacles after spawning a collectible. 0 = disabled.")]
 		public int obstaclesAfterCollectible = 2;
-		[Range(0, 100), Tooltip("Chance of health bonus spawn instead of collectible if health is less than max")]
-		public int healthBonusChance = 25;
 		
 		[Header("Visual variables:")]
 		[Range(1f,200f), Tooltip("How close to the camera all sprites turn towards")]
@@ -79,20 +70,18 @@ namespace BKRacing
 		[Header("Optimization variables:")]
 		[Range(10, 50)]
 		public int fixedTimeStep = 30;
-
+		
+		public EnvironmentTexture RoadTexture => graphicsPackage.roadTexture;
+		public EnvironmentTexture GroundTexture => graphicsPackage.groundTexture;
 		public Collectible[] Collectibles => _collectibles;
 		public Obstacle[] Obstacles => _obstacles;
 		public Decoration[] Decorations => _decorations;
-		public HealthBonus HealthBonus => _healthBonus;
 		public Character Player => _player;
 		public Color UncollectedColor => graphicsPackage.uncollectedColor;
 		public GameObject CollectibleAccent => graphicsPackage.collectibleAccentEffect;
 		public GameObject CollectedEffect => graphicsPackage.collisionEffects.hitCollectiblePrefab;
 		public float CollectedSize => graphicsPackage.itemSize;
 		public float RoadWidth => _roadWidth;
-		public int PlayerHealth => _player.Health;
-		public Sprite HealthSprite => graphicsPackage.healthIcon.sprite;
-		public HealthBar HealthBar { get; private set; }
 
 		private void Awake()
 		{
@@ -105,23 +94,9 @@ namespace BKRacing
 			forwardSpeed = 0;
 			_roadWidth = FindObjectOfType<Road>().transform.localScale.x * 0.5f;
 			_player = FindObjectOfType<Character>();
-			HealthBar = FindObjectOfType<HealthBar>();
 			Time.fixedDeltaTime = 1 / (float) fixedTimeStep;
 			SetControl(false);
 			InitGraphics();
-
-			if (useHealthSystem)
-			{
-				_player.HealthChanged += OnHealthChanged;
-			}
-		}
-
-		private void OnDisable()
-		{
-			if (useHealthSystem)
-			{
-				_player.HealthChanged -= OnHealthChanged;
-			}
 		}
 
 		private void Update()
@@ -136,11 +111,6 @@ namespace BKRacing
 			}
 		}
 
-		private void OnHealthChanged(int currentHealth)
-		{
-			HealthBar.SetHealth(currentHealth, characterMaxHealth);
-		}
-
 		private void InitGraphics()
 		{
 			_collectibles = InitItemArray<Collectible>(
@@ -149,8 +119,6 @@ namespace BKRacing
 				GetSpritesInfo(graphicsPackage.obstacleSprites, out mirrors), mirrors);
 			_decorations = InitItemArray<Decoration>(
 				GetSpritesInfo(graphicsPackage.decorationSprites, out mirrors), mirrors);
-			_healthBonus = CreateSingle<HealthBonus>(
-				graphicsPackage.healthIcon.sprite, graphicsPackage.healthIcon.randomMirroring);
 			
 			foreach (var effect in graphicsPackage.weatherEffects)
 			{
@@ -203,17 +171,6 @@ namespace BKRacing
 			}
 
 			return sprites.ToArray();
-		}
-
-		public void CollectHealth(Vector3 worldPosition)
-		{
-			_collectibleDisplay.CollectHealth(_cam.WorldToScreenPoint(worldPosition));
-			var effect = Instantiate(graphicsPackage.collisionEffects.hitCollectiblePrefab,
-				worldPosition,
-				Quaternion.identity,
-				null);
-			_player.ChangeHealth(1);
-			Destroy(effect, 2.5f);
 		}
 
 		public void Collect(Vector3 worldPosition)

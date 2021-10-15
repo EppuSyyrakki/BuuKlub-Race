@@ -5,19 +5,23 @@ using UnityEngine;
 
 namespace BKRacing
 {
-	[System.Serializable]
-	public class RoadTexture
-	{
-		public Texture texture;
-		[Range(1, 40)]
-		public int repeatY = 1;
-	}
-
 	[Serializable]
 	public class ItemSprite
 	{
 		public Sprite sprite;
 		public bool randomMirroring = false;
+	}
+
+	[Serializable]
+	public class EnvironmentTexture
+	{
+		public Texture texture;
+		public Vector2 tiling;
+
+		public EnvironmentTexture(Vector2 tiling)
+		{
+			this.tiling = tiling;
+		}
 	}
 
 	[Serializable]
@@ -54,17 +58,14 @@ namespace BKRacing
 	[CreateAssetMenu(fileName = "Graphics Package", menuName = "New Graphics Package")]
 	public class GraphicsPackage : ScriptableObject
 	{
-		[Header("Health icon for health bonus spawns and in GUI.")]
-		public ItemSprite healthIcon;
-
 		[Header("Background sprite")]
 		public Sprite backgroundCard;
-
-		[Header("Data of ground outside the road")]
-		public GroundMaterial groundMaterial;
-
+		
 		[Header("The scrolling texture for the road")]
-		public RoadTexture roadTexture;
+		public EnvironmentTexture roadTexture = new EnvironmentTexture(new Vector2(1f, 15f));
+
+		[Header("The scrolling texture for the ground")]
+		public EnvironmentTexture groundTexture = new EnvironmentTexture(new Vector2(30f, 15f));
 
 		[Header("The things to be collected by Character")]
 		public GameObject collectibleAccentEffect;

@@ -14,64 +14,82 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthIcon:
     sprite: {fileID: 21300000, guid: aad337850a5038f41a3e6c4de11617f1, type: 3}
+    randomMirroring: 0
   backgroundCard: {fileID: 0}
-  groundMaterial:
-    color: {r: 1, g: 1, b: 1, a: 1}
-    smoothness: 0.88
-    metallic: 0.231
   roadTexture:
     texture: {fileID: 2800000, guid: d0d50c0ab4e8ba342892374251bc3067, type: 3}
-    repeatY: 15
+    tiling: {x: 1, y: 15}
+  groundTexture:
+    texture: {fileID: 2800000, guid: 0daee991d87d2ff409a23ff57a0f671b, type: 3}
+    tiling: {x: 30, y: 15}
   collectibleAccentEffect: {fileID: 283717274259775710, guid: 6d89a3921b9d5ca4f94a03aaa5a538c0,
     type: 3}
   collectibleSprites:
   - sprite: {fileID: 3286163911610860551, guid: b8582351bf469bf4f9e5646beab025e3,
       type: 3}
+    randomMirroring: 0
   - sprite: {fileID: 3286163911610860551, guid: e80b29adbd9e37e4aa042b94aca55676,
       type: 3}
+    randomMirroring: 0
   - sprite: {fileID: 3286163911610860551, guid: 99761769b9406ba40aae09dd3b82261f,
       type: 3}
+    randomMirroring: 0
   - sprite: {fileID: 3286163911610860551, guid: 9990301d233b2e84e8c022e8ba5f5b2f,
       type: 3}
+    randomMirroring: 0
   - sprite: {fileID: 3286163911610860551, guid: 6ca1ef1d20701d543b141efdb09b26e9,
       type: 3}
+    randomMirroring: 0
   obstacleSprites:
   - sprite: {fileID: 3286163911610860551, guid: b0b832b7e8a34c442935273984635efc,
       type: 3}
+    randomMirroring: 0
     stopsPlayer: 0
   - sprite: {fileID: 3286163911610860551, guid: 3eea7004a025c264f87b00642e43c146,
       type: 3}
+    randomMirroring: 0
     stopsPlayer: 0
   - sprite: {fileID: 3286163911610860551, guid: 4c60fb98d066fea4c882ea1c6d5f6ebb,
       type: 3}
+    randomMirroring: 0
     stopsPlayer: 0
   decorationSprites:
   - sprite: {fileID: 3286163911610860551, guid: b33cacb70ab264c4496aa780bf1f6eb9,
       type: 3}
+    randomMirroring: 0
     probability: 0
   - sprite: {fileID: 3286163911610860551, guid: b10dcc5a15a3c8948a657b2d2262ca0b,
       type: 3}
+    randomMirroring: 0
     probability: 0
   - sprite: {fileID: 3286163911610860551, guid: a9144fc8597ac9340ab8b6f3d5f9a1ad,
       type: 3}
+    randomMirroring: 0
     probability: 0
   uncollectedColor: {r: 0, g: 0, b: 0, a: 1}
   itemSize: 0.125
   itemSprites:
   - sprite: {fileID: 3286163911610860551, guid: ef6ae95bb70946142a94656040096099,
       type: 3}
+    randomMirroring: 0
   - sprite: {fileID: 3286163911610860551, guid: 534cd2954af49e540a938faeb73b1be2,
       type: 3}
+    randomMirroring: 0
   - sprite: {fileID: 3286163911610860551, guid: 1291a981e6429b54bafc77e39a07580d,
       type: 3}
+    randomMirroring: 0
   - sprite: {fileID: 3286163911610860551, guid: da474043b309bb94389ddf8057570f0b,
       type: 3}
+    randomMirroring: 0
   - sprite: {fileID: 3286163911610860551, guid: 3acaf6191d570ec45a1da4797155c335,
       type: 3}
+    randomMirroring: 0
   - sprite: {fileID: 3286163911610860551, guid: be5c7d0f8fcbaef4ebf7348533454331,
       type: 3}
+    randomMirroring: 0
   - sprite: {fileID: 3286163911610860551, guid: 0226ac636d3e9dd4b984011f58db36ed,
       type: 3}
+    randomMirroring: 0
   collisionEffects:
     hitObstaclePrefab: {fileID: 2473328970595687785, guid: 55a2463da15dbb14fbf8a7320daaffa0,
       type: 3}

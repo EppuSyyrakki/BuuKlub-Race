@@ -11,12 +11,10 @@ namespace BKRacing
 		private float _timeSinceLast;
 		private float _timerTarget;
 		private int _obstaclesSpawned;
-		private int _maxHealth;
 		
 		private void Start()
 		{
 			var count = Game.Instance.initialSpawnCount;
-			_maxHealth = Game.Instance.characterMaxHealth;
 
 			for (int i = 0; i < count; i++)
 			{
@@ -78,23 +76,10 @@ namespace BKRacing
 
 		private void SpawnCollectible(Vector3 pos)
 		{
-			if (Game.Instance.PlayerHealth < _maxHealth 
-			    && Random.Range(0, 101) < Game.Instance.healthBonusChance)
-			{
-				SpawnHealthBonus(pos);
-				return;
-			}
-
 			_obstaclesSpawned = 0;
 			var items = GetAvailableCollectibles();
 			var item = items[Random.Range(0, items.Length)];
 			CreateItem(pos, item, true);
-		}
-
-		private void SpawnHealthBonus(Vector3 pos)
-		{
-			var item = Game.Instance.HealthBonus;
-			CreateItem(pos, item);
 		}
 
 		private void CreateItem(Vector3 pos, Item item, bool includeEffect = false)

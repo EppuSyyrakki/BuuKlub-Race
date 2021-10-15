@@ -1130,6 +1130,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: drifts_L
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 915419aaf2f3f754ba8d50645d5fc60e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 915419aaf2f3f754ba8d50645d5fc60e, type: 3}
 --- !u!1 &705507993
@@ -1495,7 +1500,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.2164396, y: 0, z: 0, w: 0.97629607}
-  m_LocalPosition: {x: 0, y: 6.25, z: -5.25}
+  m_LocalPosition: {x: 0, y: 6.67, z: -6.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1630,6 +1635,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: drifts_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 29d6cc5dcb1b7a54eb4d778098e9a178,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29d6cc5dcb1b7a54eb4d778098e9a178, type: 3}
@@ -2186,7 +2196,7 @@ PrefabInstance:
     - target: {fileID: 8714119744369027623, guid: e9de90bab82251040ad57f0b1aae0e36,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8714119744369027627, guid: e9de90bab82251040ad57f0b1aae0e36,
         type: 3}

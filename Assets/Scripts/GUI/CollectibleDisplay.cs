@@ -19,13 +19,9 @@ namespace BKRacing.GUI
 
 		private SVGImage[] _allItems;
 		private List<SVGImage> _notCollected;
-		private GameObject _healthItem;
-		private HealthBar _healthBar;
 
 		private void Start()
 		{
-			_healthItem = CreateHealthItem();
-			_healthBar = Game.Instance.HealthBar;
 			var items = Game.Instance.GetUiSprites();
 			_allItems = new SVGImage[items.Length];
 			_notCollected = new List<SVGImage>();
@@ -40,23 +36,7 @@ namespace BKRacing.GUI
 				_notCollected.Add(current);
 			}
 		}
-
-		private GameObject CreateHealthItem()
-		{
-			var go = new GameObject(Game.Instance.HealthSprite.name, typeof(Image));
-			go.transform.SetParent(transform.parent, false);
-			go.GetComponent<Image>().sprite = Game.Instance.HealthSprite;
-			go.SetActive(false);
-			return go;
-		}
-
-		public void CollectHealth(Vector2 screenPosition)
-		{
-			var health = Instantiate(_healthItem, transform.parent);
-			health.SetActive(true);
-			LaunchItemMovement(health.GetComponent<RectTransform>(), screenPosition, _healthBar.iconTransform);
-		}
-
+		
 		public void CollectNew(Vector2 screenPosition)
 		{
 			if (_notCollected.Count == 0) { return; }
