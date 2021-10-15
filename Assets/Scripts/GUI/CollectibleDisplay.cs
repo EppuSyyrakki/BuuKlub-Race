@@ -12,7 +12,7 @@ namespace BKRacing.GUI
 		private AnimationCurve toCenterCurve, toInventoryCurve, loseItemCurve;
 
 		[SerializeField, Range(0, 1f)]
-		private float itemYPosition = 0.75f, itemXPosition = 0.65f;
+		private float itemYPosition = 0.6f, itemXPosition = 0.65f;
 
 		[SerializeField]
 		private float moveTime = 0.5f, waitTime = 1f, flyTime = 1.5f;
@@ -65,7 +65,6 @@ namespace BKRacing.GUI
 			item.color = Game.Instance.UncollectedColor;
 			var target = new Vector3(Random.Range(0, Screen.width), 0, 0);
 			StartCoroutine(LaunchLostItem(lost.rectTransform, target));
-			Destroy(lost.gameObject, flyTime * 2f);
 		}
 
 		private IEnumerator LaunchLostItem(RectTransform rt, Vector3 target)
@@ -81,18 +80,24 @@ namespace BKRacing.GUI
 				var t = time / flyTime;
 				Vector3 pos = new Vector3(
 					Mathf.Lerp(source.x, target.x, t), 
-					loseItemCurve.Evaluate(t) * height, 
+					source.y + loseItemCurve.Evaluate(t) * height, 
 					0);
 				rt.position = pos;
 				time += Time.deltaTime;
 				yield return new WaitForEndOfFrame();
 			}
+
+			Destroy(rt.gameObject);
 		}
 
 		private void LaunchItemMovement(RectTransform rt, Vector3 source, RectTransform target)
 		{
+			Debug.Log("Item movement launched");
+			var centerTarget = new Vector3(0, Screen.height * itemYPosition, 0);
 			var size = Screen.width * Game.Instance.CollectedSize;
-			var centerTarget = new Vector3(Screen.width * itemXPosition, Screen.height * itemYPosition, 0);
+			var centerX = Screen.width * itemXPosition;
+			centerTarget.x = Game.Instance.Player.transform.position.x < 0 ? centerX : Screen.width - centerX;
+			var item = target.gameObject.GetComponent<SVGImage>();
 
 			// Immediately move the item to a "display position" on screen.
 			StartCoroutine(MoveTo(rt, 0, source, centerTarget, 0, size, 
@@ -102,7 +107,7 @@ namespace BKRacing.GUI
 			StartCoroutine(MoveTo(rt, moveTime + waitTime, centerTarget, target.position, size, 1, toInventoryCurve));
 
 			// Wait, finalize and destroy the collected item.
-			StartCoroutine(FinalizeCollected(target.gameObject.GetComponent<SVGImage>(), rt.gameObject));
+			StartCoroutine(FinalizeCollected(item, rt.gameObject));
 		}
 
 		private IEnumerator MoveTo(RectTransform rt, float preWait, Vector3 source, Vector3 target, 

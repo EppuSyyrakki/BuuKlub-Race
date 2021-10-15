@@ -43,6 +43,8 @@ namespace BKRacing
 
 		private void Spawn(Vector3 pos)
 		{
+			pos = CheckItemsNear(pos);
+
 			if (Game.Instance.obstaclesAfterCollectible > 0
 			    && _obstaclesSpawned < Game.Instance.obstaclesAfterCollectible)
 			{
@@ -65,6 +67,22 @@ namespace BKRacing
 			{
 				SpawnObstacle(pos);
 			}
+		}
+
+		private Vector3 CheckItemsNear(Vector3 pos)
+		{
+			var cols = Physics.OverlapSphere(pos, 2f);
+
+			foreach (var col in cols)
+			{
+				var item = col.GetComponent<Item>();
+
+				if (item == null) { continue; }
+
+				return pos + Vector3.forward * 3f;
+			}
+
+			return pos;
 		}
 
 		private void SpawnObstacle(Vector3 pos)

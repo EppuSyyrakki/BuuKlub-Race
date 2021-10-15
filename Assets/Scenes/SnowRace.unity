@@ -1374,8 +1374,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   graphicsPackage: {fileID: 11400000, guid: d2539874080bb114984ab51e4b78ea98, type: 2}
-  forwardSpeed: 150
-  forwardSpeedIncrease: 12
+  forwardSpeed: 165
+  forwardSpeedIncrease: 18
   speedIncreaseTime: 2
   horizontalSpeed: 6
   crashProtectionTime: 1.5
@@ -1383,12 +1383,12 @@ MonoBehaviour:
   waitAfterCollision: 1
   speedUpAfterCollision: 1
   collectibleBias: 0.25
-  minSpawnTime: 0.75
-  maxSpawnTime: 3
+  minSpawnTime: 0.35
+  maxSpawnTime: 2.25
   decorationDensity: 5
   initialSpawnCount: 4
-  ensureCollectibleEvery: 2
-  obstaclesAfterCollectible: 1
+  ensureCollectibleEvery: 4
+  obstaclesAfterCollectible: 2
   billboardBend: 100
   riseCurve:
     serializedVersion: 2
@@ -2158,13 +2158,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8989160697736053875, guid: e2d82e575d9882845a8f17d097a29f51,
         type: 3}
+      propertyPath: itemXPosition
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 8989160697736053875, guid: e2d82e575d9882845a8f17d097a29f51,
+        type: 3}
+      propertyPath: itemYPosition
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8989160697736053875, guid: e2d82e575d9882845a8f17d097a29f51,
+        type: 3}
       propertyPath: loseItemCurve.m_Curve.Array.size
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8989160697736053875, guid: e2d82e575d9882845a8f17d097a29f51,
         type: 3}
       propertyPath: loseItemCurve.m_Curve.Array.data[1].time
-      value: 0.5006006
+      value: 0.3035791
       objectReference: {fileID: 0}
     - target: {fileID: 8989160697736053875, guid: e2d82e575d9882845a8f17d097a29f51,
         type: 3}
@@ -2174,17 +2184,17 @@ PrefabInstance:
     - target: {fileID: 8989160697736053875, guid: e2d82e575d9882845a8f17d097a29f51,
         type: 3}
       propertyPath: loseItemCurve.m_Curve.Array.data[0].value
-      value: 0.15
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8989160697736053875, guid: e2d82e575d9882845a8f17d097a29f51,
         type: 3}
       propertyPath: loseItemCurve.m_Curve.Array.data[1].value
-      value: 0.8632574
+      value: 0.6207266
       objectReference: {fileID: 0}
     - target: {fileID: 8989160697736053875, guid: e2d82e575d9882845a8f17d097a29f51,
         type: 3}
       propertyPath: loseItemCurve.m_Curve.Array.data[2].value
-      value: -0.25
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8989160697736053875, guid: e2d82e575d9882845a8f17d097a29f51,
         type: 3}
@@ -2194,7 +2204,7 @@ PrefabInstance:
     - target: {fileID: 8989160697736053875, guid: e2d82e575d9882845a8f17d097a29f51,
         type: 3}
       propertyPath: loseItemCurve.m_Curve.Array.data[1].inSlope
-      value: -0.4021945
+      value: 0.21771437
       objectReference: {fileID: 0}
     - target: {fileID: 8989160697736053875, guid: e2d82e575d9882845a8f17d097a29f51,
         type: 3}
@@ -2214,7 +2224,7 @@ PrefabInstance:
     - target: {fileID: 8989160697736053875, guid: e2d82e575d9882845a8f17d097a29f51,
         type: 3}
       propertyPath: loseItemCurve.m_Curve.Array.data[1].outSlope
-      value: -0.4021945
+      value: 0.21771437
       objectReference: {fileID: 0}
     - target: {fileID: 8989160697736053875, guid: e2d82e575d9882845a8f17d097a29f51,
         type: 3}
