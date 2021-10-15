@@ -19,16 +19,14 @@ namespace BKRacing.GUI
 
 		private SVGImage[] _allItems;
 		private List<SVGImage> _notCollected;
-		private GameObject _healthItem;
-		private HealthBar _healthBar;
+		private List<SVGImage> _collected;
 
 		private void Start()
 		{
-			_healthItem = CreateHealthItem();
-			_healthBar = Game.Instance.HealthBar;
 			var items = Game.Instance.GetUiSprites();
 			_allItems = new SVGImage[items.Length];
 			_notCollected = new List<SVGImage>();
+			_collected = new List<SVGImage>();
 			var source = transform.GetChild(0).GetComponent<SVGImage>();
 
 			for (int i = 0; i < items.Length; i++)
@@ -40,34 +38,26 @@ namespace BKRacing.GUI
 				_notCollected.Add(current);
 			}
 		}
-
-		private GameObject CreateHealthItem()
-		{
-			var go = new GameObject(Game.Instance.HealthSprite.name, typeof(Image));
-			go.transform.SetParent(transform.parent, false);
-			go.GetComponent<Image>().sprite = Game.Instance.HealthSprite;
-			go.SetActive(false);
-			return go;
-		}
-
-		public void CollectHealth(Vector2 screenPosition)
-		{
-			var health = Instantiate(_healthItem, transform.parent);
-			health.SetActive(true);
-			LaunchItemMovement(health.GetComponent<RectTransform>(), screenPosition, _healthBar.iconTransform);
-		}
-
+		
 		public void CollectNew(Vector2 screenPosition)
 		{
 			if (_notCollected.Count == 0) { return; }
 
 			var item = _notCollected[Random.Range(0, _notCollected.Count)];
 			_notCollected.Remove(item);
+			_collected.Add(item);
 			var collected = Instantiate(item, transform.parent);
 			collected.sprite = item.sprite;
 			collected.color = Color.white;
 			collected.rectTransform.position = screenPosition;
 			LaunchItemMovement(collected.rectTransform,screenPosition, item.rectTransform);
+		}
+
+		public void LoseCollected(Vector3 screenPosition)
+		{
+			if (_notCollected.Count == _allItems.Length) { return; }
+
+			var item = _collected[Random.Range(0, _collected.Count)];
 		}
 
 		private void LaunchItemMovement(RectTransform rt, Vector3 source, RectTransform target)
@@ -108,5 +98,7 @@ namespace BKRacing.GUI
 			item.color = Color.white;
 			Destroy(itemToDestroy, waitTime * 0.5f);
 		}
+
+		
 	}
 }
