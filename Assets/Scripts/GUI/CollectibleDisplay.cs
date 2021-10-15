@@ -19,12 +19,14 @@ namespace BKRacing.GUI
 
 		private SVGImage[] _allItems;
 		private List<SVGImage> _notCollected;
+		private List<SVGImage> _collected;
 
 		private void Start()
 		{
 			var items = Game.Instance.GetUiSprites();
 			_allItems = new SVGImage[items.Length];
 			_notCollected = new List<SVGImage>();
+			_collected = new List<SVGImage>();
 			var source = transform.GetChild(0).GetComponent<SVGImage>();
 
 			for (int i = 0; i < items.Length; i++)
@@ -43,11 +45,19 @@ namespace BKRacing.GUI
 
 			var item = _notCollected[Random.Range(0, _notCollected.Count)];
 			_notCollected.Remove(item);
+			_collected.Add(item);
 			var collected = Instantiate(item, transform.parent);
 			collected.sprite = item.sprite;
 			collected.color = Color.white;
 			collected.rectTransform.position = screenPosition;
 			LaunchItemMovement(collected.rectTransform,screenPosition, item.rectTransform);
+		}
+
+		public void LoseCollected(Vector3 screenPosition)
+		{
+			if (_notCollected.Count == _allItems.Length) { return; }
+
+			var item = _collected[Random.Range(0, _collected.Count)];
 		}
 
 		private void LaunchItemMovement(RectTransform rt, Vector3 source, RectTransform target)
@@ -88,5 +98,7 @@ namespace BKRacing.GUI
 			item.color = Color.white;
 			Destroy(itemToDestroy, waitTime * 0.5f);
 		}
+
+		
 	}
 }

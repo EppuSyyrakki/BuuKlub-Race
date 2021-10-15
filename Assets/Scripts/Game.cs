@@ -189,6 +189,7 @@ namespace BKRacing
 		public void Collide(Vector3 worldPosition)
 		{
 			StopAllCoroutines();
+			_collectibleDisplay.LoseCollected(_cam.WorldToScreenPoint(_player.transform.position));
 			var effect = Instantiate(graphicsPackage.collisionEffects.hitObstaclePrefab,
 				worldPosition,
 				Quaternion.identity,
