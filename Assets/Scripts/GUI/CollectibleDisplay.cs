@@ -9,13 +9,13 @@ namespace BKRacing.GUI
 	public class CollectibleDisplay : MonoBehaviour
 	{
 		[SerializeField]
-		private AnimationCurve toCenterCurve, toInventoryCurve;
+		private AnimationCurve toCenterCurve, toInventoryCurve, loseItemCurve;
 
 		[SerializeField, Range(0, 1f)]
 		private float itemYPosition = 0.75f, itemXPosition = 0.65f;
 
 		[SerializeField]
-		private float moveTime = 0.5f, waitTime = 1f;
+		private float moveTime = 0.5f, waitTime = 1f, flyTime = 1.5f;
 
 		private SVGImage[] _allItems;
 		private List<SVGImage> _notCollected;
@@ -45,7 +45,6 @@ namespace BKRacing.GUI
 
 			var item = _notCollected[Random.Range(0, _notCollected.Count)];
 			_notCollected.Remove(item);
-			_collected.Add(item);
 			var collected = Instantiate(item, transform.parent);
 			collected.sprite = item.sprite;
 			collected.color = Color.white;
@@ -55,9 +54,39 @@ namespace BKRacing.GUI
 
 		public void LoseCollected(Vector3 screenPosition)
 		{
-			if (_notCollected.Count == _allItems.Length) { return; }
+			if (_collected.Count == 0) { return; }
 
 			var item = _collected[Random.Range(0, _collected.Count)];
+			_collected.Remove(item);
+			_notCollected.Add(item);
+			var lost = Instantiate(item, transform.parent);
+			lost.sprite = item.sprite;
+			lost.rectTransform.position = screenPosition;
+			item.color = Game.Instance.UncollectedColor;
+			var target = new Vector3(Random.Range(0, Screen.width), 0, 0);
+			StartCoroutine(LaunchLostItem(lost.rectTransform, target));
+			Destroy(lost.gameObject, flyTime * 2f);
+		}
+
+		private IEnumerator LaunchLostItem(RectTransform rt, Vector3 target)
+		{
+			var source = rt.position;
+			var size = Screen.width * Game.Instance.CollectedSize;
+			var height = Screen.height;
+			float time = 0;
+			rt.sizeDelta = new Vector3(size, size);
+
+			while (time < flyTime)
+			{
+				var t = time / flyTime;
+				Vector3 pos = new Vector3(
+					Mathf.Lerp(source.x, target.x, t), 
+					loseItemCurve.Evaluate(t) * height, 
+					0);
+				rt.position = pos;
+				time += Time.deltaTime;
+				yield return new WaitForEndOfFrame();
+			}
 		}
 
 		private void LaunchItemMovement(RectTransform rt, Vector3 source, RectTransform target)
@@ -96,9 +125,8 @@ namespace BKRacing.GUI
 		{
 			yield return new WaitForSeconds(waitTime * 2);
 			item.color = Color.white;
+			_collected.Add(item);
 			Destroy(itemToDestroy, waitTime * 0.5f);
 		}
-
-		
 	}
 }
