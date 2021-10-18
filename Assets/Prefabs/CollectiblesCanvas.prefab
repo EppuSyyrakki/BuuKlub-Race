@@ -305,10 +305,17 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  loseItemCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   itemYPosition: 0.75
   itemXPosition: 0.75
   moveTime: 0.5
   waitTime: 1
+  flyTime: 1.5
 --- !u!1 &4472128102709603611
 GameObject:
   m_ObjectHideFlags: 0
