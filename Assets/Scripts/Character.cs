@@ -7,9 +7,10 @@ namespace BKRacing
 {
     public class Character : MonoBehaviour
     {
-	    [SerializeField]
-	    private float moveTreshold = 20f;
+	    [SerializeField, Range(0, 0.1f)]
+	    private float moveTreshold = 0.0075f;
 
+	    private float _moveTreshold;
 	    private Camera _cam;
 	    private Animator _animator;
 	    private ParticleSystem _particles;
@@ -20,6 +21,7 @@ namespace BKRacing
 
 	    private void Awake()
 	    {
+		    _moveTreshold = Screen.width * moveTreshold;
 			_cam = Camera.main;
 			_animator = GetComponent<Animator>();
 			_particles = GetComponentInChildren<ParticleSystem>();
@@ -38,7 +40,7 @@ namespace BKRacing
 		    float cX = _cam.WorldToScreenPoint(transform.position).x;
 		    float touchDelta = Mathf.Abs(tX - cX);
 
-			if (touchDelta < moveTreshold)
+			if (touchDelta < _moveTreshold)
 			{
 				return;
 			}

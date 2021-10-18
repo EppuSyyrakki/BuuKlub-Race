@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 269989948659551819}
   - component: {fileID: 269989948659551817}
   - component: {fileID: 269989948659551822}
+  - component: {fileID: 7717221}
   m_Layer: 0
   m_Name: Character_Lotus
   m_TagString: Untagged
@@ -55,6 +56,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60de6bee91e9483488931cf332852644, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveTreshold: 0.008
 --- !u!114 &269989948659551819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,7 +69,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33309056c3d039c4ba3edfa336fc15bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flipX: 0
 --- !u!54 &269989948659551817
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -97,6 +98,25 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1
   m_Center: {x: 0, y: 2, z: 0}
+--- !u!95 &7717221
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 269989948659551816}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9b972057b3b00a244bbf70c4e9da34d5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4886334843770459991
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,13 +142,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4886334843770459991}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.12, y: 0.2, z: -0.91}
-  m_LocalScale: {x: 0.16697523, y: 0.18172617, z: 0.29762584}
+  m_LocalRotation: {x: -0.9866589, y: -0, z: -0, w: 0.16280189}
+  m_LocalPosition: {x: -0.12, y: 2.47, z: -1.305}
+  m_LocalScale: {x: 0.42136055, y: 0.18172617, z: 0.047323424}
   m_Children: []
   m_Father: {fileID: 269989948659551821}
   m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -161.261, y: 0, z: 0}
 --- !u!198 &2343670551455969115
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -381,7 +401,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 3
+      scalar: 7
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -1392,7 +1412,7 @@ ParticleSystem:
         m_RotationOrder: 4
     separateAxes: 0
   ColorModule:
-    enabled: 0
+    enabled: 1
     gradient:
       serializedVersion: 2
       minMaxState: 1
@@ -1400,8 +1420,8 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 1, b: 1, a: 1}
-        key1: {r: 1, g: 1, b: 1, a: 1}
+        key0: {r: 1, g: 1, b: 1, a: 0.050980393}
+        key1: {r: 1, g: 1, b: 1, a: 0}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -1418,7 +1438,7 @@ ParticleSystem:
         ctime7: 0
         atime0: 0
         atime1: 65535
-        atime2: 0
+        atime2: 65535
         atime3: 0
         atime4: 0
         atime5: 0
@@ -3585,7 +3605,7 @@ ParticleSystem:
     separateAxes: 0
     range: {x: 0, y: 1}
   ColorBySpeedModule:
-    enabled: 1
+    enabled: 0
     gradient:
       serializedVersion: 2
       minMaxState: 1
@@ -3593,7 +3613,7 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 0.9056604, g: 0.9056604, b: 0.9056604, a: 1}
+        key0: {r: 0.9056604, g: 0.9056604, b: 0.9056604, a: 0.5529412}
         key1: {r: 1, g: 1, b: 1, a: 0.39607844}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
@@ -4875,7 +4895,7 @@ PrefabInstance:
     - target: {fileID: 8742538545776668643, guid: e6e1cf18e2b1007448b5306eb550ad60,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8742538545776668643, guid: e6e1cf18e2b1007448b5306eb550ad60,
         type: 3}
@@ -4951,12 +4971,12 @@ PrefabInstance:
     - target: {fileID: 8742538545776668643, guid: 687531325f1564f48b5f25d12b076af0,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.32
+      value: 0.46
       objectReference: {fileID: 0}
     - target: {fileID: 8742538545776668643, guid: 687531325f1564f48b5f25d12b076af0,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.009999871
+      value: -0.91
       objectReference: {fileID: 0}
     - target: {fileID: 8742538545776668643, guid: 687531325f1564f48b5f25d12b076af0,
         type: 3}
@@ -5199,7 +5219,7 @@ PrefabInstance:
     - target: {fileID: 8742538545776668643, guid: 20ba90b71db4f18469c7805cdeb63d40,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.2260003
+      value: 4.226
       objectReference: {fileID: 0}
     - target: {fileID: 8742538545776668643, guid: 20ba90b71db4f18469c7805cdeb63d40,
         type: 3}
@@ -5275,7 +5295,7 @@ PrefabInstance:
     - target: {fileID: 8742538545776668643, guid: 276f8d26a54c9d84fa8cd28bb9c4780f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.079999834
+      value: 0.07999983
       objectReference: {fileID: 0}
     - target: {fileID: 8742538545776668643, guid: 276f8d26a54c9d84fa8cd28bb9c4780f,
         type: 3}
@@ -5356,12 +5376,12 @@ PrefabInstance:
     - target: {fileID: 8742538545776668643, guid: c93559b9a126ddb43a33e23fe7120304,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.15400001
+      value: -0.154
       objectReference: {fileID: 0}
     - target: {fileID: 8742538545776668643, guid: c93559b9a126ddb43a33e23fe7120304,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.7359998
+      value: 2.736
       objectReference: {fileID: 0}
     - target: {fileID: 8742538545776668643, guid: c93559b9a126ddb43a33e23fe7120304,
         type: 3}

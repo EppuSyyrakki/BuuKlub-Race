@@ -92,7 +92,6 @@ namespace BKRacing.GUI
 
 		private void LaunchItemMovement(RectTransform rt, Vector3 source, RectTransform target)
 		{
-			Debug.Log("Item movement launched");
 			var centerTarget = new Vector3(0, Screen.height * itemYPosition, 0);
 			var size = Screen.width * Game.Instance.CollectedSize;
 			var centerX = Screen.width * itemXPosition;
