@@ -17,17 +17,17 @@ namespace BKRacing.GUI
 		[SerializeField]
 		private float moveTime = 0.5f, waitTime = 1f, flyTime = 1.5f;
 
-		private SVGImage[] _allItems;
-		private List<SVGImage> _notCollected;
-		private List<SVGImage> _collected;
+		private Image[] _allItems;
+		private List<Image> _notCollected;
+		private List<Image> _collected;
 
 		private void Start()
 		{
 			var items = Game.Instance.GetUiSprites();
-			_allItems = new SVGImage[items.Length];
-			_notCollected = new List<SVGImage>();
-			_collected = new List<SVGImage>();
-			var source = transform.GetChild(0).GetComponent<SVGImage>();
+			_allItems = new Image[items.Length];
+			_notCollected = new List<Image>();
+			_collected = new List<Image>();
+			var source = transform.GetChild(0).GetComponent<Image>();
 
 			for (int i = 0; i < items.Length; i++)
 			{
@@ -97,7 +97,7 @@ namespace BKRacing.GUI
 			var size = Screen.width * Game.Instance.CollectedSize;
 			var centerX = Screen.width * itemXPosition;
 			centerTarget.x = Game.Instance.Player.transform.position.x < 0 ? centerX : Screen.width - centerX;
-			var item = target.gameObject.GetComponent<SVGImage>();
+			var item = target.gameObject.GetComponent<Image>();
 
 			// Immediately move the item to a "display position" on screen.
 			StartCoroutine(MoveTo(rt, 0, source, centerTarget, 0, size, 
@@ -126,7 +126,7 @@ namespace BKRacing.GUI
 			}
 		}
 
-		private IEnumerator FinalizeCollected(SVGImage item, GameObject itemToDestroy)
+		private IEnumerator FinalizeCollected(Image item, GameObject itemToDestroy)
 		{
 			yield return new WaitForSeconds(waitTime * 2);
 			item.color = Color.white;
