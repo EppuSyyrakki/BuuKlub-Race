@@ -17,12 +17,18 @@ namespace BKRacing.GUI
 		[SerializeField]
 		private float moveTime = 0.5f, waitTime = 1f, flyTime = 1.5f;
 
+		private Vector3 _centerTarget;
+		private float _size;
+		private float _centerX;
 		private Image[] _allItems;
 		private List<Image> _notCollected;
 		private List<Image> _collected;
 
 		private void Start()
 		{
+			_centerTarget = new Vector3(0, Screen.height * itemYPosition, 0);
+			_size = Screen.width * Game.Instance.CollectedSize;
+			_centerX = Screen.width * itemXPosition;
 			var items = Game.Instance.GetUiSprites();
 			_allItems = new Image[items.Length];
 			_notCollected = new List<Image>();
@@ -92,18 +98,15 @@ namespace BKRacing.GUI
 
 		private void LaunchItemMovement(RectTransform rt, Vector3 source, RectTransform target)
 		{
-			var centerTarget = new Vector3(0, Screen.height * itemYPosition, 0);
-			var size = Screen.width * Game.Instance.CollectedSize;
-			var centerX = Screen.width * itemXPosition;
-			centerTarget.x = Game.Instance.Player.transform.position.x < 0 ? centerX : Screen.width - centerX;
+			_centerTarget.x = Game.Instance.Player.transform.position.x < 0 ? _centerX : Screen.width - _centerX;
 			var item = target.gameObject.GetComponent<Image>();
 
 			// Immediately move the item to a "display position" on screen.
-			StartCoroutine(MoveTo(rt, 0, source, centerTarget, 0, size, 
+			StartCoroutine(MoveTo(rt, 0, source, _centerTarget, 0, _size, 
 				toCenterCurve));
 
 			// Wait and move the item to the inventory.
-			StartCoroutine(MoveTo(rt, moveTime + waitTime, centerTarget, target.position, size, 1, toInventoryCurve));
+			StartCoroutine(MoveTo(rt, moveTime + waitTime, _centerTarget, target.position, _size, 1, toInventoryCurve));
 
 			// Wait, finalize and destroy the collected item.
 			StartCoroutine(FinalizeCollected(item, rt.gameObject));

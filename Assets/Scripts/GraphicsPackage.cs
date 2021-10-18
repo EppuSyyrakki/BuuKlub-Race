@@ -60,7 +60,7 @@ namespace BKRacing
 	{
 		[Header("Background sprite")]
 		public Sprite backgroundCard;
-		
+
 		[Header("The scrolling texture for the road")]
 		public EnvironmentTexture roadTexture = new EnvironmentTexture(new Vector2(1f, 15f));
 

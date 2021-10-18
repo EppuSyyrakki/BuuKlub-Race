@@ -71,6 +71,7 @@ namespace BKRacing
 		[Range(10, 50)]
 		public int fixedTimeStep = 30;
 
+		public Sprite BackgroundCard => graphicsPackage.backgroundCard;
 		public GroundMaterial GroundMaterial => graphicsPackage.groundMaterial;
 		public EnvironmentTexture RoadTexture => graphicsPackage.roadTexture;
 		public Collectible[] Collectibles => _collectibles;
