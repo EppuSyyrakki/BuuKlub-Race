@@ -77,9 +77,11 @@ MonoBehaviour:
     randomMirroring: 0
   - sprite: {fileID: 21300000, guid: 77a3e3cbb9be7a64fad057d0cde73a93, type: 3}
     randomMirroring: 0
-  - sprite: {fileID: 21300000, guid: 4dc864c62cebc5047a6480c2fb6e7193, type: 3}
+  - sprite: {fileID: 21300000, guid: a4e1761e775b99e42890b42955c95717, type: 3}
     randomMirroring: 0
-  - sprite: {fileID: 21300000, guid: 50ec49dcaaff9c9469a4566459537131, type: 3}
+  - sprite: {fileID: 21300000, guid: 59cf3066bbacebd46b867d05b6b1941a, type: 3}
+    randomMirroring: 0
+  - sprite: {fileID: 21300000, guid: 0e7fec108590024418bfbf0466f792ff, type: 3}
     randomMirroring: 0
   collisionEffects:
     hitObstaclePrefab: {fileID: 2473328970595687785, guid: 55a2463da15dbb14fbf8a7320daaffa0,
