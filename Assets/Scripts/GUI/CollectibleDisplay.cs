@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 namespace BKRacing.GUI
 {
@@ -23,6 +25,8 @@ namespace BKRacing.GUI
 		private Image[] _allItems;
 		private List<Image> _notCollected;
 		private List<Image> _collected;
+
+		public Action gameCompleted;
 
 		private void Start()
 		{
@@ -56,6 +60,11 @@ namespace BKRacing.GUI
 			collected.color = Color.white;
 			collected.rectTransform.position = screenPosition;
 			LaunchItemMovement(collected.rectTransform,screenPosition, item.rectTransform);
+
+			if (_notCollected.Count == 0)
+			{
+				Invoke(nameof(TriggerGameCompleted), 1f);
+			}
 		}
 
 		public void LoseCollected(Vector3 screenPosition)
@@ -134,6 +143,11 @@ namespace BKRacing.GUI
 			item.color = Color.white;
 			_collected.Add(item);
 			Destroy(itemToDestroy, waitTime * 0.5f);
+		}
+
+		private void TriggerGameCompleted()
+		{
+			gameCompleted?.Invoke();
 		}
 	}
 }

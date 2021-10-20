@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace BKRacing
@@ -12,40 +13,40 @@ namespace BKRacing
 
 		public void StartGame()
 		{
-			FadeOutAll();
+			FadeAll(1, 0);
 			var buttons = GetComponentsInChildren<Button>();
 
 			foreach (var button in buttons)
 			{
 				button.interactable = false;
 			}
+
+			Invoke(nameof(EnableGame), fadeOutTime);
 		}
 
 		public void RestartGame()
 		{
-			Debug.Log("Restart game pressed");
+			Invoke(nameof(ResetGame), fadeOutTime * 0.5f);
 		}
 
-		private void FadeOutAll()
+		public void FadeAll(float from, float to)
 		{
 			var images = GetComponentsInChildren<Image>();
 
 			foreach (var image in images)
 			{
-				StartCoroutine(FadeOut(image, fadeOutTime));
+				StartCoroutine(Fade(image, fadeOutTime, from, to));
 			}
-
-			Invoke(nameof(EnableGame), fadeOutTime);
 		}
 
-		private IEnumerator FadeOut(Image image, float time)
+		private IEnumerator Fade(Image image, float time, float from, float to)
 		{
 			float t = 0;
 
 			while (t < time)
 			{
 				var color = Color.white;
-				color.a = Mathf.Lerp(1, 0, t / time);
+				color.a = Mathf.Lerp(from, to, t / time);
 				image.color = color;
 				t += Time.deltaTime;
 				yield return new WaitForEndOfFrame();
@@ -56,6 +57,11 @@ namespace BKRacing
 		{
 			Game.Instance.ReadyToStart = true;
 			gameObject.SetActive(false);
+		}
+
+		private void ResetGame()
+		{
+			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 		}
 	}
 }

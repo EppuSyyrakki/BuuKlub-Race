@@ -22,6 +22,7 @@ namespace BKRacing
 		private bool _gameStarted;
 		private AudioPlayer _audioPlayer;
 		private readonly Dictionary<SoundType, AudioClip> _sounds = new Dictionary<SoundType, AudioClip>();
+		private CanvasController _startScreen, _endScreen;
 		
 		[SerializeField]
 		private GamePackage gamePackage;
@@ -90,6 +91,10 @@ namespace BKRacing
 		{
 			if (gamePackage == null) { Debug.LogError("No Graphics Package found in Game component!"); }
 
+			_startScreen = GameObject.FindGameObjectWithTag("RacingStartScreen").GetComponent<CanvasController>();
+			_endScreen = GameObject.FindGameObjectWithTag("RacingEndScreen").GetComponent<CanvasController>();
+			_endScreen.gameObject.SetActive(false);
+
 			_instance = this;
 			_cam = Camera.main;
 			_audioPlayer = _cam.gameObject.GetComponent<AudioPlayer>();
@@ -102,6 +107,16 @@ namespace BKRacing
 			SetControl(false);
 			InitGraphics();
 			InitSounds();
+		}
+
+		private void OnEnable()
+		{
+			_collectibleDisplay.gameCompleted += EndGame;
+		}
+
+		private void OnDisable()
+		{
+			_collectibleDisplay.gameCompleted -= EndGame;
 		}
 
 		private void Update()
@@ -203,6 +218,19 @@ namespace BKRacing
 		{
 			ControlEnabled = enable;
 			if (Player.Particles != null) { Player.Particles.gameObject.SetActive(enable); }
+		}
+
+		private void EndGame()
+		{
+			// TODO: make good
+			StartCoroutine(ChangeSpeed(false, 1f, forwardSpeed, 0, 1, 0));
+			Invoke(nameof(ShowEndScreen), 2f);
+		}
+
+		private void ShowEndScreen()
+		{
+			_endScreen.gameObject.SetActive(true);
+			_endScreen.FadeAll(0, 1);
 		}
 
 		public Sprite[] GetUiSprites()

@@ -70,7 +70,7 @@ MonoBehaviour:
     randomMirroring: 0
     associatedSound: 0
   uncollectedColor: {r: 0, g: 0, b: 0, a: 1}
-  itemSize: 0.125
+  itemSize: 0.25
   itemSprites:
   - sprite: {fileID: 21300000, guid: 871e7540c7a23cd4986094181fcb1d9c, type: 3}
     randomMirroring: 0
@@ -95,6 +95,7 @@ MonoBehaviour:
     associatedSound: 0
   - sprite: {fileID: 21300000, guid: 0e7fec108590024418bfbf0466f792ff, type: 3}
     randomMirroring: 0
+    associatedSound: 0
   collisionEffects:
     hitObstaclePrefab: {fileID: 2473328970595687785, guid: 55a2463da15dbb14fbf8a7320daaffa0,
       type: 3}
