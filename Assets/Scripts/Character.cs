@@ -32,7 +32,8 @@ namespace BKRacing
 		    if (Input.touchCount == 0 || !Game.Instance.ControlEnabled)
 		    {
 				_animator.SetInteger("movement", 0);
-			    return;
+				Game.Instance.PlaySound(SoundType.MoveForward);
+				return;
 		    }
 
 		    Touch touch = Input.GetTouch(0);
@@ -45,9 +46,17 @@ namespace BKRacing
 				return;
 			}
 
-			touchDelta = Mathf.Clamp(touchDelta, 100f, 1000f);
-		    if (tX < cX) { MoveLeft(touchDelta); }
-		    else if (tX > cX) { MoveRight(touchDelta); }
+			touchDelta = Mathf.Clamp(touchDelta, 0, 1000f);
+
+
+			if (tX < cX)
+			{
+				MoveLeft(touchDelta);
+			}
+		    else if (tX > cX)
+			{
+				MoveRight(touchDelta);
+			}
 	    }
 
 	    public void MoveLeft(float touchDelta)

@@ -10,6 +10,7 @@ namespace BKRacing
 	{
 		public Sprite sprite;
 		public bool randomMirroring = false;
+		public SoundType associatedSound;
 	}
 
 	[Serializable]
@@ -22,20 +23,6 @@ namespace BKRacing
 		{
 			this.tiling = tiling;
 		}
-	}
-
-	[Serializable]
-	public class ObstacleSprite : ItemSprite
-	{
-		[Tooltip("If chosen, will stop player on contact. Else just slow down.")]
-		public bool stopsPlayer;
-	}
-
-	[Serializable]
-	public class DecorationSprite : ItemSprite
-	{
-		[Tooltip("Bigger number is more probable.")]
-		public int probability;
 	}
 
 	[System.Serializable]
@@ -91,10 +78,10 @@ namespace BKRacing
 		public List<ItemSprite> collectibleSprites;
 
 		[Header("Obstacles that slow down the Character")]
-		public List<ObstacleSprite> obstacleSprites;
+		public List<ItemSprite> obstacleSprites;
 
 		[Header("Textures that appear outside the road")]
-		public List<DecorationSprite> decorationSprites;
+		public List<ItemSprite> decorationSprites;
 
 		[Header("Items that appear from the collectibles")]
 		public Color uncollectedColor;

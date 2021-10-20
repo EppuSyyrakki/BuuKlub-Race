@@ -47,7 +47,7 @@ namespace BKRacing.Items
 
 			var animator = c.GetComponent<Animator>();
 			animator.SetTrigger("hit");
-			Game.Instance.Collide(transform.position);
+			Game.Instance.Collide(transform.position, soundType);
 			c.Crash();
 		}
 	}

@@ -9,9 +9,10 @@ namespace BKRacing.Items
 		protected Transform player;
 		protected SpriteRenderer spriteRenderer;
 		protected Vector3 newPos;
+		protected SoundType soundType;
 		private float _objectHeight;
 		private AnimationCurve _curve;
-		
+
 		public virtual Sprite Sprite => spriteRenderer.sprite;
 		public bool Mirror { get; private set; }
 
@@ -45,8 +46,9 @@ namespace BKRacing.Items
 			newPos = new Vector3(self.x, y, z);
 		}
 
-		public virtual void Init(Sprite sprite, bool mirror)
+		public virtual void Init(Sprite sprite, bool mirror, SoundType sType)
 		{
+			soundType = sType;
 			gameObject.SetActive(false);
 			var sr = GetComponent<SpriteRenderer>();
 			sr.sprite = sprite;
