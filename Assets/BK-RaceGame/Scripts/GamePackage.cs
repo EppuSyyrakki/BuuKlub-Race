@@ -10,7 +10,24 @@ namespace BKRacing
 	{
 		public Sprite sprite;
 		public bool randomMirroring = false;
-		public SoundType associatedSound;
+	}
+
+	[Serializable]
+	public class RoadItemSprite : ItemSprite
+	{
+		public Sound[] collisionSounds;
+	}
+
+	[Serializable]
+	public class Sound
+	{
+		public AudioClip clip;
+		public SoundType type;
+
+		public Sound(SoundType type)
+		{
+			this.type = type;
+		}
 	}
 
 	[Serializable]
@@ -40,25 +57,19 @@ namespace BKRacing
 		public GameObject hitObstaclePrefab;
 		public GameObject hitCollectiblePrefab;
 	}
-	
-	public enum SoundType
-	{
-		MoveForward,
-		MoveSideways,
-		PickUp1,
-		PickUp2,
-		PickUp3,
-		Collide1,
-		Collide2,
-		Collide3,
-		WinChime
-	}
 
 	[Serializable]
-	public class Sound
+	public class SoundCollection
 	{
-		public SoundType type;
-		public AudioClip clip;
+		public Sound forwardMovement = new Sound(SoundType.Moving);
+		public Sound sidewaysMovement = new Sound(SoundType.Moving);
+		public Sound endFanfare = new Sound(SoundType.Effect);
+		[Header("Voice alternatives to play in the end screen (set type to Voice):")]
+		public Sound[] endVoice;
+		[Header("Voice alternatives to play when colliding (set type to Voice):")]
+		public Sound[] collisionVoice;
+		[Header("Voice alternatives to play when collecting (set type to Voice):")]
+		public Sound[] collectVoice;
 	}
 
 	[CreateAssetMenu(fileName = "Game Package", menuName = "New Game Package")]
@@ -75,10 +86,10 @@ namespace BKRacing
 
 		[Header("The things to be collected by Character")]
 		public GameObject collectibleAccentEffect;
-		public List<ItemSprite> collectibleSprites;
+		public List<RoadItemSprite> collectibleSprites;
 
 		[Header("Obstacles that slow down the Character")]
-		public List<ItemSprite> obstacleSprites;
+		public List<RoadItemSprite> obstacleSprites;
 
 		[Header("Textures that appear outside the road")]
 		public List<ItemSprite> decorationSprites;
@@ -93,9 +104,7 @@ namespace BKRacing
 		public CollisionEffects collisionEffects;
 		public List<GameObject> weatherEffects;
 
-		[Header("Sounds - make sure no type duplicates exist")]
-		[Range(0, 1f)]
-		public float audioVolume = 1f;
-		public List<Sound> sounds;
+		[Header("Sounds:")]
+		public SoundCollection soundCollection;
 	}
 }

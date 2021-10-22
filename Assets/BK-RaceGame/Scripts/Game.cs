@@ -21,7 +21,6 @@ namespace BKRacing
 		private float _roadWidth;
 		private bool _gameStarted;
 		private AudioPlayer _audioPlayer;
-		private readonly Dictionary<SoundType, AudioClip> _sounds = new Dictionary<SoundType, AudioClip>();
 		private CanvasController _startScreen, _endScreen;
 		private static Transform _spawnContainer = null;
 		private float _originalFixedTimeStep;
@@ -76,9 +75,19 @@ namespace BKRacing
 		public AnimationCurve riseCurve;
 		[Range(5f,200f), Tooltip("How far from the spawn point the curve affects object height")]
 		public float curveDistance = 20f;
-		
+
+		[Header("Audio source volumes:")]
+		[Range(0, 1f)]
+		public float masterVolume = 0.5f;
+		[Range(0, 1f)]
+		public float movingVolume = 1f;
+		[Range(0, 1f)]
+		public float effectVolume = 1f;
+		[Range(0, 1f)]
+		public float voiceVolume = 1f;
+
 		[Header("Optimization variables:")]
-		[Range(10, 50)]
+		[Range(10, 50), Tooltip("Will be changed back to default when this object is disabled")]
 		public int fixedTimeStep = 30;
 
 		public Sprite BackgroundCard => gamePackage.backgroundCard;
@@ -92,7 +101,7 @@ namespace BKRacing
 		public GameObject CollectibleAccent => gamePackage.collectibleAccentEffect;
 		public float CollectedSize => gamePackage.itemSize;
 		public float RoadWidth => _roadWidth;
-		public float AudioVolume => gamePackage.audioVolume;
+		public SoundCollection SoundCollection => gamePackage.soundCollection;
 
 		private void Awake()
 		{
@@ -113,7 +122,6 @@ namespace BKRacing
 			_player = FindObjectOfType<Character>();
 			SetControl(false);
 			InitGraphics();
-			InitSounds();
 		}
 
 		private void OnEnable()
@@ -158,15 +166,7 @@ namespace BKRacing
 				Instantiate(effect, _spawnContainer);
 			}
 		}
-
-		private void InitSounds()
-		{
-			foreach (var sound in gamePackage.sounds)
-			{
-				_sounds.Add(sound.type, sound.clip);
-			}
-		}
-
+		
 		private Sprite[] GetSpritesInfo<T>(List<T> items, out bool[] mirrors, out SoundType[] soundTypes) 
 			where T : ItemSprite
 		{
@@ -178,7 +178,7 @@ namespace BKRacing
 			{
 				sprites[i] = items[i].sprite;
 				mirrors[i] = items[i].randomMirroring;
-				soundTypes[i] = items[i].associatedSound;
+				
 			}
 
 			return sprites;
@@ -258,7 +258,6 @@ namespace BKRacing
 
 		public void Collect(Vector3 worldPosition, SoundType soundType)
 		{
-			PlaySound(soundType);
 			StopAllCoroutines();
 			_collectibleDisplay.CollectNew(_cam.WorldToScreenPoint(worldPosition));
 			var effect = Instantiate(gamePackage.collisionEffects.hitCollectiblePrefab,
@@ -272,7 +271,6 @@ namespace BKRacing
 
 		public void Collide(Vector3 worldPosition, SoundType soundType)
 		{
-			PlaySound(soundType);
 			StopAllCoroutines();
 			_collectibleDisplay.LoseCollected(_cam.WorldToScreenPoint(_player.transform.position));
 			var effect = Instantiate(gamePackage.collisionEffects.hitObstaclePrefab,
@@ -284,14 +282,6 @@ namespace BKRacing
 				waitAfterCollision));
 			StartCoroutine(ChangeSpeed(true, stoppingSpeed + waitAfterCollision, 0,
 				_startingSpeed, speedUpAfterCollision, 0));
-		}
-
-		public void PlaySound(SoundType type)
-		{
-			if (_sounds.ContainsKey(type))
-			{
-				_audioPlayer.PlaySound(_sounds[type], type);
-			}
 		}
 	}
 }

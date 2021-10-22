@@ -1232,7 +1232,7 @@ MonoBehaviour:
   forwardSpeed: 165
   forwardSpeedIncrease: 18
   speedIncreaseTime: 2
-  horizontalSpeed: 6
+  horizontalSpeed: 8
   crashProtectionTime: 1.5
   stoppingSpeed: 0.5
   waitAfterCollision: 1

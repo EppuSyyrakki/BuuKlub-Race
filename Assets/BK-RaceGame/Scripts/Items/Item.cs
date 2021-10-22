@@ -15,6 +15,7 @@ namespace BKRacing.Items
 
 		public virtual Sprite Sprite => spriteRenderer.sprite;
 		public bool Mirror { get; private set; }
+		public AudioClip AudioClip { get; private set; }
 
 		private void Start()
 		{

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using BKRacing.Environment;
+using BKRacing.Items;
 using UnityEngine;
 
 namespace BKRacing
@@ -24,7 +25,10 @@ namespace BKRacing
 	    private ParticleSystem _particles;
 	    private bool _crashProtection = false;
 
-	    public ParticleSystem Particles => _particles;
+		// Delegate for triggering sounds. AudioPlayer hooks itself up to this.
+		public Action<AudioClip, SoundType> triggerSound;
+
+		public ParticleSystem Particles => _particles;
 	    public bool Protected => _crashProtection;
 
 	    private void Awake()
@@ -36,12 +40,17 @@ namespace BKRacing
 			_particles = GetComponentInChildren<ParticleSystem>();
 	    }
 
+	    private void Start()
+	    {
+
+			// triggerSound();
+	    }
+
 	    private void Update()
 	    {
 		    if (Input.touchCount == 0 || !Game.Instance.ControlEnabled)
 		    {
 				_animator.SetInteger("movement", 0);
-				Game.Instance.PlaySound(SoundType.MoveForward);
 				return;
 		    }
 
@@ -58,7 +67,17 @@ namespace BKRacing
 			Move(touch.position.x < screenPosX ? Direction.Left : Direction.Right);
 	    }
 
-	    private void Move(Direction direction)
+	    private void OnTriggerEnter(Collider other)
+	    {
+		    //var item = other.GetComponent<Item>();
+
+		    //if (item != null)
+		    //{
+
+		    //}
+	    }
+
+		private void Move(Direction direction)
 	    {
 		    var amount = direction == Direction.Left ? -1 : 1;
 			Vector3 pos = transform.position;
