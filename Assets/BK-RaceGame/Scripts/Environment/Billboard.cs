@@ -7,6 +7,7 @@ namespace BKRacing.Environment
 		private Camera _cam;
 		private int _updateEvery = 3;
 		private int _frameTimer;
+		private bool _isItem = false;
 
 		private void Awake()
 		{
@@ -18,13 +19,31 @@ namespace BKRacing.Environment
 		{
 			if (_frameTimer == _updateEvery)
 			{
-				var look = -_cam.transform.forward * Game.Instance.billboardBend;
+				Vector3 look;
+
+				if (_isItem)
+				{
+					look = -_cam.transform.forward * Game.Instance.itemBillboardBend;
+					transform.forward = transform.position - look;
+					_frameTimer = 0;
+					return;
+				}
+
+				var offset = new Vector3(0, 
+					Game.Instance.decorationBillboardBendY,
+					-Game.Instance.decorationBillboardBendZ);
+				look = _cam.transform.position + offset;
 				transform.forward = transform.position - look;
 				_frameTimer = 0;
 				return;
 			}
 
 			_frameTimer++;
+		}
+
+		public void SetAsItem()
+		{
+			_isItem = true;
 		}
 	}
 }

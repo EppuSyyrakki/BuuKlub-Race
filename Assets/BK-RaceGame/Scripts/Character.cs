@@ -1,13 +1,21 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using BKRacing.Environment;
 using UnityEngine;
 
 namespace BKRacing
 {
+	[RequireComponent(typeof(Billboard))]
     public class Character : MonoBehaviour
     {
-	    [SerializeField, Range(0, 0.1f)]
+	    private enum Direction
+	    {
+			Left,
+			Right
+	    }
+
+		[SerializeField, Range(0, 0.1f)]
 	    private float moveTreshold = 0.0075f;
 
 	    private float _moveTreshold;
@@ -15,12 +23,13 @@ namespace BKRacing
 	    private Animator _animator;
 	    private ParticleSystem _particles;
 	    private bool _crashProtection = false;
-	    
+
 	    public ParticleSystem Particles => _particles;
 	    public bool Protected => _crashProtection;
 
 	    private void Awake()
 	    {
+			GetComponent<Billboard>().SetAsItem();
 		    _moveTreshold = Screen.width * moveTreshold;
 			_cam = Camera.main;
 			_animator = GetComponent<Animator>();
@@ -37,57 +46,49 @@ namespace BKRacing
 		    }
 
 		    Touch touch = Input.GetTouch(0);
-		    float tX = touch.position.x;
-		    float cX = _cam.WorldToScreenPoint(transform.position).x;
-		    float touchDelta = Mathf.Abs(tX - cX);
+		    var screenPosX = _cam.WorldToScreenPoint(transform.position).x;
 
-			if (touchDelta < _moveTreshold)
+			// if touch is very close to character, don't move
+			if (touch.position.x > screenPosX - _moveTreshold && touch.position.x < screenPosX + _moveTreshold)
 			{
+				_animator.SetInteger("movement", 0);
 				return;
 			}
-
-			touchDelta = Mathf.Clamp(touchDelta, 0, 1000f);
-
-
-			if (tX < cX)
-			{
-				MoveLeft(touchDelta);
-			}
-		    else if (tX > cX)
-			{
-				MoveRight(touchDelta);
-			}
+			
+			Move(touch.position.x < screenPosX ? Direction.Left : Direction.Right);
 	    }
 
-	    public void MoveLeft(float touchDelta)
-        {
-            _animator.SetInteger("movement", -1);
-            Move(-Game.Instance.horizontalSpeed * touchDelta / Screen.width * 5f);
-        }
+	    private void Move(Direction direction)
+	    {
+		    var amount = direction == Direction.Left ? -1 : 1;
+			Vector3 pos = transform.position;
+			float limit = Game.Instance.RoadWidth - 1;
+			var step = Game.Instance.horizontalSpeed * amount * Time.deltaTime;
+			var newX = Mathf.Clamp(pos.x + step, -limit, limit);
+			transform.position = new Vector3(newX, pos.y, pos.z);
 
-        public void MoveRight(float touchDelta)
-        {
-			_animator.SetInteger("movement", 1);
-			Move(Game.Instance.horizontalSpeed * touchDelta / Screen.width * 5f);
-        }
+			if (Mathf.Approximately(newX, pos.x))
+			{
+				amount = 0;
+			}
 
-        public void Crash()
-        {
-	        _crashProtection = true;
-	        Invoke(nameof(EnableCrashing), Game.Instance.crashProtectionTime);
-        }
-
-        private void Move(float step)
-        {
-	        Vector3 pos = transform.position;
-	        float limit = Game.Instance.RoadWidth - 1;
-	        var newX = Mathf.Clamp(pos.x + step * Time.deltaTime, -limit, limit);
-	        transform.position = new Vector3(newX, pos.y, pos.z);
-        }
+			_animator.SetInteger("movement", amount);
+		}
 
 		private void EnableCrashing()
         {
 	        _crashProtection = false;
         }
-    }
+
+		public void Crash()
+		{
+			_crashProtection = true;
+			Invoke(nameof(EnableCrashing), Game.Instance.crashProtectionTime);
+		}
+
+		public void DisableCrashing()
+		{
+			_crashProtection = true;
+		}
+	}
 }

@@ -24,6 +24,7 @@ namespace BKRacing
 		private readonly Dictionary<SoundType, AudioClip> _sounds = new Dictionary<SoundType, AudioClip>();
 		private CanvasController _startScreen, _endScreen;
 		private static Transform _spawnContainer = null;
+		private float _originalFixedTimeStep;
 		
 		[SerializeField]
 		private GamePackage gamePackage;
@@ -37,7 +38,8 @@ namespace BKRacing
 		[Range(0, 30f)]
 		public float forwardSpeedIncrease = 10f;
 		public float speedIncreaseTime = 2f;
-		public float horizontalSpeed = 2f;
+		[Range(1f, 10f)]
+		public float horizontalSpeed = 6;
 		[Range(1f, 3f), Tooltip("Time the character is protected from another crash after crashing.")]
 		public float crashProtectionTime = 1.5f;
 		[SerializeField, Range(0.1f, 1f), Tooltip("How fast a collision with obstacle stops the player")]
@@ -64,8 +66,12 @@ namespace BKRacing
 		public int obstaclesAfterCollectible = 2;
 		
 		[Header("Visual variables:")]
-		[Range(1f,200f), Tooltip("How close to the camera all sprites turn towards")]
-		public float billboardBend = 100f;
+		[Range(1f, 200f), Tooltip("How close to the camera item sprites turn towards")]
+		public float itemBillboardBend = 100f;
+		[Range(1f, 200f), Tooltip("Depth offset behind the camera where decoration sprites turn towards")]
+		public float decorationBillboardBendZ = 25f;
+		[Range(-50f, 50f), Tooltip("Height offset behind the camera where decoration sprites turn towards")]
+		public float decorationBillboardBendY = 2f;
 		[Tooltip("Curve for the height of all items after spawning")]
 		public AnimationCurve riseCurve;
 		[Range(5f,200f), Tooltip("How far from the spawn point the curve affects object height")]
@@ -92,13 +98,12 @@ namespace BKRacing
 		{
 			if (gamePackage == null) { Debug.LogError("No Graphics Package found in Game component!"); }
 
+			_instance = this;
 			_startScreen = GameObject.FindGameObjectWithTag("RacingStartScreen").GetComponent<CanvasController>();
 			_endScreen = GameObject.FindGameObjectWithTag("RacingEndScreen").GetComponent<CanvasController>();
 			_endScreen.gameObject.SetActive(false);
 			_spawnContainer = new GameObject("SpawnContainer").transform;
 			_spawnContainer.SetParent(transform);
-
-			_instance = this;
 			_cam = Camera.main;
 			_audioPlayer = _cam.gameObject.GetComponent<AudioPlayer>();
 			_collectibleDisplay = FindObjectOfType<CollectibleDisplay>();
@@ -106,7 +111,6 @@ namespace BKRacing
 			forwardSpeed = 0;
 			_roadWidth = FindObjectOfType<Road>().transform.localScale.x * 0.5f;
 			_player = FindObjectOfType<Character>();
-			Time.fixedDeltaTime = 1 / (float) fixedTimeStep;
 			SetControl(false);
 			InitGraphics();
 			InitSounds();
@@ -114,16 +118,21 @@ namespace BKRacing
 
 		private void OnEnable()
 		{
+			_originalFixedTimeStep = Time.fixedDeltaTime;
+			Time.fixedDeltaTime = 1 / (float)fixedTimeStep;
 			_collectibleDisplay.gameCompleted += EndGame;
 		}
 
 		private void OnDisable()
 		{
 			_collectibleDisplay.gameCompleted -= EndGame;
+			Time.fixedDeltaTime = _originalFixedTimeStep;
 		}
 
 		private void Update()
 		{
+			_audioPlayer.SetMoveVolumeAndPitch(Mathf.Clamp01(forwardSpeed / _startingSpeed));
+
 			// Initial start of game.
 			if (!ReadyToStart) { return; }
 
@@ -133,8 +142,6 @@ namespace BKRacing
 				StartCoroutine(ChangeSpeed(true, 0, 0, _startingSpeed, 
 					speedUpAfterCollision, 0));
 			}
-
-			_audioPlayer.SetMoveVolumeAndPitch(Mathf.Clamp01(forwardSpeed / _startingSpeed));
 		}
 
 		private void InitGraphics()

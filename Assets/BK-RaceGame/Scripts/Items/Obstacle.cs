@@ -15,6 +15,7 @@ namespace BKRacing.Items
 
 		private void Awake()
 		{
+			GetComponent<Billboard>().SetAsItem();
 			var col = GetComponent<SphereCollider>();
 			col.center = Vector3.up;
 			col.radius = 1;

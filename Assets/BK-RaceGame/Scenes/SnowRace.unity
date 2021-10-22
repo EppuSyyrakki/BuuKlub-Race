@@ -1244,7 +1244,9 @@ MonoBehaviour:
   initialSpawnCount: 4
   ensureCollectibleEvery: 4
   obstaclesAfterCollectible: 2
-  billboardBend: 100
+  itemBillboardBend: 100
+  decorationBillboardBendZ: 25
+  decorationBillboardBendY: 0
   riseCurve:
     serializedVersion: 2
     m_Curve:
