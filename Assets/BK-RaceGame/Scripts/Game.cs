@@ -23,6 +23,7 @@ namespace BKRacing
 		private AudioPlayer _audioPlayer;
 		private readonly Dictionary<SoundType, AudioClip> _sounds = new Dictionary<SoundType, AudioClip>();
 		private CanvasController _startScreen, _endScreen;
+		private static Transform _spawnContainer = null;
 		
 		[SerializeField]
 		private GamePackage gamePackage;
@@ -94,6 +95,8 @@ namespace BKRacing
 			_startScreen = GameObject.FindGameObjectWithTag("RacingStartScreen").GetComponent<CanvasController>();
 			_endScreen = GameObject.FindGameObjectWithTag("RacingEndScreen").GetComponent<CanvasController>();
 			_endScreen.gameObject.SetActive(false);
+			_spawnContainer = new GameObject("SpawnContainer").transform;
+			_spawnContainer.SetParent(transform);
 
 			_instance = this;
 			_cam = Camera.main;
@@ -145,7 +148,7 @@ namespace BKRacing
 			
 			foreach (var effect in gamePackage.weatherEffects)
 			{
-				Instantiate(effect);
+				Instantiate(effect, _spawnContainer);
 			}
 		}
 
@@ -190,6 +193,7 @@ namespace BKRacing
 		private static T CreateSingle<T>(Sprite sprite, bool mirror, SoundType soundType) where T : Item
 		{
 			var go = new GameObject(sprite.name);
+			go.transform.SetParent(_spawnContainer);
 			var item = go.AddComponent<T>();
 			item.Init(sprite, mirror, soundType);
 			return item;
@@ -253,7 +257,7 @@ namespace BKRacing
 			var effect = Instantiate(gamePackage.collisionEffects.hitCollectiblePrefab,
 				worldPosition,
 				Quaternion.identity,
-				null);
+				_spawnContainer);
 			Destroy(effect, 2.5f);
 			StartCoroutine(ChangeSpeed(true, 0, forwardSpeed,
 				forwardSpeed + forwardSpeedIncrease, speedIncreaseTime, 0));
@@ -267,7 +271,7 @@ namespace BKRacing
 			var effect = Instantiate(gamePackage.collisionEffects.hitObstaclePrefab,
 				worldPosition,
 				Quaternion.identity,
-				null);
+				_spawnContainer);
 			Destroy(effect, 5f);
 			StartCoroutine(ChangeSpeed(false, 0, forwardSpeed, 0, stoppingSpeed,
 				waitAfterCollision));

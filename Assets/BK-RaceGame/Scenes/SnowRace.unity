@@ -1238,7 +1238,7 @@ MonoBehaviour:
   waitAfterCollision: 1
   speedUpAfterCollision: 1
   collectibleBias: 0.25
-  minSpawnTime: 0.35
+  minSpawnTime: 0.5
   maxSpawnTime: 2.25
   decorationDensity: 5
   initialSpawnCount: 4
