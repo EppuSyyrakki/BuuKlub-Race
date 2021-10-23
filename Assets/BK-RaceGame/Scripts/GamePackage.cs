@@ -15,19 +15,14 @@ namespace BKRacing
 	[Serializable]
 	public class RoadItemSprite : ItemSprite
 	{
-		public Sound[] collisionSounds;
+		public Sound collisionSound;
 	}
 
 	[Serializable]
 	public class Sound
 	{
 		public AudioClip clip;
-		public SoundType type;
-
-		public Sound(SoundType type)
-		{
-			this.type = type;
-		}
+		public SoundType Type { get; set; }
 	}
 
 	[Serializable]
@@ -61,14 +56,17 @@ namespace BKRacing
 	[Serializable]
 	public class SoundCollection
 	{
-		public Sound forwardMovement = new Sound(SoundType.Moving);
-		public Sound sidewaysMovement = new Sound(SoundType.Moving);
-		public Sound endFanfare = new Sound(SoundType.Effect);
-		[Header("Voice alternatives to play in the end screen (set type to Voice):")]
+		public Sound forwardMovement;
+		public Sound sidewaysMovement;
+		public Sound endFanfare;
+		[Header("Voice alternatives:")]
+		[Header("On game start:")]
+		public Sound[] startVoice;
+		[Header("End screen:")]
 		public Sound[] endVoice;
-		[Header("Voice alternatives to play when colliding (set type to Voice):")]
+		[Header("On colliding with obstacles:")]
 		public Sound[] collisionVoice;
-		[Header("Voice alternatives to play when collecting (set type to Voice):")]
+		[Header("On collecting an item:")]
 		public Sound[] collectVoice;
 	}
 
@@ -85,10 +83,9 @@ namespace BKRacing
 		public GroundMaterial groundMaterial;
 
 		[Header("The things to be collected by Character")]
-		public GameObject collectibleAccentEffect;
 		public List<RoadItemSprite> collectibleSprites;
 
-		[Header("Obstacles that slow down the Character")]
+		[Header("Obstacles that stop the Character")]
 		public List<RoadItemSprite> obstacleSprites;
 
 		[Header("Textures that appear outside the road")]
@@ -97,14 +94,35 @@ namespace BKRacing
 		[Header("Items that appear from the collectibles")]
 		public Color uncollectedColor;
 		[Range(0.05f, 0.3f), Tooltip("Size of the image as fraction of screen width")]
-		public float itemSize = 0.125f;
+		public float itemSize = 0.2f;
 		public List<ItemSprite> itemSprites;
 
 		[Header("Prefabs for effects")]
 		public CollisionEffects collisionEffects;
 		public List<GameObject> weatherEffects;
+		public GameObject collectibleAccentEffect;
 
-		[Header("Sounds:")]
+		[Header("Sounds (collision/collection effects are set from items):")]
 		public SoundCollection soundCollection;
+
+		private void OnValidate()
+		{
+			// Set the sound Types that define the audio source used for each sound automatically.
+			SetSoundTypes();
+		}
+
+		private void SetSoundTypes()
+		{
+			foreach (var sound in soundCollection.collectVoice) { sound.Type = SoundType.Voice; }
+			foreach (var sound in soundCollection.collisionVoice) { sound.Type = SoundType.Voice; }
+			foreach (var sound in soundCollection.endVoice) { sound.Type = SoundType.Voice; }
+			foreach (var sound in soundCollection.startVoice) { sound.Type = SoundType.Voice; }
+			foreach (var item in collectibleSprites) { item.collisionSound.Type = SoundType.Effect; }
+			foreach (var item in obstacleSprites) { item.collisionSound.Type = SoundType.Effect; }
+
+			soundCollection.forwardMovement.Type = SoundType.Moving;
+			soundCollection.sidewaysMovement.Type = SoundType.Moving;
+			soundCollection.endFanfare.Type = SoundType.Effect;
+		}
 	}
 }

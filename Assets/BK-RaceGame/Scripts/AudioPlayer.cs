@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace BKRacing
 {
@@ -14,22 +15,42 @@ namespace BKRacing
 
 	public class AudioPlayer : MonoBehaviour
 	{
-		private AudioSource _movingSource;
-		private AudioSource _effectSource;
-		private AudioSource _voiceSource;
+		private AudioSource Moving
+		{
+			get
+			{
+				if (_moving == null) { _moving = GetComponents<AudioSource>()[0]; }
+				return _moving;
+			}
+		}
+
+		private AudioSource Effect
+		{
+			get
+			{
+				if (_effect == null) { _effect = GetComponents<AudioSource>()[1]; }
+				return _effect;
+			}
+		}
+		private AudioSource Voice
+		{
+			get
+			{
+				if (_voice == null) { _voice = GetComponents<AudioSource>()[2]; }
+				return _voice;
+			}
+		}
+
+		private AudioSource _moving, _effect, _voice;
 		private float _maxVol, _movingVol, _effectVol, _voiceVol;
 		
 		private void Start()
 		{
-			AudioSource[] sources = GetComponents<AudioSource>();
-			_movingSource = sources[0];
-			_effectSource = sources[1];
-			_voiceSource = sources[2];
 			_maxVol = Game.Instance.masterVolume;
 			SetVolumeVariables();
-			_movingSource.loop = true;
-			_effectSource.loop = false;
-			_voiceSource.loop = false;
+			Moving.loop = true;
+			Effect.loop = false;
+			Voice.loop = false;
 		}
 
 		private void OnEnable()
@@ -59,24 +80,24 @@ namespace BKRacing
 		
 		public void SetMoveVolumeAndPitch(float vol)
 		{
-			_movingSource.volume = Mathf.Lerp(0, _maxVol, vol);
-			_movingSource.pitch = Mathf.Lerp(0.9f, 1.1f, vol);
+			Moving.volume = Mathf.Lerp(0, _maxVol, vol);
+			Moving.pitch = Mathf.Lerp(0.9f, 1.1f, vol);
 		}
 
-		public void PlayAudio(AudioClip clip, SoundType type)
+		public void PlayAudio(Sound sound)
 		{
-			switch (type)
+			switch (sound.Type)
 			{
 				case SoundType.Moving:
-					if (_movingSource.clip == clip) return;
-					PlayFromSource(clip, _movingSource);
+					if (Moving.clip == sound.clip) return;
+					PlayFromSource(sound.clip, Moving);
 					break;
 				case SoundType.Effect:
-					PlayFromSource(clip, _effectSource);
+					PlayFromSource(sound.clip, Effect);
 					break;
 				case SoundType.Voice:
-					if (_voiceSource.isPlaying) return;
-					PlayFromSource(clip, _voiceSource);
+					if (Voice.isPlaying) return;
+					PlayFromSource(sound.clip, Voice);
 					break;
 			}
 		}

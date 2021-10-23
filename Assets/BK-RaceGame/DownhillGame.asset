@@ -20,82 +20,77 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
     smoothness: 0.333
     metallic: 0
-  collectibleAccentEffect: {fileID: 283717274259775710, guid: 6d89a3921b9d5ca4f94a03aaa5a538c0,
-    type: 3}
   collectibleSprites:
   - sprite: {fileID: 3286163911610860551, guid: b8582351bf469bf4f9e5646beab025e3,
       type: 3}
     randomMirroring: 0
-    associatedSound: 2
+    collisionSound:
+      clip: {fileID: 8300000, guid: f33141d02861b86498448652f3a9cf77, type: 3}
   - sprite: {fileID: 3286163911610860551, guid: e80b29adbd9e37e4aa042b94aca55676,
       type: 3}
     randomMirroring: 0
-    associatedSound: 2
+    collisionSound:
+      clip: {fileID: 8300000, guid: f33141d02861b86498448652f3a9cf77, type: 3}
   - sprite: {fileID: 3286163911610860551, guid: 99761769b9406ba40aae09dd3b82261f,
       type: 3}
     randomMirroring: 0
-    associatedSound: 2
+    collisionSound:
+      clip: {fileID: 8300000, guid: f33141d02861b86498448652f3a9cf77, type: 3}
   - sprite: {fileID: 3286163911610860551, guid: 9990301d233b2e84e8c022e8ba5f5b2f,
       type: 3}
     randomMirroring: 0
-    associatedSound: 2
+    collisionSound:
+      clip: {fileID: 8300000, guid: f33141d02861b86498448652f3a9cf77, type: 3}
   - sprite: {fileID: 3286163911610860551, guid: 6ca1ef1d20701d543b141efdb09b26e9,
       type: 3}
     randomMirroring: 0
-    associatedSound: 2
+    collisionSound:
+      clip: {fileID: 8300000, guid: f33141d02861b86498448652f3a9cf77, type: 3}
   obstacleSprites:
   - sprite: {fileID: 3286163911610860551, guid: b0b832b7e8a34c442935273984635efc,
       type: 3}
     randomMirroring: 0
-    associatedSound: 5
+    collisionSound:
+      clip: {fileID: 8300000, guid: 8e4f7d7e786bf28429541e2a472d1cb7, type: 3}
   - sprite: {fileID: 3286163911610860551, guid: 3eea7004a025c264f87b00642e43c146,
       type: 3}
     randomMirroring: 0
-    associatedSound: 6
+    collisionSound:
+      clip: {fileID: 8300000, guid: 3c33965fb9beb4643abbf0ca0791a6ac, type: 3}
   - sprite: {fileID: 3286163911610860551, guid: 4c60fb98d066fea4c882ea1c6d5f6ebb,
       type: 3}
     randomMirroring: 0
-    associatedSound: 7
+    collisionSound:
+      clip: {fileID: 8300000, guid: fab23d5d0290a524086c1899125ee815, type: 3}
   decorationSprites:
   - sprite: {fileID: 3286163911610860551, guid: b33cacb70ab264c4496aa780bf1f6eb9,
       type: 3}
     randomMirroring: 0
-    associatedSound: 0
   - sprite: {fileID: 3286163911610860551, guid: b10dcc5a15a3c8948a657b2d2262ca0b,
       type: 3}
     randomMirroring: 0
-    associatedSound: 0
   - sprite: {fileID: 3286163911610860551, guid: a9144fc8597ac9340ab8b6f3d5f9a1ad,
       type: 3}
     randomMirroring: 0
-    associatedSound: 0
   uncollectedColor: {r: 0, g: 0, b: 0, a: 1}
   itemSize: 0.25
   itemSprites:
   - sprite: {fileID: 21300000, guid: 871e7540c7a23cd4986094181fcb1d9c, type: 3}
     randomMirroring: 0
-    associatedSound: 0
   - sprite: {fileID: 21300000, guid: 3eee8a2fd5d125c4ba6d3062d16a2cc1, type: 3}
     randomMirroring: 0
-    associatedSound: 0
   - sprite: {fileID: 21300000, guid: 888e0fa023c3a0b43927c3e6cb22484e, type: 3}
     randomMirroring: 0
-    associatedSound: 0
   - sprite: {fileID: 21300000, guid: 8c5925d3004285a49a0bcf783c7c98e9, type: 3}
     randomMirroring: 0
-    associatedSound: 0
   - sprite: {fileID: 21300000, guid: 77a3e3cbb9be7a64fad057d0cde73a93, type: 3}
     randomMirroring: 0
-    associatedSound: 0
   - sprite: {fileID: 21300000, guid: a4e1761e775b99e42890b42955c95717, type: 3}
     randomMirroring: 0
-    associatedSound: 0
   - sprite: {fileID: 21300000, guid: 59cf3066bbacebd46b867d05b6b1941a, type: 3}
     randomMirroring: 0
-    associatedSound: 0
   - sprite: {fileID: 21300000, guid: 0e7fec108590024418bfbf0466f792ff, type: 3}
     randomMirroring: 0
-    associatedSound: 0
   collisionEffects:
     hitObstaclePrefab: {fileID: 2473328970595687785, guid: 55a2463da15dbb14fbf8a7320daaffa0,
       type: 3}
@@ -104,19 +99,40 @@ MonoBehaviour:
   weatherEffects:
   - {fileID: 8931038786710276726, guid: 3bde7e40a8e504d4d99805703869dd46, type: 3}
   - {fileID: 6338130425423638093, guid: a2aedda27a98acf4fa81572f3fda3f64, type: 3}
-  audioVolume: 0.438
-  sounds:
-  - type: 0
-    clip: {fileID: 8300000, guid: 22882708c4308d94ba5453ad0ada311e, type: 3}
-  - type: 1
-    clip: {fileID: 8300000, guid: 735b5df483eda5f40b9e0474f61fdd0b, type: 3}
-  - type: 5
-    clip: {fileID: 8300000, guid: fab23d5d0290a524086c1899125ee815, type: 3}
-  - type: 6
-    clip: {fileID: 8300000, guid: 3c33965fb9beb4643abbf0ca0791a6ac, type: 3}
-  - type: 7
-    clip: {fileID: 8300000, guid: 8e4f7d7e786bf28429541e2a472d1cb7, type: 3}
-  - type: 2
-    clip: {fileID: 8300000, guid: f33141d02861b86498448652f3a9cf77, type: 3}
-  - type: 8
-    clip: {fileID: 8300000, guid: 97240a9f7ac045544b90cc0513de9efc, type: 3}
+  collectibleAccentEffect: {fileID: 283717274259775710, guid: 6d89a3921b9d5ca4f94a03aaa5a538c0,
+    type: 3}
+  soundCollection:
+    forwardMovement:
+      clip: {fileID: 8300000, guid: 22882708c4308d94ba5453ad0ada311e, type: 3}
+    sidewaysMovement:
+      clip: {fileID: 8300000, guid: 735b5df483eda5f40b9e0474f61fdd0b, type: 3}
+    endFanfare:
+      clip: {fileID: 8300000, guid: 97240a9f7ac045544b90cc0513de9efc, type: 3}
+    startVoice:
+    - clip: {fileID: 8300000, guid: 7d66655e457aac04ab2a77fba4eb5cf1, type: 3}
+    - clip: {fileID: 8300000, guid: deffbcd0c25ef8b4ca6f78cddcae16b6, type: 3}
+    - clip: {fileID: 8300000, guid: 977a8ce2d32e95044bd06d5a4404952c, type: 3}
+    - clip: {fileID: 8300000, guid: 507dca9a193c7a8419d00cc8d9e7c366, type: 3}
+    - clip: {fileID: 8300000, guid: d8da7e9f1a1921044809b7dc5df122b4, type: 3}
+    - clip: {fileID: 8300000, guid: 5f87393c52214b74aaf58516be5172e4, type: 3}
+    endVoice:
+    - clip: {fileID: 8300000, guid: 7fda79f2328b0f64b855eaba24454426, type: 3}
+    - clip: {fileID: 8300000, guid: 055b0b255388eb14db1706c18d5ed606, type: 3}
+    - clip: {fileID: 8300000, guid: ac2eae093b084d14ba77416ccba0e5a0, type: 3}
+    - clip: {fileID: 8300000, guid: a5ce4463b287fd448ae75031b514bf22, type: 3}
+    - clip: {fileID: 8300000, guid: 5fee3a20514d122448c4e83c89ba08a0, type: 3}
+    - clip: {fileID: 8300000, guid: d106203140dd8a54d9e550491fdfd00f, type: 3}
+    - clip: {fileID: 8300000, guid: c5da0966b1fc26741a81e1ce86efee92, type: 3}
+    - clip: {fileID: 8300000, guid: 0bda82b7eeb33154aaa3d0272841cc90, type: 3}
+    collisionVoice:
+    - clip: {fileID: 8300000, guid: d48eb5cfe6a9a2f4093074f86de7927e, type: 3}
+    - clip: {fileID: 8300000, guid: 929b18abebb1a2a4aad91dfc5ccae183, type: 3}
+    - clip: {fileID: 8300000, guid: 61538941e8040fb49ac54d3d9ad7eee9, type: 3}
+    - clip: {fileID: 8300000, guid: 7582f1361750c3946a361fd4836bb05b, type: 3}
+    collectVoice:
+    - clip: {fileID: 8300000, guid: 0d464b7aa3cb31b4aa8aa0a73d00c172, type: 3}
+    - clip: {fileID: 8300000, guid: 1e1ed0f4a5da09b4ea248e1406cfb6ba, type: 3}
+    - clip: {fileID: 8300000, guid: 196616415a1e36d429714bf22d16189f, type: 3}
+    - clip: {fileID: 8300000, guid: 9b99005da96478b4e95b981b0d373023, type: 3}
+    - clip: {fileID: 8300000, guid: 44449a07b9979a345a8ee7b0d8e95b73, type: 3}
+    - clip: {fileID: 8300000, guid: 7adb77162e9d22f44816bd5f9d7d0f57, type: 3}

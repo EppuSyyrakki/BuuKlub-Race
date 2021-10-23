@@ -43,7 +43,7 @@ namespace BKRacing.Items
 			
 			var animator = c.GetComponent<Animator>();
 			animator.SetTrigger("collect");
-			Game.Instance.Collect(transform.position, soundType);
+			Game.Instance.Collect(transform.position);
 			Destroy(gameObject);
 		}
 	}

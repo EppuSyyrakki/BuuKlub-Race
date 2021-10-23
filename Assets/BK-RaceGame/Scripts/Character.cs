@@ -24,9 +24,10 @@ namespace BKRacing
 	    private Animator _animator;
 	    private ParticleSystem _particles;
 	    private bool _crashProtection = false;
+	    private SoundCollection _soundCollection;
 
 		// Delegate for triggering sounds. AudioPlayer hooks itself up to this.
-		public Action<AudioClip, SoundType> triggerSound;
+		public Action<Sound> triggerSound;
 
 		public ParticleSystem Particles => _particles;
 	    public bool Protected => _crashProtection;
@@ -42,8 +43,8 @@ namespace BKRacing
 
 	    private void Start()
 	    {
-
-			// triggerSound();
+		    _soundCollection = Game.Instance.SoundCollection;
+		    triggerSound(_soundCollection.forwardMovement);
 	    }
 
 	    private void Update()
@@ -69,13 +70,13 @@ namespace BKRacing
 
 	    private void OnTriggerEnter(Collider other)
 	    {
-		    //var item = other.GetComponent<Item>();
+			var item = other.GetComponent<Item>();
 
-		    //if (item != null)
-		    //{
+			if (item != null && item.Sound != null)
+			{
 
-		    //}
-	    }
+			}
+		}
 
 		private void Move(Direction direction)
 	    {

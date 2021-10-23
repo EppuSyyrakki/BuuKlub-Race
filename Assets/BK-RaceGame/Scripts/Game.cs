@@ -11,7 +11,6 @@ namespace BKRacing
 	public class Game : MonoBehaviour
 	{
 		private static Game _instance;
-		private Camera _cam;
 		private CollectibleDisplay _collectibleDisplay;
 		private Collectible[] _collectibles;
 		private Obstacle[] _obstacles;
@@ -27,6 +26,9 @@ namespace BKRacing
 		
 		[SerializeField]
 		private GamePackage gamePackage;
+
+		[SerializeField]
+		private Camera sceneCamera = null;
 
 		public static Game Instance => _instance;
 		public bool ControlEnabled { get; private set; }
@@ -106,6 +108,7 @@ namespace BKRacing
 		private void Awake()
 		{
 			if (gamePackage == null) { Debug.LogError("No Graphics Package found in Game component!"); }
+			if (sceneCamera == null) { Debug.LogError("No Camera set in Game component!");}
 
 			_instance = this;
 			_startScreen = GameObject.FindGameObjectWithTag("RacingStartScreen").GetComponent<CanvasController>();
@@ -113,15 +116,14 @@ namespace BKRacing
 			_endScreen.gameObject.SetActive(false);
 			_spawnContainer = new GameObject("SpawnContainer").transform;
 			_spawnContainer.SetParent(transform);
-			_cam = Camera.main;
-			_audioPlayer = _cam.gameObject.GetComponent<AudioPlayer>();
+			_audioPlayer = sceneCamera.gameObject.GetComponent<AudioPlayer>();
 			_collectibleDisplay = FindObjectOfType<CollectibleDisplay>();
 			_startingSpeed = forwardSpeed;
 			forwardSpeed = 0;
 			_roadWidth = FindObjectOfType<Road>().transform.localScale.x * 0.5f;
 			_player = FindObjectOfType<Character>();
 			SetControl(false);
-			InitGraphics();
+			InitItems();
 		}
 
 		private void OnEnable()
@@ -152,58 +154,62 @@ namespace BKRacing
 			}
 		}
 
-		private void InitGraphics()
+		private void InitItems()
 		{
 			_collectibles = InitItemArray<Collectible>(
-				GetSpritesInfo(gamePackage.collectibleSprites, out var mirrors, out var soundTypes), mirrors, soundTypes);
+				GetItemInfo(gamePackage.collectibleSprites, out var m, out var s), m, s);
 			_obstacles = InitItemArray<Obstacle>(
-				GetSpritesInfo(gamePackage.obstacleSprites, out mirrors, out soundTypes), mirrors, soundTypes);
+				GetItemInfo(gamePackage.obstacleSprites, out m, out s), m, s);
 			_decorations = InitItemArray<Decoration>(
-				GetSpritesInfo(gamePackage.decorationSprites, out mirrors, out soundTypes), mirrors, soundTypes);
+				GetItemInfo(gamePackage.decorationSprites, out m, out s), m, s);
 			
 			foreach (var effect in gamePackage.weatherEffects)
 			{
 				Instantiate(effect, _spawnContainer);
 			}
 		}
-		
-		private Sprite[] GetSpritesInfo<T>(List<T> items, out bool[] mirrors, out SoundType[] soundTypes) 
-			where T : ItemSprite
-		{
-			var sprites = new Sprite[items.Count];
-			mirrors = new bool[items.Count];
-			soundTypes = new SoundType[items.Count];
 
-			for (int i = 0; i < items.Count; i++)
-			{
-				sprites[i] = items[i].sprite;
-				mirrors[i] = items[i].randomMirroring;
-				
-			}
-
-			return sprites;
-		}
-
-		private static T[] InitItemArray<T>(Sprite[] sprites, bool[] mirrors, SoundType[] soundTypes) where T : Item
+		private static T[] InitItemArray<T>(Sprite[] sprites, bool[] mirrors, Sound[] sounds) where T : Item
 		{
 			var items = new T[sprites.Length];
 
 			for (int i = 0; i < sprites.Length; i++)
 			{
-				var item = CreateSingle<T>(sprites[i], mirrors[i], soundTypes[i]);
+				var item = CreateSingle<T>(sprites[i], mirrors[i], sounds[i]);
 				items[i] = item;
 			}
 
 			return items;
 		}
 
-		private static T CreateSingle<T>(Sprite sprite, bool mirror, SoundType soundType) where T : Item
+		private static T CreateSingle<T>(Sprite sprite, bool mirror, Sound sound) where T : Item
 		{
 			var go = new GameObject(sprite.name);
 			go.transform.SetParent(_spawnContainer);
 			var item = go.AddComponent<T>();
-			item.Init(sprite, mirror, soundType);
+			item.Init(sprite, mirror, sound);
 			return item;
+		}
+
+		private Sprite[] GetItemInfo<T>(List<T> items, out bool[] mirrors, out Sound[] sounds) 
+			where T : ItemSprite
+		{
+			var sprites = new Sprite[items.Count];
+			mirrors = new bool[items.Count];
+			sounds = new Sound[items.Count];
+
+			for (int i = 0; i < items.Count; i++)
+			{
+				sprites[i] = items[i].sprite;
+				mirrors[i] = items[i].randomMirroring;
+
+				if (items[i] is RoadItemSprite item)
+				{
+					sounds[i] = item.collisionSound;
+				}
+			}
+
+			return sprites;
 		}
 
 		private IEnumerator ChangeSpeed(bool control, float preWait, float from, float to, float time, float postWait)
@@ -256,10 +262,10 @@ namespace BKRacing
 			return sprites.ToArray();
 		}
 
-		public void Collect(Vector3 worldPosition, SoundType soundType)
+		public void Collect(Vector3 worldPosition)
 		{
 			StopAllCoroutines();
-			_collectibleDisplay.CollectNew(_cam.WorldToScreenPoint(worldPosition));
+			_collectibleDisplay.CollectNew(sceneCamera.WorldToScreenPoint(worldPosition));
 			var effect = Instantiate(gamePackage.collisionEffects.hitCollectiblePrefab,
 				worldPosition,
 				Quaternion.identity,
@@ -269,10 +275,10 @@ namespace BKRacing
 				forwardSpeed + forwardSpeedIncrease, speedIncreaseTime, 0));
 		}
 
-		public void Collide(Vector3 worldPosition, SoundType soundType)
+		public void Collide(Vector3 worldPosition)
 		{
 			StopAllCoroutines();
-			_collectibleDisplay.LoseCollected(_cam.WorldToScreenPoint(_player.transform.position));
+			_collectibleDisplay.LoseCollected(sceneCamera.WorldToScreenPoint(_player.transform.position));
 			var effect = Instantiate(gamePackage.collisionEffects.hitObstaclePrefab,
 				worldPosition,
 				Quaternion.identity,
