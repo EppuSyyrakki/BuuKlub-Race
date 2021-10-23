@@ -77,6 +77,19 @@ namespace BKRacing
 		public AnimationCurve riseCurve;
 		[Range(5f,200f), Tooltip("How far from the spawn point the curve affects object height")]
 		public float curveDistance = 20f;
+		[Range(0, 150f), Tooltip("The height where the background card is drawn")]
+		public float backgroundY = 50f;
+		[Range(200f, 500f), Tooltip("The depth where the background card is drawn")]
+		public float backgroundZ = 300f;
+		[Range(0.5f, 4f), Tooltip("Amount to scale the background in size")]
+		public float backgroundScale = 1f;
+		
+		[Header("User Interface variables:")]
+		public Color uncollectedColor;
+		[Range(0, 1f), Tooltip("Collected item position on the screen")]
+		public float itemYPosition = 0.4f, itemXPosition = 0.25f;
+		[Range(0.05f, 0.3f), Tooltip("Size of the collected items as fraction of screen width")]
+		public float itemSize = 0.2f;
 
 		[Header("Audio source volumes:")]
 		[Range(0, 1f)]
@@ -99,9 +112,7 @@ namespace BKRacing
 		public Obstacle[] Obstacles => _obstacles;
 		public Decoration[] Decorations => _decorations;
 		public Character Player => _player;
-		public Color UncollectedColor => gamePackage.uncollectedColor;
 		public GameObject CollectibleAccent => gamePackage.collectibleAccentEffect;
-		public float CollectedSize => gamePackage.itemSize;
 		public float RoadWidth => _roadWidth;
 		public SoundCollection SoundCollection => gamePackage.soundCollection;
 
@@ -151,6 +162,7 @@ namespace BKRacing
 				_gameStarted = true;
 				StartCoroutine(ChangeSpeed(true, 0, 0, _startingSpeed, 
 					speedUpAfterCollision, 0));
+				Player.StartMoving();
 			}
 		}
 
@@ -240,6 +252,7 @@ namespace BKRacing
 		private void EndGame()
 		{
 			// TODO: make good
+			Player.DisableCrashing();
 			StartCoroutine(ChangeSpeed(false, 1f, forwardSpeed, 0, 1, 0));
 			Invoke(nameof(ShowEndScreen), 2f);
 		}

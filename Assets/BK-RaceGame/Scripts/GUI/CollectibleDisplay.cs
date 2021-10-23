@@ -13,9 +13,6 @@ namespace BKRacing.GUI
 		[SerializeField]
 		private AnimationCurve toCenterCurve, toInventoryCurve, loseItemCurve;
 
-		[SerializeField, Range(0, 1f)]
-		private float itemYPosition = 0.6f, itemXPosition = 0.65f;
-
 		[SerializeField]
 		private float moveTime = 0.5f, waitTime = 1f, flyTime = 1.5f;
 
@@ -25,14 +22,20 @@ namespace BKRacing.GUI
 		private Image[] _allItems;
 		private List<Image> _notCollected;
 		private List<Image> _collected;
+		private float _itemYPosition;
+		private float _itemXPosition;
+		private float _collectedSize;
 
 		public Action gameCompleted;
 
 		private void Start()
 		{
-			_centerTarget = new Vector3(0, Screen.height * itemYPosition, 0);
-			_size = Screen.width * Game.Instance.CollectedSize;
-			_centerX = Screen.width * itemXPosition;
+			_itemYPosition = Game.Instance.itemYPosition;
+			_itemXPosition = Game.Instance.itemXPosition;
+			_collectedSize = Game.Instance.itemSize;
+			_centerTarget = new Vector3(0, Screen.height * _itemYPosition, 0);
+			_size = Screen.width * _collectedSize;
+			_centerX = Screen.width * _itemXPosition;
 			var items = Game.Instance.GetUiSprites();
 			_allItems = new Image[items.Length];
 			_notCollected = new List<Image>();
@@ -43,12 +46,21 @@ namespace BKRacing.GUI
 			{
 				var current = i == 0 ? source : Instantiate(source, transform);
 				current.sprite = items[i];
-				current.color = Game.Instance.UncollectedColor;
+				current.color = Game.Instance.uncollectedColor;
 				_allItems[i] = current;
 				_notCollected.Add(current);
 			}
 		}
-		
+
+#if UNITY_EDITOR
+		private void Update()
+		{
+			_itemYPosition = Game.Instance.itemYPosition;
+			_itemXPosition = Game.Instance.itemXPosition;
+			_collectedSize = Game.Instance.itemSize;
+		}
+#endif
+
 		public void CollectNew(Vector2 screenPosition)
 		{
 			if (_notCollected.Count == 0) { return; }
@@ -77,7 +89,7 @@ namespace BKRacing.GUI
 			var lost = Instantiate(item, transform.parent);
 			lost.sprite = item.sprite;
 			lost.rectTransform.position = screenPosition;
-			item.color = Game.Instance.UncollectedColor;
+			item.color = Game.Instance.uncollectedColor;
 			var target = new Vector3(Random.Range(0, Screen.width), 0, 0);
 			StartCoroutine(LaunchLostItem(lost.rectTransform, target));
 		}
@@ -85,7 +97,7 @@ namespace BKRacing.GUI
 		private IEnumerator LaunchLostItem(RectTransform rt, Vector3 target)
 		{
 			var source = rt.position;
-			var size = Screen.width * Game.Instance.CollectedSize;
+			var size = Screen.width * _collectedSize;
 			var height = Screen.height;
 			float time = 0;
 			rt.sizeDelta = new Vector3(size, size);

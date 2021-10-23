@@ -41,8 +41,7 @@ namespace BKRacing.Items
 		{
 			if (!other.gameObject.TryGetComponent<Character>(out var c)) { return; }
 			
-			var animator = c.GetComponent<Animator>();
-			animator.SetTrigger("collect");
+			c.Animator.SetTrigger("collect");
 			Game.Instance.Collect(transform.position);
 			Destroy(gameObject);
 		}

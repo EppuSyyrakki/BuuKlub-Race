@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using BKRacing.Environment;
 using BKRacing.Items;
+using TMPro;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace BKRacing
 {
@@ -25,12 +27,13 @@ namespace BKRacing
 	    private ParticleSystem _particles;
 	    private bool _crashProtection = false;
 	    private SoundCollection _soundCollection;
-
+	    
 		// Delegate for triggering sounds. AudioPlayer hooks itself up to this.
 		public Action<Sound> triggerSound;
 
 		public ParticleSystem Particles => _particles;
 	    public bool Protected => _crashProtection;
+	    public Animator Animator => _animator;
 
 	    private void Awake()
 	    {
@@ -44,13 +47,13 @@ namespace BKRacing
 	    private void Start()
 	    {
 		    _soundCollection = Game.Instance.SoundCollection;
-		    triggerSound(_soundCollection.forwardMovement);
 	    }
 
 	    private void Update()
 	    {
 		    if (Input.touchCount == 0 || !Game.Instance.ControlEnabled)
 		    {
+			    triggerSound(_soundCollection.forwardMovement);
 				_animator.SetInteger("movement", 0);
 				return;
 		    }
@@ -64,7 +67,8 @@ namespace BKRacing
 				_animator.SetInteger("movement", 0);
 				return;
 			}
-			
+
+			triggerSound(_soundCollection.sidewaysMovement);
 			Move(touch.position.x < screenPosX ? Direction.Left : Direction.Right);
 	    }
 
@@ -72,11 +76,19 @@ namespace BKRacing
 	    {
 			var item = other.GetComponent<Item>();
 
-			if (item != null && item.Sound != null)
-			{
+			if (item == null || item.Sound == null) { return; }
 
+			triggerSound(item.Sound);
+
+			if (item is Obstacle)
+			{
+				triggerSound(GetRandomSound(_soundCollection.collisionVoice));
 			}
-		}
+			else if (item is Collectible)
+			{
+				triggerSound(GetRandomSound(_soundCollection.collectVoice));
+			}
+	    }
 
 		private void Move(Direction direction)
 	    {
@@ -110,5 +122,16 @@ namespace BKRacing
 		{
 			_crashProtection = true;
 		}
-	}
+
+		public void StartMoving()
+		{
+			triggerSound(GetRandomSound(_soundCollection.startVoice));
+			_animator.SetTrigger("collect");
+		}
+
+		private Sound GetRandomSound(Sound[] sounds)
+		{
+			return sounds[Random.Range(0, sounds.Length)];
+		}
+    }
 }

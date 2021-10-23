@@ -54,5 +54,10 @@ namespace BKRacing.Items
 			Mirror = mirror;
 			Sound = sound;
 		}
+
+		public void SetSound(Sound sound)
+		{
+			Sound = sound;
+		}
 	}
 }

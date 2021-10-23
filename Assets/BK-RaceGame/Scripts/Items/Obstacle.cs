@@ -46,10 +46,9 @@ namespace BKRacing.Items
 
 			if (c.Protected) { return; }
 
-			var animator = c.GetComponent<Animator>();
-			animator.SetTrigger("hit");
-			Game.Instance.Collide(transform.position);
+			c.Animator.SetTrigger("hit");
 			c.Crash();
+			Game.Instance.Collide(transform.position);
 		}
 	}
 }

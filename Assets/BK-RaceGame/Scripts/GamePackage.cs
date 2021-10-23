@@ -59,7 +59,6 @@ namespace BKRacing
 		public Sound forwardMovement;
 		public Sound sidewaysMovement;
 		public Sound endFanfare;
-		[Header("Voice alternatives:")]
 		[Header("On game start:")]
 		public Sound[] startVoice;
 		[Header("End screen:")]
@@ -92,9 +91,6 @@ namespace BKRacing
 		public List<ItemSprite> decorationSprites;
 
 		[Header("Items that appear from the collectibles")]
-		public Color uncollectedColor;
-		[Range(0.05f, 0.3f), Tooltip("Size of the image as fraction of screen width")]
-		public float itemSize = 0.2f;
 		public List<ItemSprite> itemSprites;
 
 		[Header("Prefabs for effects")]
