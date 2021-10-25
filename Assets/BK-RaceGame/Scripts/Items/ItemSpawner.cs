@@ -102,6 +102,7 @@ namespace BKRacing
 		private void CreateItem(Vector3 pos, Item item, bool includeEffect = false)
 		{
 			var go = Instantiate(item, pos + Vector3.down * 10f, Quaternion.identity, transform);
+			go.SetSound(item.Sound);
 			go.gameObject.SetActive(true);
 
 			if (item.Mirror)
