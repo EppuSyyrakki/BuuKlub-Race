@@ -1242,7 +1242,7 @@ MonoBehaviour:
   minSpawnTime: 0.5
   maxSpawnTime: 2.25
   decorationDensity: 4
-  initialSpawnCount: 4
+  initialSpawnCount: 6
   ensureCollectibleEvery: 4
   obstaclesAfterCollectible: 2
   itemBillboardBend: 100
@@ -1285,10 +1285,10 @@ MonoBehaviour:
   backgroundY: 50
   backgroundZ: 300
   backgroundScale: 1
-  uncollectedColor: {r: 0, g: 0, b: 0, a: 0}
-  itemYPosition: 0.5
-  itemXPosition: 0.25
-  itemSize: 0.25
+  uncollectedColor: {r: 0, g: 0, b: 0, a: 1}
+  itemYPosition: 0.55
+  itemXPosition: 0.1
+  itemSize: 0.175
   masterVolume: 0.5
   movingVolume: 1
   effectVolume: 1
@@ -1561,6 +1561,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CollectiblesCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 1917685485699515778, guid: e2d82e575d9882845a8f17d097a29f51,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1917685485699515804, guid: e2d82e575d9882845a8f17d097a29f51,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1664,6 +1669,31 @@ PrefabInstance:
     - target: {fileID: 1917685485699515804, guid: e2d82e575d9882845a8f17d097a29f51,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4157079279632807453, guid: e2d82e575d9882845a8f17d097a29f51,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4157079279632807453, guid: e2d82e575d9882845a8f17d097a29f51,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4157079279632807453, guid: e2d82e575d9882845a8f17d097a29f51,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4157079279632807453, guid: e2d82e575d9882845a8f17d097a29f51,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4157079279632807453, guid: e2d82e575d9882845a8f17d097a29f51,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -81,6 +81,9 @@ namespace BKRacing
 		[Header("Material used in the ground")]
 		public GroundMaterial groundMaterial;
 
+		[Header("The goal line spawned when items collected")]
+		public Sprite finishLine;
+
 		[Header("The things to be collected by Character")]
 		public List<RoadItemSprite> collectibleSprites;
 

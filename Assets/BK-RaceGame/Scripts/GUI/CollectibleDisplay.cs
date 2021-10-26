@@ -16,7 +16,7 @@ namespace BKRacing.GUI
 		[SerializeField]
 		private float moveTime = 0.5f, waitTime = 1f, flyTime = 1.5f;
 
-		private Vector3 _centerTarget;
+		// private Vector3 _centerTarget;
 		private float _size;
 		private float _centerX;
 		private Image[] _allItems;
@@ -25,6 +25,7 @@ namespace BKRacing.GUI
 		private float _itemYPosition;
 		private float _itemXPosition;
 		private float _collectedSize;
+		private float _parentScale;
 
 		public Action gameCompleted;
 
@@ -33,13 +34,13 @@ namespace BKRacing.GUI
 			_itemYPosition = Game.Instance.itemYPosition;
 			_itemXPosition = Game.Instance.itemXPosition;
 			_collectedSize = Game.Instance.itemSize;
-			_centerTarget = new Vector3(0, Screen.height * _itemYPosition, 0);
 			_size = Screen.width * _collectedSize;
 			_centerX = Screen.width * _itemXPosition;
 			var items = Game.Instance.GetUiSprites();
 			_allItems = new Image[items.Length];
 			_notCollected = new List<Image>();
 			_collected = new List<Image>();
+			_parentScale = transform.parent.parent.localScale.x;
 			var source = transform.GetChild(0).GetComponent<Image>();
 
 			for (int i = 0; i < items.Length; i++)
@@ -119,15 +120,18 @@ namespace BKRacing.GUI
 
 		private void LaunchItemMovement(RectTransform rt, Vector3 source, RectTransform target)
 		{
-			_centerTarget.x = Game.Instance.Player.transform.position.x < 0 ? _centerX : Screen.width - _centerX;
+			var x = Game.Instance.Player.transform.position.x < 0 ? _centerX : Screen.width - _centerX;
+			var centerTarget = new Vector3(x, Screen.height * _itemYPosition, 0);
+			centerTarget.x /= _parentScale;	// Scale the vector according to Canvas Scaler
+			centerTarget.y /= _parentScale;
 			var item = target.gameObject.GetComponent<Image>();
 
 			// Immediately move the item to a "display position" on screen.
-			StartCoroutine(MoveTo(rt, 0, source, _centerTarget, 0, _size, 
+			StartCoroutine(MoveTo(rt, 0, source, centerTarget, 0, _size, 
 				toCenterCurve));
 
 			// Wait and move the item to the inventory.
-			StartCoroutine(MoveTo(rt, moveTime + waitTime, _centerTarget, target.position, _size, 1, toInventoryCurve));
+			StartCoroutine(MoveTo(rt, moveTime + waitTime, centerTarget, target.position, _size, 1, toInventoryCurve));
 
 			// Wait, finalize and destroy the collected item.
 			StartCoroutine(FinalizeCollected(item, rt.gameObject));

@@ -80,7 +80,7 @@ namespace BKRacing
 
 			triggerSound(item.Sound);
 
-			if (item is Obstacle)
+			if (item is Obstacle && !_crashProtection)
 			{
 				triggerSound(GetRandomSound(_soundCollection.collisionVoice));
 			}

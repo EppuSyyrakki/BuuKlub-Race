@@ -14,10 +14,11 @@ namespace BKRacing
 		private void Start()
 		{
 			var count = Game.Instance.initialSpawnCount;
+			var dist = transform.position.z / count;
 
-			for (int i = 0; i < count; i++)
+			for (int i = 1; i <= count; i++)
 			{
-				var z = Random.Range(0, transform.position.z * 0.75f);
+				var z = dist * i - 10f;
 				SpawnObstacle(RandomPosition() + Vector3.back * z);
 			}
 		}
@@ -94,7 +95,7 @@ namespace BKRacing
 		private void SpawnCollectible(Vector3 pos)
 		{
 			_obstaclesSpawned = 0;
-			var items = GetAvailableCollectibles();
+			var items = Game.Instance.Collectibles;
 			var item = items[Random.Range(0, items.Length)];
 			CreateItem(pos, item, true);
 		}
@@ -115,13 +116,7 @@ namespace BKRacing
 				Instantiate(Game.Instance.CollectibleAccent, go.transform);
 			}
 		}
-
-		private Collectible[] GetAvailableCollectibles()
-		{
-			// TODO: Remove already collected items and return a new array or list
-			return Game.Instance.Collectibles;
-		}
-
+		
 		private Vector3 RandomPosition()
 		{
 			var v2 = Random.insideUnitCircle * (Game.Instance.RoadWidth - 0.5f);

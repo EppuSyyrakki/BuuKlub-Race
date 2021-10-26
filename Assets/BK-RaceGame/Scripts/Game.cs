@@ -59,7 +59,7 @@ namespace BKRacing
 		public float maxSpawnTime = 2.5f;
 		[Range(0, 10), Tooltip("Density of decorations outside the road area")]
 		public int decorationDensity = 5;
-		[Range(1, 5), Tooltip("How many obstacles get spawned on road at start")]
+		[Range(1, 10), Tooltip("How many obstacles get spawned on road at start")]
 		public int initialSpawnCount = 2;
 		[Range(0, 10), Tooltip("Ensure at least every n:th item is a collectible. 0 = disabled.")]
 		public int ensureCollectibleEvery = 5;
@@ -108,6 +108,7 @@ namespace BKRacing
 		public Sprite BackgroundCard => gamePackage.backgroundCard;
 		public GroundMaterial GroundMaterial => gamePackage.groundMaterial;
 		public EnvironmentTexture RoadTexture => gamePackage.roadTexture;
+		public Sprite FinishLine => gamePackage.finishLine;
 		public Collectible[] Collectibles => _collectibles;
 		public Obstacle[] Obstacles => _obstacles;
 		public Decoration[] Decorations => _decorations;
