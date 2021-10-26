@@ -88,6 +88,8 @@ namespace BKRacing.Items
 
 				yield return new WaitForEndOfFrame();
 			}
+
+			Destroy(gameObject);
 		}
 
 		private Vector3 GetLaunchTarget()

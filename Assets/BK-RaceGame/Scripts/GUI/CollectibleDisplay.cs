@@ -19,7 +19,6 @@ namespace BKRacing.GUI
 		private float _itemYPosition;
 		private float _itemXPosition;
 		private float _collectedSize;
-		private float _parentScale;
 		private AnimationCurve _loseItemCurve;
 		private AnimationCurve _toCenterCurve;
 		private AnimationCurve _toInventoryCurve;
@@ -28,6 +27,7 @@ namespace BKRacing.GUI
 		
 		private void Start()
 		{
+			SetInventory();
 			_itemYPosition = Game.Instance.itemYPosition;
 			_itemXPosition = Game.Instance.itemXPosition;
 			_collectedSize = Game.Instance.itemSize;
@@ -37,7 +37,6 @@ namespace BKRacing.GUI
 			_allItems = new Image[items.Length];
 			_notCollected = new List<Image>();
 			_collected = new List<Image>();
-			_parentScale = transform.parent.parent.localScale.x;
 			var source = transform.GetChild(0).GetComponent<Image>();
 
 			for (int i = 0; i < items.Length; i++)
@@ -52,6 +51,13 @@ namespace BKRacing.GUI
 			_loseItemCurve = Game.Instance.loseItemCurve;
 			_toCenterCurve = Game.Instance.toCenterCurve;
 			_toInventoryCurve = Game.Instance.toInventoryCurve;
+		}
+
+		private void SetInventory()
+		{
+			var scale = Game.Instance.inventoryItemScale;
+			transform.GetChild(0).localScale = new Vector3(scale, scale, 1);
+			GetComponent<GridLayoutGroup>().spacing = new Vector2(Game.Instance.inventorySpacing, 0);
 		}
 
 		private void Update()
@@ -122,8 +128,8 @@ namespace BKRacing.GUI
 		{
 			var x = Game.Instance.Player.transform.position.x < 0 ? _centerX : Screen.width - _centerX;
 			var centerTarget = new Vector3(x, Screen.height * _itemYPosition, 0);
-			centerTarget.x /= _parentScale;	// Scale the vector according to Canvas Scaler
-			centerTarget.y /= _parentScale;
+			//centerTarget.x /= _parentScale;	// Scale the vector according to Canvas Scaler
+			//centerTarget.y /= _parentScale;
 			var item = target.gameObject.GetComponent<Image>();
 			var moveTime = Game.Instance.moveTime;
 			var waitTime = Game.Instance.waitTime;

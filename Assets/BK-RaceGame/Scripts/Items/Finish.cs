@@ -14,7 +14,7 @@ namespace BKRacing.Items
 		private void Awake()
 		{
 			var col = GetComponent<BoxCollider>();
-			col.size = new Vector3(10f, 10f, 2f);
+			col.size = new Vector3(10f, 10f, 10f);
 		}
 
 		public override void Update()
@@ -27,7 +27,7 @@ namespace BKRacing.Items
 				return;
 			}
 
-			if (newPos.z < player.position.z && !_sorted)
+			if (!_sorted && newPos.z < player.position.z)
 			{
 				spriteRenderer.sortingOrder += 100;
 				_sorted = true;

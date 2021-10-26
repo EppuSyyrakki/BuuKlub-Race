@@ -8,7 +8,9 @@ using Random = UnityEngine.Random;
 
 namespace BKRacing
 {
-	[RequireComponent(typeof(Billboard))]
+	[RequireComponent(typeof(Billboard), 
+		typeof(Collider), 
+		typeof(Rigidbody))]
     public class Character : MonoBehaviour
     {
 	    private enum Direction
@@ -36,6 +38,7 @@ namespace BKRacing
 
 	    private void Awake()
 	    {
+		    GetComponent<Rigidbody>().isKinematic = true;
 			GetComponent<Billboard>().SetAsItem();
 		    _moveTreshold = Screen.width * moveTreshold;
 			_cam = Camera.main;

@@ -26,6 +26,7 @@ namespace BKRacing
 		private static Transform _spawnContainer = null;
 		private float _originalFixedTimeStep;
 		private ItemSpawner _itemSpawner;
+		private bool _characterHasParticles = false;
 		
 		[SerializeField]
 		private GamePackage gamePackage;
@@ -107,6 +108,10 @@ namespace BKRacing
 		public AnimationCurve loseItemCurve;
 		[Range (2f, 10f), Tooltip("Height of launched items on road when all collected")]
 		public float launchHeight = 5f;
+		[Range(0.5f, 3f), Tooltip("Size of the items in the on-screen inventory")]
+		public float inventoryItemScale = 1.25f;
+		[Range(1f, 50f), Tooltip("Spacing of the inventory items")]
+		public float inventorySpacing = 25f;
 
 		[Header("Audio source variables:")]
 		[Range(0, 1f)]
@@ -160,6 +165,11 @@ namespace BKRacing
 			_itemSpawner = FindObjectOfType<ItemSpawner>();
 			SetControl(false);
 			InitItems();
+
+			if (Player.Particles != null)
+			{
+				_characterHasParticles = true;
+			}
 		}
 
 		private void OnEnable()
@@ -188,6 +198,17 @@ namespace BKRacing
 				StartCoroutine(ChangeSpeed(true, 0, 0, _startingSpeed, 
 					speedUpAfterCollision, 0));
 				Player.StartMoving();
+			}
+
+			if (!_characterHasParticles) return;
+			
+			if (forwardSpeed >= _startingSpeed / 2)
+			{
+				Player.Particles.Play();
+			}
+			else
+			{
+				Player.Particles.Stop();
 			}
 		}
 
@@ -272,7 +293,7 @@ namespace BKRacing
 		private void SetControl(bool enable)
 		{
 			ControlEnabled = enable;
-			if (Player.Particles != null) { Player.Particles.gameObject.SetActive(enable); }
+			
 		}
 
 		public void EndGame()
