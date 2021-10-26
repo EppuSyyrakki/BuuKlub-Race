@@ -18,7 +18,8 @@ namespace BKRacing
 
 			for (int i = 1; i <= count; i++)
 			{
-				var z = dist * i - 10f;
+				float offset = i == count ? 30f : 5f;
+				var z = dist * i - offset;
 				SpawnObstacle(RandomPosition() + Vector3.back * z);
 			}
 		}
