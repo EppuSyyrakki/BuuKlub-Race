@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using BKRacing.Environment;
 using BKRacing.Items;
-using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -77,6 +76,15 @@ namespace BKRacing
 			var item = other.GetComponent<Item>();
 
 			if (item == null || item.Sound == null) { return; }
+
+			if (item is Finish && Game.Instance.IsAllCollected)
+			{
+				Game.Instance.EndGame();
+				_animator.SetTrigger("collect");
+				triggerSound(GetRandomSound(_soundCollection.endVoice));
+				triggerSound(item.Sound);
+				return;
+			}
 
 			triggerSound(item.Sound);
 

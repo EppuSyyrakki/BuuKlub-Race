@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using BKRacing.GUI;
 using BKRacing.Items;
 using UnityEngine;
 
@@ -10,6 +11,7 @@ namespace BKRacing
 		private float _timeSinceLast;
 		private float _timerTarget;
 		private int _obstaclesSpawned;
+		private CollectibleDisplay _display;
 		
 		private void Start()
 		{
@@ -22,6 +24,14 @@ namespace BKRacing
 				var z = dist * i - offset;
 				SpawnObstacle(RandomPosition() + Vector3.back * z);
 			}
+
+			_display = FindObjectOfType<CollectibleDisplay>();
+			_display.allCollected += SpawnFinishLine;
+		}
+
+		private void OnDisable()
+		{
+			_display.allCollected -= SpawnFinishLine;
 		}
 
 		private void Update()
@@ -122,6 +132,11 @@ namespace BKRacing
 		{
 			var v2 = Random.insideUnitCircle * (Game.Instance.RoadWidth - 0.5f);
 			return transform.position + new Vector3(v2.x, 0, v2.y);
+		}
+
+		private void SpawnFinishLine()
+		{
+			CreateItem(transform.position, Game.Instance.FinishLine);
 		}
 	}
 }

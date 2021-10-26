@@ -15,6 +15,7 @@ namespace BKRacing
 		private Collectible[] _collectibles;
 		private Obstacle[] _obstacles;
 		private Decoration[] _decorations;
+		private Finish _finishLine;
 		private Character _player;
 		private float _startingSpeed;
 		private float _roadWidth;
@@ -108,7 +109,7 @@ namespace BKRacing
 		public Sprite BackgroundCard => gamePackage.backgroundCard;
 		public GroundMaterial GroundMaterial => gamePackage.groundMaterial;
 		public EnvironmentTexture RoadTexture => gamePackage.roadTexture;
-		public Sprite FinishLine => gamePackage.finishLine;
+		public Finish FinishLine => _finishLine;
 		public Collectible[] Collectibles => _collectibles;
 		public Obstacle[] Obstacles => _obstacles;
 		public Decoration[] Decorations => _decorations;
@@ -116,6 +117,8 @@ namespace BKRacing
 		public GameObject CollectibleAccent => gamePackage.collectibleAccentEffect;
 		public float RoadWidth => _roadWidth;
 		public SoundCollection SoundCollection => gamePackage.soundCollection;
+
+		public bool IsAllCollected => _collectibleDisplay.AllCollected;
 
 		private void Awake()
 		{
@@ -142,12 +145,10 @@ namespace BKRacing
 		{
 			_originalFixedTimeStep = Time.fixedDeltaTime;
 			Time.fixedDeltaTime = 1 / (float)fixedTimeStep;
-			_collectibleDisplay.gameCompleted += EndGame;
 		}
 
 		private void OnDisable()
 		{
-			_collectibleDisplay.gameCompleted -= EndGame;
 			Time.fixedDeltaTime = _originalFixedTimeStep;
 		}
 
@@ -175,6 +176,7 @@ namespace BKRacing
 				GetItemInfo(gamePackage.obstacleSprites, out m, out s), m, s);
 			_decorations = InitItemArray<Decoration>(
 				GetItemInfo(gamePackage.decorationSprites, out m, out s), m, s);
+			_finishLine = CreateSingle<Finish>(gamePackage.finishLine, false, gamePackage.soundCollection.endFanfare);
 			
 			foreach (var effect in gamePackage.weatherEffects)
 			{
@@ -250,9 +252,8 @@ namespace BKRacing
 			if (Player.Particles != null) { Player.Particles.gameObject.SetActive(enable); }
 		}
 
-		private void EndGame()
+		public void EndGame()
 		{
-			// TODO: make good
 			Player.DisableCrashing();
 			StartCoroutine(ChangeSpeed(false, 1f, forwardSpeed, 0, 1, 0));
 			Invoke(nameof(ShowEndScreen), 2f);

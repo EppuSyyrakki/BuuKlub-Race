@@ -27,7 +27,9 @@ namespace BKRacing.GUI
 		private float _collectedSize;
 		private float _parentScale;
 
-		public Action gameCompleted;
+		public Action allCollected;
+
+		public bool AllCollected => _notCollected.Count == 0;
 
 		private void Start()
 		{
@@ -76,7 +78,7 @@ namespace BKRacing.GUI
 
 			if (_notCollected.Count == 0)
 			{
-				Invoke(nameof(TriggerGameCompleted), 1f);
+				allCollected?.Invoke();
 			}
 		}
 
@@ -159,11 +161,6 @@ namespace BKRacing.GUI
 			item.color = Color.white;
 			_collected.Add(item);
 			Destroy(itemToDestroy, waitTime * 0.5f);
-		}
-
-		private void TriggerGameCompleted()
-		{
-			gameCompleted?.Invoke();
 		}
 	}
 }
