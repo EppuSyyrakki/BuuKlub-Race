@@ -51,10 +51,6 @@ namespace BKRacing
 			Moving.loop = true;
 			Effect.loop = false;
 			Voice.loop = false;
-		}
-
-		private void OnEnable()
-		{
 			Game.Instance.Player.triggerSound += PlayAudio;
 		}
 
