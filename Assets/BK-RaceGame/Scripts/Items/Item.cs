@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace BKRacing.Items
 {
@@ -11,6 +12,7 @@ namespace BKRacing.Items
 		protected Vector3 newPos;
 		private float _objectHeight;
 		private AnimationCurve _curve;
+		private bool _discarded = false;
 
 		public virtual Sprite Sprite => spriteRenderer.sprite;
 		public bool Mirror { get; private set; }
@@ -40,6 +42,8 @@ namespace BKRacing.Items
 
 		public virtual void Update()
 		{
+			if (_discarded) return;
+
 			var self = transform.position;
 			var z = self.z - Game.Instance.forwardSpeed * Time.deltaTime * 0.12f;
 			var y = GetYPosition(z);
@@ -58,6 +62,43 @@ namespace BKRacing.Items
 		public void SetSound(Sound sound)
 		{
 			Sound = sound;
+		}
+
+		public void DiscardItem()
+		{
+			_discarded = true;
+			GetComponent<SphereCollider>().enabled = false;
+			StartCoroutine(Launch(Game.Instance.loseItemCurve));
+		}
+
+		private IEnumerator Launch(AnimationCurve curve)
+		{
+			float flyTime = Game.Instance.flyTime;
+			float time = 0;
+			var height = Game.Instance.launchHeight;
+			Vector3 origin = transform.position;
+			Vector3 target = GetLaunchTarget();
+			
+			while (time > flyTime)
+			{
+				var t = time / flyTime;
+				Vector3 pos = new Vector3(
+					Mathf.Lerp(origin.x, target.x, t),
+					origin.y + curve.Evaluate(t) * height,
+					origin.z);
+				transform.position = pos;
+				time += Time.deltaTime;
+
+				yield return new WaitForEndOfFrame();
+			}
+		}
+
+		private Vector3 GetLaunchTarget()
+		{
+			Vector3 target = transform.position;
+			float multiplier = target.x < 0 ? -1 : 1;
+			target.x = Random.Range(8f, 16f) * multiplier;
+			return target;
 		}
 	}
 }

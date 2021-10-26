@@ -69,15 +69,16 @@ namespace BKRacing
 
 		private void SetVolumeVariables()
 		{
-			_movingVol = Game.Instance.movingVolume;
-			_effectVol = Game.Instance.effectVolume;
-			_voiceVol = Game.Instance.voiceVolume;
+			_movingVol = Game.Instance.movingVolume * _maxVol;
+			Effect.volume = Game.Instance.effectVolume * _maxVol;
+			Voice.volume = Game.Instance.voiceVolume * _maxVol;
 		}
 		
 		public void SetMoveVolumeAndPitch(float vol)
 		{
-			Moving.volume = Mathf.Lerp(0, _maxVol, vol);
-			Moving.pitch = Mathf.Lerp(0.9f, 1.1f, vol);
+			var bend = Game.Instance.movingPitchBend;
+			Moving.volume = Mathf.Lerp(0, _movingVol, vol);
+			Moving.pitch = Mathf.LerpUnclamped(1 - bend, 1 + bend, vol);
 		}
 
 		public void PlayAudio(Sound sound)

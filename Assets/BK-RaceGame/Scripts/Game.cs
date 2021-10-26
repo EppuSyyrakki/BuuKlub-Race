@@ -18,6 +18,7 @@ namespace BKRacing
 		private Finish _finishLine;
 		private Character _player;
 		private float _startingSpeed;
+		private float _maxSpeed;
 		private float _roadWidth;
 		private bool _gameStarted;
 		private AudioPlayer _audioPlayer;
@@ -91,8 +92,22 @@ namespace BKRacing
 		public float itemYPosition = 0.4f, itemXPosition = 0.25f;
 		[Range(0.05f, 0.3f), Tooltip("Size of the collected items as fraction of screen width")]
 		public float itemSize = 0.2f;
+		[Tooltip("Time it takes for an item to move to display and inventory positions")]
+		public float moveTime = 0.5f;
+		[Tooltip("How long a gained item is displayed on screen")]
+		public float waitTime = 1f;
+		[Tooltip("How long does it take for a lost item to fly off screen")]
+		public float flyTime = 1.5f;
+		[Tooltip("Curve of moving item to display position")]
+		public AnimationCurve toCenterCurve;
+		[Tooltip("Curve of moving item to inventory position")]
+		public AnimationCurve toInventoryCurve;
+		[Tooltip("Curve of item height when it is lost. Also used to launch obstacles/items when all collected")]
+		public AnimationCurve loseItemCurve;
+		[Range (2f, 10f), Tooltip("Height of launched items on road when all collected")]
+		public float launchHeight = 5f;
 
-		[Header("Audio source volumes:")]
+		[Header("Audio source variables:")]
 		[Range(0, 1f)]
 		public float masterVolume = 0.5f;
 		[Range(0, 1f)]
@@ -101,7 +116,9 @@ namespace BKRacing
 		public float effectVolume = 1f;
 		[Range(0, 1f)]
 		public float voiceVolume = 1f;
-
+		[Range(0, 0.95f)]
+		public float movingPitchBend = 0.1f;
+		
 		[Header("Optimization variables:")]
 		[Range(10, 50), Tooltip("Will be changed back to default when this object is disabled")]
 		public int fixedTimeStep = 30;
@@ -135,6 +152,7 @@ namespace BKRacing
 			_collectibleDisplay = FindObjectOfType<CollectibleDisplay>();
 			_startingSpeed = forwardSpeed;
 			forwardSpeed = 0;
+			_maxSpeed = speedUpAfterCollision * (gamePackage.itemSprites.Count - 1) + _startingSpeed;
 			_roadWidth = FindObjectOfType<Road>().transform.localScale.x * 0.5f;
 			_player = FindObjectOfType<Character>();
 			SetControl(false);
@@ -154,7 +172,7 @@ namespace BKRacing
 
 		private void Update()
 		{
-			_audioPlayer.SetMoveVolumeAndPitch(Mathf.Clamp01(forwardSpeed / _startingSpeed));
+			_audioPlayer.SetMoveVolumeAndPitch(forwardSpeed / _maxSpeed);
 
 			// Initial start of game.
 			if (!ReadyToStart) { return; }
@@ -255,6 +273,7 @@ namespace BKRacing
 		public void EndGame()
 		{
 			Player.DisableCrashing();
+			StopAllCoroutines();
 			StartCoroutine(ChangeSpeed(false, 1f, forwardSpeed, 0, 1, 0));
 			Invoke(nameof(ShowEndScreen), 2f);
 		}
@@ -303,6 +322,16 @@ namespace BKRacing
 				waitAfterCollision));
 			StartCoroutine(ChangeSpeed(true, stoppingSpeed + waitAfterCollision, 0,
 				_startingSpeed, speedUpAfterCollision, 0));
+		}
+
+		public void DiscardAllRoadItems()
+		{
+			var items = _spawnContainer.GetComponentsInChildren<Item>();
+
+			foreach (var item in items)
+			{
+				item.DiscardItem();
+			}
 		}
 	}
 }
