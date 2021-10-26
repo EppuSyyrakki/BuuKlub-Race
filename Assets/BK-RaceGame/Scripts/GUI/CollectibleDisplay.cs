@@ -26,8 +26,6 @@ namespace BKRacing.GUI
 
 		public Action allCollected;
 		
-		public bool AllCollected => _notCollected.Count == 0;
-
 		private void Start()
 		{
 			_itemYPosition = Game.Instance.itemYPosition;
@@ -56,14 +54,12 @@ namespace BKRacing.GUI
 			_toInventoryCurve = Game.Instance.toInventoryCurve;
 		}
 
-#if UNITY_EDITOR
 		private void Update()
 		{
 			_itemYPosition = Game.Instance.itemYPosition;
 			_itemXPosition = Game.Instance.itemXPosition;
 			_collectedSize = Game.Instance.itemSize;
 		}
-#endif
 
 		public void CollectNew(Vector2 screenPosition)
 		{

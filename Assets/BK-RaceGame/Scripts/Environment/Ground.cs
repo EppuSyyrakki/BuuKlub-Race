@@ -26,9 +26,7 @@ namespace BKRacing.Environment
 
 		private void Update()
 		{
-#if UNITY_EDITOR
 			SetMaterialProperties();
-#endif
 		}
 
 		private void SetMaterialProperties()

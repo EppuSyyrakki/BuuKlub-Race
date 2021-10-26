@@ -15,42 +15,23 @@ namespace BKRacing
 
 	public class AudioPlayer : MonoBehaviour
 	{
-		private AudioSource Moving
-		{
-			get
-			{
-				if (_moving == null) { _moving = GetComponents<AudioSource>()[0]; }
-				return _moving;
-			}
-		}
-
-		private AudioSource Effect
-		{
-			get
-			{
-				if (_effect == null) { _effect = GetComponents<AudioSource>()[1]; }
-				return _effect;
-			}
-		}
-		private AudioSource Voice
-		{
-			get
-			{
-				if (_voice == null) { _voice = GetComponents<AudioSource>()[2]; }
-				return _voice;
-			}
-		}
-
 		private AudioSource _moving, _effect, _voice;
-		private float _maxVol, _movingVol, _effectVol, _voiceVol;
-		
+		private float _maxVol, _movingVol;
+
+		private void Awake()
+		{
+			_moving = transform.GetChild(0).GetComponent<AudioSource>();
+			_effect = transform.GetChild(1).GetComponent<AudioSource>();
+			_voice = transform.GetChild(2).GetComponent<AudioSource>();
+		}
+
 		private void Start()
 		{
 			_maxVol = Game.Instance.masterVolume;
 			SetVolumeVariables();
-			Moving.loop = true;
-			Effect.loop = false;
-			Voice.loop = false;
+			_moving.loop = true;
+			_effect.loop = false;
+			_voice.loop = false;
 			Game.Instance.Player.triggerSound += PlayAudio;
 		}
 
@@ -59,26 +40,19 @@ namespace BKRacing
 			Game.Instance.Player.triggerSound -= PlayAudio;
 		}
 
-		private void Update()
-		{
-#if UNITY_EDITOR
-			_maxVol = Game.Instance.masterVolume;
-			SetVolumeVariables();
-#endif
-		}
-
 		private void SetVolumeVariables()
 		{
+			_maxVol = Game.Instance.masterVolume;
 			_movingVol = Game.Instance.movingVolume * _maxVol;
-			Effect.volume = Game.Instance.effectVolume * _maxVol;
-			Voice.volume = Game.Instance.voiceVolume * _maxVol;
+			_effect.volume = Game.Instance.effectVolume * _maxVol;
+			_voice.volume = Game.Instance.voiceVolume * _maxVol;
 		}
 		
 		public void SetMoveVolumeAndPitch(float vol)
 		{
 			var bend = Game.Instance.movingPitchBend;
-			Moving.volume = Mathf.Lerp(0, _movingVol, vol);
-			Moving.pitch = Mathf.LerpUnclamped(1 - bend, 1 + bend, vol);
+			_moving.volume = Mathf.Lerp(0, _movingVol, vol);
+			_moving.pitch = Mathf.LerpUnclamped(1 - bend, 1 + bend, vol);
 		}
 
 		public void PlayAudio(Sound sound)
@@ -86,15 +60,15 @@ namespace BKRacing
 			switch (sound.Type)
 			{
 				case SoundType.Moving:
-					if (Moving.clip == sound.clip) return;
-					PlayFromSource(sound.clip, Moving);
+					if (_moving.clip == sound.clip) return;
+					PlayFromSource(sound.clip, _moving);
 					break;
 				case SoundType.Effect:
-					PlayFromSource(sound.clip, Effect);
+					PlayFromSource(sound.clip, _effect);
 					break;
 				case SoundType.Voice:
-					if (Voice.isPlaying) return;
-					PlayFromSource(sound.clip, Voice);
+					if (_voice.isPlaying) return;
+					PlayFromSource(sound.clip, _voice);
 					break;
 			}
 		}

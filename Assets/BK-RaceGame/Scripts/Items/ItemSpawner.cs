@@ -12,6 +12,7 @@ namespace BKRacing
 		private float _timerTarget;
 		private int _obstaclesSpawned;
 		private CollectibleDisplay _display;
+		private bool _spawningStopped = false;
 		
 		private void Start()
 		{
@@ -36,7 +37,7 @@ namespace BKRacing
 
 		private void Update()
 		{
-			if (!Game.Instance.ControlEnabled) { return; }
+			if (!Game.Instance.ControlEnabled || _spawningStopped) { return; }
 
 			_timeSinceLast += Time.deltaTime;
 
@@ -136,7 +137,13 @@ namespace BKRacing
 
 		private void SpawnFinishLine()
 		{
-			CreateItem(transform.position, Game.Instance.FinishLine);
+			CreateItem(transform.position + Vector3.back * 75f, Game.Instance.FinishLine);
 		}
+
+		public Item[] GetItemsAndStopSpawning()
+		{
+			_spawningStopped = true;
+			return GetComponentsInChildren<Item>();
+		} 
 	}
 }

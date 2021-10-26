@@ -110,7 +110,7 @@ namespace BKRacing
 			SetSoundTypes();
 		}
 
-		private void SetSoundTypes()
+		public void SetSoundTypes()
 		{
 			foreach (var sound in soundCollection.collectVoice) { sound.Type = SoundType.Voice; }
 			foreach (var sound in soundCollection.collisionVoice) { sound.Type = SoundType.Voice; }

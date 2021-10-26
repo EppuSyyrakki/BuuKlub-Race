@@ -25,6 +25,7 @@ namespace BKRacing
 		private CanvasController _startScreen, _endScreen;
 		private static Transform _spawnContainer = null;
 		private float _originalFixedTimeStep;
+		private ItemSpawner _itemSpawner;
 		
 		[SerializeField]
 		private GamePackage gamePackage;
@@ -118,6 +119,8 @@ namespace BKRacing
 		public float voiceVolume = 1f;
 		[Range(0, 0.95f)]
 		public float movingPitchBend = 0.1f;
+		[Range(0, 10f), Tooltip("How many seconds to wait after finish line to trigger ending voice.")]
+		public float waitForEndVoice = 4f;
 		
 		[Header("Optimization variables:")]
 		[Range(10, 50), Tooltip("Will be changed back to default when this object is disabled")]
@@ -135,14 +138,13 @@ namespace BKRacing
 		public float RoadWidth => _roadWidth;
 		public SoundCollection SoundCollection => gamePackage.soundCollection;
 
-		public bool IsAllCollected => _collectibleDisplay.AllCollected;
-
 		private void Awake()
 		{
 			if (gamePackage == null) { Debug.LogError("No Graphics Package found in Game component!"); }
 			if (sceneCamera == null) { Debug.LogError("No Camera set in Game component!");}
 
 			_instance = this;
+			gamePackage.SetSoundTypes();
 			_startScreen = GameObject.FindGameObjectWithTag("RacingStartScreen").GetComponent<CanvasController>();
 			_endScreen = GameObject.FindGameObjectWithTag("RacingEndScreen").GetComponent<CanvasController>();
 			_endScreen.gameObject.SetActive(false);
@@ -155,18 +157,21 @@ namespace BKRacing
 			_maxSpeed = speedUpAfterCollision * (gamePackage.itemSprites.Count - 1) + _startingSpeed;
 			_roadWidth = FindObjectOfType<Road>().transform.localScale.x * 0.5f;
 			_player = FindObjectOfType<Character>();
+			_itemSpawner = FindObjectOfType<ItemSpawner>();
 			SetControl(false);
 			InitItems();
 		}
 
 		private void OnEnable()
 		{
+			_collectibleDisplay.allCollected += DiscardAllRoadItems;
 			_originalFixedTimeStep = Time.fixedDeltaTime;
 			Time.fixedDeltaTime = 1 / (float)fixedTimeStep;
 		}
-
+		
 		private void OnDisable()
 		{
+			_collectibleDisplay.allCollected -= DiscardAllRoadItems;
 			Time.fixedDeltaTime = _originalFixedTimeStep;
 		}
 
@@ -326,7 +331,9 @@ namespace BKRacing
 
 		public void DiscardAllRoadItems()
 		{
-			var items = _spawnContainer.GetComponentsInChildren<Item>();
+			var items = _itemSpawner.GetItemsAndStopSpawning();
+			StartCoroutine(ChangeSpeed(true, 0, forwardSpeed, forwardSpeed * 2, 
+				8f, 0));
 
 			foreach (var item in items)
 			{

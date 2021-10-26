@@ -20,6 +20,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
     smoothness: 0.333
     metallic: 0
+  finishLine: {fileID: 21300000, guid: 54ef141480257824ca60e158c50c0431, type: 3}
   collectibleSprites:
   - sprite: {fileID: 3286163911610860551, guid: b8582351bf469bf4f9e5646beab025e3,
       type: 3}
@@ -72,24 +73,22 @@ MonoBehaviour:
   - sprite: {fileID: 3286163911610860551, guid: a9144fc8597ac9340ab8b6f3d5f9a1ad,
       type: 3}
     randomMirroring: 0
-  uncollectedColor: {r: 0, g: 0, b: 0, a: 1}
-  itemSize: 0.25
   itemSprites:
   - sprite: {fileID: 21300000, guid: 871e7540c7a23cd4986094181fcb1d9c, type: 3}
     randomMirroring: 0
   - sprite: {fileID: 21300000, guid: 3eee8a2fd5d125c4ba6d3062d16a2cc1, type: 3}
     randomMirroring: 0
-  - sprite: {fileID: 21300000, guid: 888e0fa023c3a0b43927c3e6cb22484e, type: 3}
+  - sprite: {fileID: 21300000, guid: a4e1761e775b99e42890b42955c95717, type: 3}
     randomMirroring: 0
-  - sprite: {fileID: 21300000, guid: 8c5925d3004285a49a0bcf783c7c98e9, type: 3}
+  - sprite: {fileID: 21300000, guid: 888e0fa023c3a0b43927c3e6cb22484e, type: 3}
     randomMirroring: 0
   - sprite: {fileID: 21300000, guid: 77a3e3cbb9be7a64fad057d0cde73a93, type: 3}
     randomMirroring: 0
-  - sprite: {fileID: 21300000, guid: a4e1761e775b99e42890b42955c95717, type: 3}
+  - sprite: {fileID: 21300000, guid: 0e7fec108590024418bfbf0466f792ff, type: 3}
+    randomMirroring: 0
+  - sprite: {fileID: 21300000, guid: 8c5925d3004285a49a0bcf783c7c98e9, type: 3}
     randomMirroring: 0
   - sprite: {fileID: 21300000, guid: 59cf3066bbacebd46b867d05b6b1941a, type: 3}
-    randomMirroring: 0
-  - sprite: {fileID: 21300000, guid: 0e7fec108590024418bfbf0466f792ff, type: 3}
     randomMirroring: 0
   collisionEffects:
     hitObstaclePrefab: {fileID: 2473328970595687785, guid: 55a2463da15dbb14fbf8a7320daaffa0,

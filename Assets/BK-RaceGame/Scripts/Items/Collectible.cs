@@ -21,6 +21,8 @@ namespace BKRacing.Items
 
 		public override void Update()
 		{
+			if (discarded) { return; }
+
 			base.Update();
 
 			if (newPos.z < -10f)

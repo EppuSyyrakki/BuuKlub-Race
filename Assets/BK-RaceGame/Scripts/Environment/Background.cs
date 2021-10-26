@@ -11,12 +11,10 @@ namespace BKRacing.Environment
 			SetTransform();
 		}
 
-#if UNITY_EDITOR
 		private void Update()
 		{
 			SetTransform();
 		}
-#endif
 
 		private void SetTransform()
 		{

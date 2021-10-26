@@ -724,7 +724,7 @@ MonoBehaviour:
   curveDistance: 200
   backgroundY: 50
   backgroundZ: 300
-  backgroundScale: 1
+  backgroundScale: 1.25
   uncollectedColor: {r: 0, g: 0, b: 0, a: 1}
   itemYPosition: 0.55
   itemXPosition: 0.1
@@ -734,28 +734,137 @@ MonoBehaviour:
   flyTime: 1.5
   toCenterCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1.764831
+      outSlope: 1.764831
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5350433
+      value: 0.94426095
+      inSlope: 1.1790701
+      outSlope: 1.1790701
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.7684986
+      value: 1.0827721
+      inSlope: 0.11788218
+      outSlope: 0.11788218
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: -0.35754487
+      outSlope: -0.35754487
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   toInventoryCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.0010375977
+      value: 0
+      inSlope: 0.7955927
+      outSlope: 0.7955927
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.19144812
+    - serializedVersion: 3
+      time: 0.35252887
+      value: 0.29611206
+      inSlope: 2.0069785
+      outSlope: 2.0069785
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5757115
+      value: 0.9240621
+      inSlope: 2.070159
+      outSlope: 2.070159
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.19668563
+    - serializedVersion: 3
+      time: 0.6847441
+      value: 1.092537
+      inSlope: 0.6075101
+      outSlope: 0.6075101
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.17085065
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   loseItemCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 4.6091514
+      outSlope: 4.6091514
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.038089056
+    - serializedVersion: 3
+      time: 0.3035791
+      value: 0.6207266
+      inSlope: 0.21771437
+      outSlope: 0.21771437
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: -0.5
+      inSlope: -4.1626186
+      outSlope: -4.1626186
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.034912672
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   launchHeight: 5
   masterVolume: 0.5
-  movingVolume: 1
+  movingVolume: 0.65
   effectVolume: 1
   voiceVolume: 1
-  movingPitchBend: 0.1
+  movingPitchBend: 0.2
+  waitForEndVoice: 4
   fixedTimeStep: 15
 --- !u!20 &963194227 stripped
 Camera:

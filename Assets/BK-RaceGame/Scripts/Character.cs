@@ -77,12 +77,12 @@ namespace BKRacing
 
 			if (item == null || item.Sound == null) { return; }
 
-			if (item is Finish && Game.Instance.IsAllCollected)
+			if (item is Finish)
 			{
 				Game.Instance.EndGame();
 				_animator.SetTrigger("collect");
-				triggerSound(GetRandomSound(_soundCollection.endVoice));
 				triggerSound(item.Sound);
+				Invoke(nameof(TriggerEndVoice), Game.Instance.waitForEndVoice);
 				return;
 			}
 
@@ -140,6 +140,11 @@ namespace BKRacing
 		private Sound GetRandomSound(Sound[] sounds)
 		{
 			return sounds[Random.Range(0, sounds.Length)];
+		}
+
+		private void TriggerEndVoice()
+		{
+			triggerSound(GetRandomSound(_soundCollection.endVoice));
 		}
     }
 }
