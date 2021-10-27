@@ -136,8 +136,12 @@ namespace BKRacing
 
 		public void StartMoving()
 		{
-			triggerSound(GetRandomSound(_soundCollection.startVoice));
 			_animator.SetTrigger("collect");
+		}
+
+		public void TriggerStartVoice()
+		{
+			triggerSound(GetRandomSound(_soundCollection.startVoice));
 		}
 
 		private Sound GetRandomSound(Sound[] sounds)

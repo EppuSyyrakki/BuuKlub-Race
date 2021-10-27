@@ -55,6 +55,7 @@ namespace BKRacing
 
 		private void EnableGame()
 		{
+			Game.Instance.Player.TriggerStartVoice();
 			Game.Instance.ReadyToStart = true;
 			gameObject.SetActive(false);
 		}

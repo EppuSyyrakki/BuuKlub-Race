@@ -293,7 +293,6 @@ namespace BKRacing
 		private void SetControl(bool enable)
 		{
 			ControlEnabled = enable;
-			
 		}
 
 		public void EndGame()
