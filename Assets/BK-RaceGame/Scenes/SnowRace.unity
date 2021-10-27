@@ -375,6 +375,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8714119742719579819, guid: 8d9e6b01ff4d5084d8c272dd945e44e4,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8714119744369027623, guid: 8d9e6b01ff4d5084d8c272dd945e44e4,
         type: 3}
       propertyPath: m_Name
@@ -916,6 +921,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28770122f5f3c4447bb507f40e4e60dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1698548564 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8714119742719579812, guid: 8d9e6b01ff4d5084d8c272dd945e44e4,
+    type: 3}
+  m_PrefabInstance: {fileID: 613257771}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1698548569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1698548564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a89ba3b7a55457d88c824dac224e850, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonType: 1
 --- !u!1 &1723925678
 GameObject:
   m_ObjectHideFlags: 0
@@ -1153,6 +1177,25 @@ Transform:
   m_Father: {fileID: 1723925679}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2068189380 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8714119742918489762, guid: e9de90bab82251040ad57f0b1aae0e36,
+    type: 3}
+  m_PrefabInstance: {fileID: 8714119743189686883}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2068189385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2068189380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a89ba3b7a55457d88c824dac224e850, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonType: 0
 --- !u!1001 &1917685485007133132
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1579,6 +1622,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8714119742918489760, guid: e9de90bab82251040ad57f0b1aae0e36,
         type: 3}
+      propertyPath: m_TargetGraphic
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714119742918489760, guid: e9de90bab82251040ad57f0b1aae0e36,
+        type: 3}
+      propertyPath: m_SpriteState.m_PressedSprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714119742918489760, guid: e9de90bab82251040ad57f0b1aae0e36,
+        type: 3}
+      propertyPath: m_SpriteState.m_DisabledSprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714119742918489760, guid: e9de90bab82251040ad57f0b1aae0e36,
+        type: 3}
+      propertyPath: m_SpriteState.m_SelectedSprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714119742918489760, guid: e9de90bab82251040ad57f0b1aae0e36,
+        type: 3}
+      propertyPath: m_SpriteState.m_HighlightedSprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714119742918489760, guid: e9de90bab82251040ad57f0b1aae0e36,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -1630,6 +1698,11 @@ PrefabInstance:
     - target: {fileID: 8714119742918489760, guid: e9de90bab82251040ad57f0b1aae0e36,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714119742918489767, guid: e9de90bab82251040ad57f0b1aae0e36,
+        type: 3}
+      propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8714119744369027623, guid: e9de90bab82251040ad57f0b1aae0e36,
