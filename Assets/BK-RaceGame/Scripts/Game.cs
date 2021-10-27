@@ -131,6 +131,8 @@ namespace BKRacing
 		[Range(10, 50), Tooltip("Will be changed back to default when this object is disabled")]
 		public int fixedTimeStep = 30;
 
+		public UIButton PlayButton => gamePackage.playButton;
+		public UIButton ReplayButton => gamePackage.replayButton;
 		public Sprite BackgroundCard => gamePackage.backgroundCard;
 		public GroundMaterial GroundMaterial => gamePackage.groundMaterial;
 		public EnvironmentTexture RoadTexture => gamePackage.roadTexture;

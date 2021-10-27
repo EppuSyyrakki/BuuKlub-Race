@@ -6,6 +6,13 @@ using UnityEngine;
 namespace BKRacing
 {
 	[Serializable]
+	public class UIButton
+	{
+		public Sprite normalSprite;
+		public Sprite hoverSprite;
+	}
+
+	[Serializable]
 	public class ItemSprite
 	{
 		public Sprite sprite;
@@ -72,6 +79,10 @@ namespace BKRacing
 	[CreateAssetMenu(fileName = "Game Package", menuName = "New Game Package")]
 	public class GamePackage : ScriptableObject
 	{
+		[Header("UI Buttons")]
+		public UIButton playButton;
+		public UIButton replayButton;
+
 		[Header("Background sprite")]
 		public Sprite backgroundCard;
 
