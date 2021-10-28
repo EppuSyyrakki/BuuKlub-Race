@@ -670,6 +670,7 @@ MonoBehaviour:
   backgroundY: 65
   backgroundZ: 300
   backgroundScale: 1.25
+  showBanks: 1
   uncollectedColor: {r: 0, g: 0, b: 0, a: 1}
   itemYPosition: 0.55
   itemXPosition: 0.2
@@ -1202,6 +1203,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3772819036078178008, guid: f99803edf4576ba4e995d9158b7bccd3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3772819036078178008, guid: f99803edf4576ba4e995d9158b7bccd3,
+        type: 3}
+      propertyPath: m_TagString
+      value: RoadBank
+      objectReference: {fileID: 0}
+    - target: {fileID: 3772819037712906359, guid: f99803edf4576ba4e995d9158b7bccd3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3772819037712906359, guid: f99803edf4576ba4e995d9158b7bccd3,
+        type: 3}
+      propertyPath: m_TagString
+      value: RoadBank
+      objectReference: {fileID: 0}
     - target: {fileID: 4078809070211298849, guid: f99803edf4576ba4e995d9158b7bccd3,
         type: 3}
       propertyPath: m_RootOrder

@@ -96,6 +96,8 @@ namespace BKRacing
 		public float backgroundZ = 300f;
 		[Range(0.5f, 4f), Tooltip("Amount to scale the background in size")]
 		public float backgroundScale = 1f;
+		[Tooltip("Toggle bank/edge 3D objects on the side of the road")]
+		public bool showBanks = true;
 		
 		[Header("User Interface variables:")]
 		public Color uncollectedColor;
@@ -178,6 +180,8 @@ namespace BKRacing
 			SetControl(false);
 			InitItems();
 			SetCameraToPreset();
+
+			if (!showBanks) DisableBanks();
 		}
 
 		private void OnEnable()
@@ -266,6 +270,59 @@ namespace BKRacing
 			}
 
 			return sprites;
+		}
+
+		private void SetCameraToPreset()
+		{
+			var pos = new Vector3();
+			var rot = new Vector3();
+			float fov = 0;
+
+			switch (cameraPreset)
+			{
+				case CameraPreset.None:
+					return;
+				case CameraPreset.Extreme:
+					pos = new Vector3(0, 20f, -30f);
+					rot = new Vector3(25f, 0, 0);
+					fov = 30f;
+					break;
+				case CameraPreset.High:
+					pos = new Vector3(0, 11f, -7f);
+					rot = new Vector3(35, 0, 0);
+					fov = 70f;
+					break;
+				case CameraPreset.Medium:
+					pos = new Vector3(0, 10f, -9f);
+					rot = new Vector3(30f, 0, 0);
+					fov = 65f;
+					break;
+				case CameraPreset.Low:
+					pos = new Vector3(0, 7f, -6.15f);
+					rot = new Vector3(30f, 0, 0);
+					fov = 75f;
+					break;
+			}
+
+			SetCamera(pos, rot, fov);
+		}
+
+		private void SetCamera(Vector3 pos, Vector3 rot, float fov)
+		{
+			sceneCamera.fieldOfView = fov;
+			var t = sceneCamera.transform;
+			t.position = pos;
+			t.eulerAngles = rot;
+		}
+
+		private void DisableBanks()
+		{
+			var banks = GameObject.FindGameObjectsWithTag("RoadBank");
+
+			foreach (var bank in banks)
+			{
+				bank.SetActive(false);
+			}
 		}
 
 		private IEnumerator ChangeSpeed(bool control, float preWait, float from, float to, float time, float postWait)
@@ -361,49 +418,6 @@ namespace BKRacing
 		private void OnValidate()
 		{
 			SetCameraToPreset();
-		}
-
-		private void SetCameraToPreset()
-		{
-			var pos = new Vector3();
-			var rot = new Vector3();
-			float fov = 0;
-
-			switch (cameraPreset)
-			{
-				case CameraPreset.None:
-					return;
-				case CameraPreset.Extreme:
-					pos = new Vector3(0, 20f, -30f);
-					rot = new Vector3(25f, 0, 0);
-					fov = 30f;
-					break;
-				case CameraPreset.High:
-					pos = new Vector3(0, 11f, -7f);
-					rot = new Vector3(35, 0, 0);
-					fov = 70f;
-					break;
-				case CameraPreset.Medium:
-					pos = new Vector3(0, 10f, -9f);
-					rot = new Vector3(30f, 0, 0);
-					fov = 65f;
-					break;
-				case CameraPreset.Low:
-					pos = new Vector3(0, 7f, -6.15f);
-					rot = new Vector3(30f, 0, 0);
-					fov = 75f;
-					break;
-			}
-
-			SetCamera(pos, rot, fov);
-		}
-
-		private void SetCamera(Vector3 pos, Vector3 rot, float fov)
-		{
-			sceneCamera.fieldOfView = fov;
-			var t = sceneCamera.transform;
-			t.position = pos;
-			t.eulerAngles = rot;
 		}
 	}
 }

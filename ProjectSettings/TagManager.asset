@@ -6,6 +6,7 @@ TagManager:
   tags:
   - RacingStartScreen
   - RacingEndScreen
+  - RoadBank
   layers:
   - Default
   - TransparentFX
