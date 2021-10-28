@@ -75,6 +75,8 @@ namespace BKRacing
 
 		private void PlayFromSource(AudioClip clip, AudioSource source)
 		{
+			if (clip == null) return;
+
 			source.Stop();
 			source.clip = clip;
 			source.Play();

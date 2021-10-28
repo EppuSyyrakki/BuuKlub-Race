@@ -128,6 +128,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7717221, guid: f2777dbda068f9e47a1fc7d0b6a82e18, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 9b972057b3b00a244bbf70c4e9da34d5, type: 2}
     - target: {fileID: 269989948659551816, guid: f2777dbda068f9e47a1fc7d0b6a82e18,
         type: 3}
       propertyPath: m_Name
@@ -231,6 +235,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: EndCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714119744369027623, guid: 8d9e6b01ff4d5084d8c272dd945e44e4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8714119744369027627, guid: 8d9e6b01ff4d5084d8c272dd945e44e4,
         type: 3}
@@ -543,6 +552,7 @@ MonoBehaviour:
   gamePackage: {fileID: 11400000, guid: d2539874080bb114984ab51e4b78ea98, type: 2}
   sceneCamera: {fileID: 963194227}
   cameraPreset: 1
+  roadWidth: 6
   forwardSpeed: 150
   forwardSpeedIncrease: 18
   speedIncreaseTime: 2
@@ -602,6 +612,7 @@ MonoBehaviour:
   uncollectedColor: {r: 0, g: 0, b: 0, a: 1}
   itemYPosition: 0.55
   itemXPosition: 0.2
+  toOppositeSide: 1
   itemSize: 0.175
   moveTime: 0.5
   waitTime: 1
@@ -741,7 +752,7 @@ MonoBehaviour:
   voiceVolume: 1
   movingPitchBend: 0.2
   waitForEndVoice: 4
-  fixedTimeStep: 15
+  fixedTimeStep: 20
 --- !u!20 &963194227 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 7674393900729948527, guid: 6f5700dc7d5196f45992a465c775ea63,
@@ -964,6 +975,41 @@ PrefabInstance:
       propertyPath: m_Name
       value: Environment
       objectReference: {fileID: 0}
+    - target: {fileID: 4078809071491848847, guid: f99803edf4576ba4e995d9158b7bccd3,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4544253245542179938, guid: f99803edf4576ba4e995d9158b7bccd3,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4544253245542179938, guid: f99803edf4576ba4e995d9158b7bccd3,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4544253245542179938, guid: f99803edf4576ba4e995d9158b7bccd3,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 4544253246952514253, guid: f99803edf4576ba4e995d9158b7bccd3,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4544253246952514253, guid: f99803edf4576ba4e995d9158b7bccd3,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4544253246952514253, guid: f99803edf4576ba4e995d9158b7bccd3,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f99803edf4576ba4e995d9158b7bccd3, type: 3}
 --- !u!1001 &6688637464015328226
@@ -1033,6 +1079,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6688637462460102688, guid: 3ad36945c2639344fb9d3028197351e4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6688637464374727319, guid: 3ad36945c2639344fb9d3028197351e4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ad36945c2639344fb9d3028197351e4, type: 3}
 --- !u!1001 &7674393901377516572
@@ -1085,7 +1141,7 @@ PrefabInstance:
     - target: {fileID: 7674393900729948520, guid: 6f5700dc7d5196f45992a465c775ea63,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 28
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 7674393900729948520, guid: 6f5700dc7d5196f45992a465c775ea63,
         type: 3}
@@ -1115,6 +1171,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: StartCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714119744369027623, guid: e9de90bab82251040ad57f0b1aae0e36,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8714119744369027627, guid: e9de90bab82251040ad57f0b1aae0e36,
         type: 3}

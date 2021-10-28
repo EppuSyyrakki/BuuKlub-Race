@@ -28,20 +28,22 @@ namespace BKRacing
 		private Character _player;
 		private float _startingSpeed;
 		private float _maxSpeed;
-		private float _roadWidth;
 		private bool _gameStarted;
 		private AudioPlayer _audioPlayer;
 		private CanvasController _startScreen, _endScreen;
 		private static Transform _spawnContainer = null;
 		private float _originalFixedTimeStep;
 		private ItemSpawner _itemSpawner;
-		
+
 		[SerializeField]
 		private GamePackage gamePackage;
 
 		[SerializeField]
 		private Camera sceneCamera = null;
 		public CameraPreset cameraPreset;
+
+		[SerializeField, Range(5f, 10f)]
+		private float roadWidth = 6f;
 
 		public static Game Instance => _instance;
 		public bool ControlEnabled { get; private set; }
@@ -52,7 +54,7 @@ namespace BKRacing
 		[Range(0, 30f)]
 		public float forwardSpeedIncrease = 10f;
 		public float speedIncreaseTime = 2f;
-		[Range(1f, 10f)]
+		[Range(1f, 15f)]
 		public float horizontalSpeed = 6;
 		[Range(1f, 3f), Tooltip("Time the character is protected from another crash after crashing.")]
 		public float crashProtectionTime = 1.5f;
@@ -60,7 +62,7 @@ namespace BKRacing
 		private float stoppingSpeed = 0.5f;
 		[SerializeField, Range(0.1f, 3f), Tooltip("Seconds to wait after colliding")]
 		private float waitAfterCollision = 1f;
-		[SerializeField, Range(0, 1f), Tooltip("Time it takes to get back up to starting speed after colliding")]
+		[SerializeField, Range(0, 2f), Tooltip("Time it takes to get back up to starting speed after colliding")]
 		private float speedUpAfterCollision = 1f;
 
 		[Header("Spawner variables:")]
@@ -88,7 +90,7 @@ namespace BKRacing
 		public float decorationBillboardBendY = 2f;
 		[Tooltip("Curve for the height of all items after spawning")]
 		public AnimationCurve riseCurve;
-		[Range(5f,200f), Tooltip("How far from the spawn point the curve affects object height")]
+		[Range(0f,300f), Tooltip("How far from the spawn point the curve affects object height")]
 		public float curveDistance = 20f;
 		[Range(0, 150f), Tooltip("The height where the background card is drawn")]
 		public float backgroundY = 50f;
@@ -103,6 +105,8 @@ namespace BKRacing
 		public Color uncollectedColor;
 		[Range(0, 1f), Tooltip("Collected item position on the screen")]
 		public float itemYPosition = 0.4f, itemXPosition = 0.25f;
+		[Tooltip("Make the item fly to the opposite side from where it was collected")]
+		public bool toOppositeSide = true;
 		[Range(0.05f, 0.3f), Tooltip("Size of the collected items as fraction of screen width")]
 		public float itemSize = 0.2f;
 		[Tooltip("Time it takes for an item to move to display and inventory positions")]
@@ -142,6 +146,7 @@ namespace BKRacing
 		[Range(10, 50), Tooltip("Will be changed back to default when this object is disabled")]
 		public int fixedTimeStep = 30;
 
+		public float ScrollSpeed => gamePackage.roadTexture.scrollSpeed * 0.001f;
 		public float StartingSpeed => _startingSpeed;
 		public UIButton PlayButton => gamePackage.playButton;
 		public UIButton ReplayButton => gamePackage.replayButton;
@@ -154,7 +159,7 @@ namespace BKRacing
 		public Decoration[] Decorations => _decorations;
 		public Character Player => _player;
 		public GameObject CollectibleAccent => gamePackage.collectibleAccentEffect;
-		public float RoadWidth => _roadWidth;
+		public float RoadWidth => roadWidth;
 		public SoundCollection SoundCollection => gamePackage.soundCollection;
 
 		private void Awake()
@@ -174,9 +179,9 @@ namespace BKRacing
 			_startingSpeed = forwardSpeed;
 			forwardSpeed = 0;
 			_maxSpeed = speedUpAfterCollision * (gamePackage.itemSprites.Count - 1) + _startingSpeed;
-			_roadWidth = FindObjectOfType<Road>().transform.localScale.x * 0.5f;
 			_player = FindObjectOfType<Character>();
 			_itemSpawner = FindObjectOfType<ItemSpawner>();
+			SetRoadWidth();
 			SetControl(false);
 			InitItems();
 			SetCameraToPreset();
@@ -315,6 +320,24 @@ namespace BKRacing
 			t.eulerAngles = rot;
 		}
 
+		private void SetRoadWidth()
+		{
+			var t = FindObjectOfType<Road>().transform;
+			var scale = t.localScale;
+			scale.x = roadWidth * 2;
+			t.localScale = scale;
+
+			var decorations = FindObjectsOfType<DecorationSpawner>();
+
+			foreach (var spawner in decorations)
+			{
+				var st = spawner.transform;
+				var pos = st.position;
+				var multiplier = pos.x < 0 ? -1 : 1;
+				st.position = new Vector3(roadWidth * multiplier + 6f * multiplier, pos.y, pos.z);
+			}
+		}
+
 		private void DisableBanks()
 		{
 			var banks = GameObject.FindGameObjectsWithTag("RoadBank");
@@ -383,7 +406,7 @@ namespace BKRacing
 				worldPosition,
 				Quaternion.identity,
 				_spawnContainer);
-			Destroy(effect, 2.5f);
+			Destroy(effect, 5f);
 			StartCoroutine(ChangeSpeed(true, 0, forwardSpeed,
 				forwardSpeed + forwardSpeedIncrease, speedIncreaseTime, 0));
 		}
@@ -418,6 +441,7 @@ namespace BKRacing
 		private void OnValidate()
 		{
 			SetCameraToPreset();
+			SetRoadWidth();
 		}
 	}
 }

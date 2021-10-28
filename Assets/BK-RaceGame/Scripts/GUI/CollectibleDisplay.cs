@@ -12,7 +12,6 @@ namespace BKRacing.GUI
 	{
 		// private Vector3 _centerTarget;
 		private float _size;
-		private float _centerX;
 		private Image[] _allItems;
 		private List<Image> _notCollected;
 		private List<Image> _collected;
@@ -32,7 +31,6 @@ namespace BKRacing.GUI
 			_itemXPosition = Game.Instance.itemXPosition;
 			_collectedSize = Game.Instance.itemSize;
 			_size = Screen.width * _collectedSize;
-			_centerX = Screen.width * _itemXPosition;
 			var items = Game.Instance.GetUiSprites();
 			_allItems = new Image[items.Length];
 			_notCollected = new List<Image>();
@@ -126,7 +124,14 @@ namespace BKRacing.GUI
 
 		private void LaunchItemMovement(RectTransform rt, Vector3 source, RectTransform target)
 		{
-			var x = Game.Instance.Player.transform.position.x < 0 ? _centerX : Screen.width - _centerX;
+			var centerX = Screen.width * _itemXPosition;
+			float x = Game.Instance.Player.transform.position.x < 0 ? centerX : Screen.width - centerX;
+			
+			if (Game.Instance.toOppositeSide)
+			{
+				x = Game.Instance.Player.transform.position.x > 0 ? centerX : Screen.width - centerX;
+			}
+
 			var centerTarget = new Vector3(x, Screen.height * _itemYPosition, 0);
 			//centerTarget.x /= _parentScale;	// Scale the vector according to Canvas Scaler
 			//centerTarget.y /= _parentScale;

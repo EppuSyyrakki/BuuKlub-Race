@@ -96,7 +96,8 @@ namespace BKRacing.Items
 		{
 			Vector3 target = transform.position;
 			float multiplier = target.x < 0 ? -1 : 1;
-			target.x = Random.Range(10f, 30f) * multiplier;
+			var roadWidth = Game.Instance.RoadWidth * 2f;
+			target.x = Random.Range(roadWidth, roadWidth * 3f) * multiplier;
 			return target;
 		}
 	}

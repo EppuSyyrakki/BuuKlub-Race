@@ -37,6 +37,7 @@ namespace BKRacing
 	{
 		public Texture texture;
 		public Vector2 tiling;
+		public float scrollSpeed = 0.00048f;
 
 		public EnvironmentTexture(Vector2 tiling)
 		{

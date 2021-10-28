@@ -11,6 +11,7 @@ namespace BKRacing
 	[RequireComponent(typeof(Billboard), 
 		typeof(Collider), 
 		typeof(Rigidbody))]
+	[RequireComponent(typeof(Animator))]
     public class Character : MonoBehaviour
     {
 	    private enum Direction

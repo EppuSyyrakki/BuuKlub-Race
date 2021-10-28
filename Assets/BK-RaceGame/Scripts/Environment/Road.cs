@@ -25,8 +25,9 @@ namespace BKRacing.Environment
 
 		private void Update()
 		{
-			var tiling = Game.Instance.RoadTexture.tiling;
-			Vector2 offset = new Vector2(0, Game.Instance.forwardSpeed * tiling.y * 0.00048f * Time.deltaTime);
+			_material.mainTextureScale = Game.Instance.RoadTexture.tiling;
+			var speed = Game.Instance.ScrollSpeed;
+			Vector2 offset = new Vector2(0, Game.Instance.forwardSpeed * speed * Time.deltaTime);
 			_material.mainTextureOffset += offset;
 		}
 	}
