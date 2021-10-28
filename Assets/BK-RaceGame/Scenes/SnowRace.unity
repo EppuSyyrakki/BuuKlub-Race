@@ -705,6 +705,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gamePackage: {fileID: 11400000, guid: d2539874080bb114984ab51e4b78ea98, type: 2}
   sceneCamera: {fileID: 963194227}
+  cameraPreset: 1
   forwardSpeed: 150
   forwardSpeedIncrease: 18
   speedIncreaseTime: 2
@@ -757,7 +758,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   curveDistance: 200
-  backgroundY: 50
+  backgroundY: 65
   backgroundZ: 300
   backgroundScale: 1.25
   uncollectedColor: {r: 0, g: 0, b: 0, a: 1}
@@ -1559,7 +1560,7 @@ PrefabInstance:
     - target: {fileID: 7674393900729948520, guid: 6f5700dc7d5196f45992a465c775ea63,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.67
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7674393900729948520, guid: 6f5700dc7d5196f45992a465c775ea63,
         type: 3}
@@ -1569,12 +1570,12 @@ PrefabInstance:
     - target: {fileID: 7674393900729948520, guid: 6f5700dc7d5196f45992a465c775ea63,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.97629607
+      value: 0.9659259
       objectReference: {fileID: 0}
     - target: {fileID: 7674393900729948520, guid: 6f5700dc7d5196f45992a465c775ea63,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.2164396
+      value: 0.25881907
       objectReference: {fileID: 0}
     - target: {fileID: 7674393900729948520, guid: 6f5700dc7d5196f45992a465c775ea63,
         type: 3}
@@ -1589,7 +1590,7 @@ PrefabInstance:
     - target: {fileID: 7674393900729948520, guid: 6f5700dc7d5196f45992a465c775ea63,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -90
+      value: 28
       objectReference: {fileID: 0}
     - target: {fileID: 7674393900729948520, guid: 6f5700dc7d5196f45992a465c775ea63,
         type: 3}
@@ -1605,6 +1606,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Main Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 7674393900729948527, guid: 6f5700dc7d5196f45992a465c775ea63,
+        type: 3}
+      propertyPath: field of view
+      value: 75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6f5700dc7d5196f45992a465c775ea63, type: 3}

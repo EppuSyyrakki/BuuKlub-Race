@@ -44,6 +44,7 @@ namespace BKRacing
 			_cam = Camera.main;
 			_animator = GetComponent<Animator>();
 			_particles = GetComponentInChildren<ParticleSystem>();
+			_particles.Pause();
 	    }
 
 	    private void Start()
@@ -53,6 +54,8 @@ namespace BKRacing
 
 	    private void Update()
 	    {
+		    SetParticles();
+
 		    if (Input.touchCount == 0 || !Game.Instance.ControlEnabled)
 		    {
 			    triggerSound(_soundCollection.forwardMovement);
@@ -72,6 +75,18 @@ namespace BKRacing
 
 			triggerSound(_soundCollection.sidewaysMovement);
 			Move(touch.position.x < screenPosX ? Direction.Left : Direction.Right);
+	    }
+
+	    private void SetParticles()
+	    {
+		    if (Game.Instance.forwardSpeed > Game.Instance.StartingSpeed * 0.5f && _particles.isPaused)
+		    {
+				_particles.Play();
+		    }
+		    else if (Game.Instance.forwardSpeed < Game.Instance.StartingSpeed * 0.5f && _particles.isPlaying)
+		    {
+				_particles.Pause();
+		    }
 	    }
 
 	    private void OnTriggerEnter(Collider other)

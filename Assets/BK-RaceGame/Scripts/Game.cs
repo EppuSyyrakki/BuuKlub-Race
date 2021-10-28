@@ -8,6 +8,15 @@ using UnityEngine;
 
 namespace BKRacing
 {
+	public enum CameraPreset
+	{
+		None,
+		Low,
+		Medium,
+		High,
+		Extreme
+	}
+
 	public class Game : MonoBehaviour
 	{
 		private static Game _instance;
@@ -26,13 +35,13 @@ namespace BKRacing
 		private static Transform _spawnContainer = null;
 		private float _originalFixedTimeStep;
 		private ItemSpawner _itemSpawner;
-		private bool _characterHasParticles = false;
 		
 		[SerializeField]
 		private GamePackage gamePackage;
 
 		[SerializeField]
 		private Camera sceneCamera = null;
+		public CameraPreset cameraPreset;
 
 		public static Game Instance => _instance;
 		public bool ControlEnabled { get; private set; }
@@ -131,6 +140,7 @@ namespace BKRacing
 		[Range(10, 50), Tooltip("Will be changed back to default when this object is disabled")]
 		public int fixedTimeStep = 30;
 
+		public float StartingSpeed => _startingSpeed;
 		public UIButton PlayButton => gamePackage.playButton;
 		public UIButton ReplayButton => gamePackage.replayButton;
 		public Sprite BackgroundCard => gamePackage.backgroundCard;
@@ -167,11 +177,7 @@ namespace BKRacing
 			_itemSpawner = FindObjectOfType<ItemSpawner>();
 			SetControl(false);
 			InitItems();
-
-			if (Player.Particles != null)
-			{
-				_characterHasParticles = true;
-			}
+			SetCameraToPreset();
 		}
 
 		private void OnEnable()
@@ -200,17 +206,6 @@ namespace BKRacing
 				StartCoroutine(ChangeSpeed(true, 0, 0, _startingSpeed, 
 					speedUpAfterCollision, 0));
 				Player.StartMoving();
-			}
-
-			if (!_characterHasParticles) return;
-			
-			if (forwardSpeed >= _startingSpeed / 2)
-			{
-				Player.Particles.Play();
-			}
-			else
-			{
-				Player.Particles.Stop();
 			}
 		}
 
@@ -361,6 +356,54 @@ namespace BKRacing
 			{
 				item.DiscardItem();
 			}
+		}
+
+		private void OnValidate()
+		{
+			SetCameraToPreset();
+		}
+
+		private void SetCameraToPreset()
+		{
+			var pos = new Vector3();
+			var rot = new Vector3();
+			float fov = 0;
+
+			switch (cameraPreset)
+			{
+				case CameraPreset.None:
+					return;
+				case CameraPreset.Extreme:
+					pos = new Vector3(0, 20f, -30f);
+					rot = new Vector3(25f, 0, 0);
+					fov = 30f;
+					break;
+				case CameraPreset.High:
+					pos = new Vector3(0, 11f, -7f);
+					rot = new Vector3(35, 0, 0);
+					fov = 70f;
+					break;
+				case CameraPreset.Medium:
+					pos = new Vector3(0, 10f, -9f);
+					rot = new Vector3(30f, 0, 0);
+					fov = 65f;
+					break;
+				case CameraPreset.Low:
+					pos = new Vector3(0, 7f, -6.15f);
+					rot = new Vector3(30f, 0, 0);
+					fov = 75f;
+					break;
+			}
+
+			SetCamera(pos, rot, fov);
+		}
+
+		private void SetCamera(Vector3 pos, Vector3 rot, float fov)
+		{
+			sceneCamera.fieldOfView = fov;
+			var t = sceneCamera.transform;
+			t.position = pos;
+			t.eulerAngles = rot;
 		}
 	}
 }
