@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fd7f555d396220b4b9d0004906349664, type: 3}
-  m_Name: DownhillGame
+  m_Name: LotusGamePackage
   m_EditorClassIdentifier: 
   playButton:
     normalSprite: {fileID: 21300000, guid: 6deb610947396bf40a2bf1edd5b7f4c9, type: 3}
