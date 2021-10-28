@@ -1,12 +1,24 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &4078809069543057312
+--- !u!114 &4078809070633888391
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4078809071202734316}
+  m_GameObject: {fileID: 3772819036078178008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aba31078cccabcd4082f6afe2cac09a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4078809071508889220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3772819037712906359}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aba31078cccabcd4082f6afe2cac09a3, type: 3}
@@ -26,7 +38,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4078809070211298849
 Transform:
@@ -73,7 +85,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4078809070270621227}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.7, y: 45, z: 300}
+  m_LocalPosition: {x: 0, y: 20, z: 300}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4078809070211298849}
@@ -141,25 +153,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47c788919b1c4f31a818fa3e78aa9b99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4078809070633888391
+--- !u!114 &4078809069543057312
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3772819036078178008}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aba31078cccabcd4082f6afe2cac09a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &4078809071508889220
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3772819037712906359}
+  m_GameObject: {fileID: 4078809071202734316}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aba31078cccabcd4082f6afe2cac09a3, type: 3}
@@ -176,6 +176,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Road
+      objectReference: {fileID: 0}
+    - target: {fileID: 1390354643137929330, guid: 26608c0e8b4567d48901824513aaa228,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 1390354643137929334, guid: 26608c0e8b4567d48901824513aaa228,
         type: 3}
@@ -362,6 +367,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 915419aaf2f3f754ba8d50645d5fc60e,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 915419aaf2f3f754ba8d50645d5fc60e, type: 3}
 --- !u!1 &3772819037712906359 stripped
@@ -498,6 +508,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 29d6cc5dcb1b7a54eb4d778098e9a178,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29d6cc5dcb1b7a54eb4d778098e9a178, type: 3}
 --- !u!1 &3772819036078178008 stripped
@@ -598,6 +613,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9196504424386549926, guid: b1236b5b358ed0a4ab97a209ed1aa923,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1236b5b358ed0a4ab97a209ed1aa923, type: 3}
